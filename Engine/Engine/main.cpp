@@ -1,6 +1,16 @@
-#include <iostream>
+#include "pch.h"
 
-int main()
+#include "Application.h"
+
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
-	std::cout << "Hello World" << std::endl;
+	Application& app = Application::Get();
+	{
+		app._HInstance = hInstance;
+	}
+
+	while(!app.IsExited())
+	{
+		app.Update();
+	}
 }
