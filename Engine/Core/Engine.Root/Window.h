@@ -3,7 +3,7 @@
 class Window
 {
 public:
-	Window(WNDPROC  windowProc_, std::wstring name_, std::wstring title_, HINSTANCE hInstance_);
+	Window(WNDPROC  windowProc_, std::string name_, std::string title_, HINSTANCE hInstance_);
 	~Window() = default;
 
 public:
@@ -14,8 +14,8 @@ private:
 
 public:
 	WNDPROC 											_WindowProc;
-	std::wstring										_Name;
-	std::wstring									    _Title;
+	std::string											_Name;
+	std::string											_Title;
 	HINSTANCE											_HInstance;
 	HWND												_Hwnd;
 

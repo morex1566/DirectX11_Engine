@@ -1,0 +1,11 @@
+{
+   "Engine" : {
+      "Setting" : {
+         "Window" : {
+            "FullScreen" : 0,
+            "Height" : 900,
+            "Width" : 1600
+         }
+      }
+   }
+}

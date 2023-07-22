@@ -53,9 +53,13 @@ private:
 	/**
 	 * \brief current process windows
 	 */
-	static std::vector<std::unique_ptr<Window>>			_windows;
+	static std::vector<std::unique_ptr<Window>>	_windows;
 	/**
 	 * \brief if true, application is terminated.
 	 */
-	bool _IsExited;
+	bool _isExited;
+	/**
+	 * \brief  singleton instance
+	 */
+	static Application* _instance;
 };

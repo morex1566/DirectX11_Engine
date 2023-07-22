@@ -8,7 +8,7 @@ LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	{
 		case WM_DESTROY:
 			PostQuitMessage(0);
-			Application::Get()._IsExited = true;
+			Application::Get()._isExited = true;
 			return 0;
 
 		case WM_PAINT:
@@ -29,14 +29,18 @@ LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 Application& Application::Get()
 {
-	static Application instance;
-
-	if(!instance.initialize())
+	if(_instance == nullptr)
 	{
-		throw std::exception("Application initialize failure.");
+		_instance = new Application;
+
+		if (!_instance->initialize())
+		{
+			Logger::Log(L"Application initialize failure.");
+			throw std::exception("Application initialize failure.");
+		}
 	}
 
-	return instance;
+	return *_instance;
 }
 
 void Application::Update()
@@ -51,11 +55,11 @@ void Application::Update()
 
 bool Application::IsExited() const
 {
-	return _IsExited;
+	return _isExited;
 }
 
 Application::Application()
-	: _HInstance(NULL), _IsExited(false)
+	: _HInstance(NULL), _isExited(false)
 {
 }
 
@@ -69,8 +73,8 @@ bool Application::initialize()
 	// 1. generate main window
 	_windows.emplace_back(std::make_unique<Window>(
 		WindowProc,
-		L"Main",
-		L"Engine",
+		"Main",
+		"Engine",
 		_HInstance
 	));
 
@@ -81,3 +85,4 @@ bool Application::initialize()
 }
 
 std::vector<std::unique_ptr<Window>> Application::_windows;
+Application* Application::_instance;
