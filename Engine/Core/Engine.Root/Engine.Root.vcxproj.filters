@@ -29,11 +29,17 @@
     <ClCompile Include="Window.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
+    <ClCompile Include="LogManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Libraries\json\dist\jsoncpp.cpp">
       <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +55,13 @@
     <ClInclude Include="Window.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
+    <ClInclude Include="LogManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,27 +1,43 @@
 #include "pch.h"
 #include "Window.h"
 
+#include <utility>
+
 
 Window::Window(WNDPROC windowProc_, std::string name_, std::string title_, HINSTANCE hInstance_)
-	: _WindowProc(windowProc_), _Name(std::move(name_)), _Title(std::move(title_)), _HInstance(hInstance_)
+	: _WindowProc(windowProc_), _Name(std::move(name_)), _Title(std::move(title_)), _HInstance(hInstance_), _Hwnd(NULL)
+{
+}
+
+void Window::Initialize()
 {
 	// Register the window class.
 	{
 		WNDCLASS wc = { };
 
-		wc.lpfnWndProc = windowProc_;
-		wc.hInstance = hInstance_;
+		wc.lpfnWndProc = _WindowProc;
+		wc.hInstance = _HInstance;
 		wc.lpszClassName = _Name.c_str();
 
 		RegisterClass(&wc);
 	}
 
-	// Create the window.
+	// Create the window.z
 	_Hwnd = createHWND();
-	if(_Hwnd == NULL)
+	if (_Hwnd == NULL)
 	{
-		throw std::exception("Craete HWND failure.");
+		LogManager::LogError("Window Creation Failure.");
+		return;
 	}
+}
+
+void Window::Shutdown()
+{
+	DestroyWindow(_Hwnd);
+	_Hwnd = NULL;
+
+	UnregisterClass(_Name.c_str(), _HInstance);
+	_HInstance = NULL;
 }
 
 void Window::ShowWindow() const

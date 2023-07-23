@@ -3,10 +3,11 @@
 class Window
 {
 public:
-	Window(WNDPROC  windowProc_, std::string name_, std::string title_, HINSTANCE hInstance_);
-	~Window() = default;
+	Window(WNDPROC windowProc_, std::string name_, std::string title_, HINSTANCE hInstance_);
 
-public:
+	void Initialize();
+	void Shutdown();
+
 	void ShowWindow() const;
 
 private:
@@ -18,5 +19,4 @@ public:
 	std::string											_Title;
 	HINSTANCE											_HInstance;
 	HWND												_Hwnd;
-
 };

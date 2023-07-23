@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Application.h"
 #include "Window.h"
+#include "D3DManager.h"
+#include "WindowManager.h"
 
 LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -12,45 +14,58 @@ LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			return 0;
 
 		case WM_PAINT:
-			PAINTSTRUCT ps;
-			{
-				const HDC hdc = BeginPaint(hwnd, &ps);
-				const HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
+			return 0;
 
-				FillRect(hdc, &ps.rcPaint, hBrush);
-				EndPaint(hwnd, &ps);
-			}
-
-		return 0;
+	case WM_SIZE:
+			D3DManager::Get().Clear();
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
+void Application::onRender()
+{
+	D3DManager::Get().BeginScene();
+
+	D3DManager::Get().EndScene();
+}
+
 Application& Application::Get()
 {
-	if(_instance == nullptr)
-	{
-		_instance = new Application;
-
-		if (!_instance->initialize())
-		{
-			Logger::Log(L"Application initialize failure.");
-			throw std::exception("Application initialize failure.");
-		}
-	}
-
-	return *_instance;
+	static Application instance;
+	return instance;
 }
 
 void Application::Update()
 {
 	MSG msg = { };
-	while (GetMessage(&msg, NULL, 0, 0) > 0)
+
+	// Initialize the message structure.
+	ZeroMemory(&msg, sizeof(MSG));
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
+	if (!_isExited)
+	{
+		onRender();
+	}
+
+}
+
+void Application::Start()
+{
+	WindowManager::Get().ShowWindows();
+
+	_isStarted = true;
+}
+
+bool Application::IsStarted() const
+{
+	return _isStarted;
 }
 
 bool Application::IsExited() const
@@ -58,31 +73,38 @@ bool Application::IsExited() const
 	return _isExited;
 }
 
+void Application::Shutdown()
+{
+	D3DManager::Get().Shutdown();
+
+	WindowManager::Get().Shutdown();
+
+	LogManager::Get().Shutdown();
+
+	_isExited = true;
+}
+
 Application::Application()
-	: _HInstance(NULL), _isExited(false)
+	: _HInstance(NULL), _isExited(false), _isStarted(false)
 {
 }
 
-//std::unique_ptr<Window>& Application::OpenWindow()
-//{
-//	return 
-//}
-
-bool Application::initialize()
+bool Application::Initialize(HINSTANCE hInstance_)
 {
-	// 1. generate main window
-	_windows.emplace_back(std::make_unique<Window>(
-		WindowProc,
-		"Main",
-		"Engine",
-		_HInstance
-	));
+	LogManager& logManager = LogManager::Get();
+	{
+		logManager.Initialize();
+	}
 
-	// 2. show window
-	_windows.back()->ShowWindow();
+	WindowManager& windowManager = WindowManager::Get();
+	{
+		windowManager.Initialize(WindowProc, "Main", "Engine", hInstance_);
+	}
+
+	D3DManager& d3dManager = D3DManager::Get();
+	{
+		d3dManager.Initialize(windowManager.GetMainWindow()._Hwnd);
+	}
 
 	return true;
 }
-
-std::vector<std::unique_ptr<Window>> Application::_windows;
-Application* Application::_instance;
