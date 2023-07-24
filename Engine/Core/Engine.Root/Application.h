@@ -28,7 +28,8 @@ private:
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	void onRender();
-	
+	void onDispose();
+
 private:
 	HINSTANCE										_HInstance;
 	bool											_isExited;

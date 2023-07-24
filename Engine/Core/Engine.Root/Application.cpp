@@ -3,6 +3,10 @@
 #include "Window.h"
 #include "D3DManager.h"
 #include "WindowManager.h"
+#include "SceneManager.h"
+#include "GameObjectManager.h"
+#include "ComponentManager.h"
+#include "Scene.h"
 
 LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -27,7 +31,18 @@ void Application::onRender()
 {
 	D3DManager::Get().BeginScene();
 
+	SceneManager::Get().GetCurrentScene()->Render();
+
 	D3DManager::Get().EndScene();
+}
+
+void Application::onDispose()
+{
+	SceneManager::Get().Dispose();
+
+	GameObjectManager::Get().Dispose();
+
+	ComponentManager::Get().Dispose();
 }
 
 Application& Application::Get()
@@ -51,7 +66,9 @@ void Application::Update()
 
 	if (!_isExited)
 	{
+		SceneManager::Get().GetCurrentScene()->Update();
 		onRender();
+		onDispose();
 	}
 
 }
@@ -75,6 +92,12 @@ bool Application::IsExited() const
 
 void Application::Shutdown()
 {
+	ComponentManager::Get().Shutdown();
+
+	GameObjectManager::Get().Shutdown();
+
+	SceneManager::Get().Shutdown();
+
 	D3DManager::Get().Shutdown();
 
 	WindowManager::Get().Shutdown();
@@ -91,6 +114,7 @@ Application::Application()
 
 bool Application::Initialize(HINSTANCE hInstance_)
 {
+	// CAUTION : Set as first.
 	LogManager& logManager = LogManager::Get();
 	{
 		logManager.Initialize();
@@ -104,6 +128,22 @@ bool Application::Initialize(HINSTANCE hInstance_)
 	D3DManager& d3dManager = D3DManager::Get();
 	{
 		d3dManager.Initialize(windowManager.GetMainWindow()._Hwnd);
+	}
+
+	// CAUTION : Set as earlier than GameObjectManager.
+	SceneManager& sceneManager = SceneManager::Get();
+	{
+		sceneManager.Initialize();
+	}
+
+	GameObjectManager& gameObjectManager = GameObjectManager::Get();
+	{
+		gameObjectManager.Initialize();
+	}
+
+	ComponentManager& componentManager = ComponentManager::Get();
+	{
+		componentManager.Initialize();
 	}
 
 	return true;
