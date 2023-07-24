@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "SceneManager.h"
 
-#include "Scene.h"
-
 SceneManager& SceneManager::Get()
 {
 	static SceneManager instance;
@@ -18,7 +16,7 @@ void SceneManager::Initialize()
 
 void SceneManager::Shutdown()
 {
-	for (auto& scene : _scenes)
+	for (const auto& scene : _scenes)
 	{
 		scene->Destroy();
 	}

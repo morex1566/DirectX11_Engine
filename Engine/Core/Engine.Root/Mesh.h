@@ -4,5 +4,12 @@
 
 class Mesh : public Component
 {
-};
+public:
+	Mesh();
+	~Mesh() override;
 
+	void Render();
+
+private:
+
+};

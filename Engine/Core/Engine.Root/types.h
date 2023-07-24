@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <DirectXMath.h>
+
 using byte = unsigned char;
 using int8 = __int8;
 using int16 = __int16;
@@ -12,3 +14,16 @@ using uint16 = unsigned __int16;
 using uint32 = unsigned __int32;
 using uint64 = unsigned __int64;
 
+struct MatrixBufferType
+{
+	DirectX::XMMATRIX world;
+	DirectX::XMMATRIX view;
+	DirectX::XMMATRIX projection;
+};
+
+struct LightBufferType
+{
+	DirectX::XMFLOAT4 diffuseColor;
+	DirectX::XMFLOAT3 lightDirection;
+	float padding;
+};

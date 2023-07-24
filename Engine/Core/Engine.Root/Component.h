@@ -9,14 +9,14 @@ public:
 	virtual ~Component();
 
 	virtual void Update();
-	void Destroy();
+	virtual void Destroy();
 
 	bool IsDestroyed();
 	bool IsActivated();
 
 public:
 	std::string _Name;
-
+	
 private:
 	bool										_isDestroyed;
 	bool										_isActivated;

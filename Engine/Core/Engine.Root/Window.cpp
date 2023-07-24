@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "Window.h"
 
-#include <utility>
-
-
 Window::Window(WNDPROC windowProc_, std::string name_, std::string title_, HINSTANCE hInstance_)
 	: _WindowProc(windowProc_), _Name(std::move(name_)), _Title(std::move(title_)), _HInstance(hInstance_), _Hwnd(NULL)
 {

@@ -1,6 +1,8 @@
 #pragma once
 
-class Component;
+#include "Component.h"
+#include "Material.h"
+#include "Transform.h"
 
 class ComponentManager
 {

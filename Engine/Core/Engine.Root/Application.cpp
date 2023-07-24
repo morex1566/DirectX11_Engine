@@ -1,12 +1,10 @@
 #include "pch.h"
 #include "Application.h"
-#include "Window.h"
 #include "D3DManager.h"
-#include "WindowManager.h"
 #include "SceneManager.h"
 #include "GameObjectManager.h"
 #include "ComponentManager.h"
-#include "Scene.h"
+#include "WindowManager.h"
 
 LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -103,6 +101,8 @@ void Application::Shutdown()
 	WindowManager::Get().Shutdown();
 
 	LogManager::Get().Shutdown();
+
+	onDispose();
 
 	_isExited = true;
 }

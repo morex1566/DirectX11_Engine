@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "GameObject.h"
 #include "GameObjectManager.h"
-#include "Component.h"
-#include "Transform.h"
 
 GameObject::GameObject()
 	: _Name(std::string()), _parent(nullptr), _isDestroyed(false), _isActivated(true)
@@ -42,6 +40,17 @@ std::vector<Component*>& GameObject::GetComponents()
 
 void GameObject::AttachChild(GameObject* gameObject_)
 {
+	// Check is the 'gameObject_' already child.
+	for (const auto& child : _children)
+	{
+		if(child == gameObject_)
+		{
+			LogManager::LogWarning("GameObject is already chlid.");
+			return;
+		}
+	}
+
+	// Attach 'gameObject_' to _children. 
 	_children.emplace_back(gameObject_);
 }
 

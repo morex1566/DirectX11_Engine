@@ -10,6 +10,9 @@ public:
 	static LogManager& Get();
 
 	static void Log(const std::wstring& msg_);
+	static void Log(const std::string& msg_);
+	static void LogWarning(const std::wstring& msg_);
+	static void LogWarning(const std::string& msg_);
 	static void LogError(const std::wstring& msg_);
 	static void LogError(const std::string& msg_);
 

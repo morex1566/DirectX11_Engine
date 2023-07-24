@@ -18,4 +18,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 			app.Update();
 		}
 	}
+
+	app.Shutdown();
 }

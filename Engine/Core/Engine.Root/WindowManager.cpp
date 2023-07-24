@@ -2,7 +2,6 @@
 
 #include "pch.h"
 #include "WindowManager.h"
-#include "Window.h"
 
 WindowManager& WindowManager::Get()
 {

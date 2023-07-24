@@ -1,5 +1,7 @@
-#include "pch.h"
 // ReSharper disable CppPossiblyUninitializedMember
+
+#include "pch.h"
+#include "D3DManager.h"
 
 #pragma warning(disable: 6214)
 #pragma warning(disable: 26495)
@@ -8,7 +10,6 @@
 #pragma warning(disable: 6387)
 #pragma warning(disable: 6001)
 
-#include "D3DManager.h"
 
 D3DManager& D3DManager::Get()
 {

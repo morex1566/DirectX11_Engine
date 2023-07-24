@@ -10,7 +10,7 @@ Component::Component()
 
 Component::~Component()
 {
-	Destroy();
+	Component::Destroy();
 }
 
 bool Component::IsDestroyed()

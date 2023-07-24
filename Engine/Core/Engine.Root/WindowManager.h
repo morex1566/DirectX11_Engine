@@ -1,6 +1,5 @@
 #pragma once
-
-class Window;
+#include "Window.h"
 
 class WindowManager
 {

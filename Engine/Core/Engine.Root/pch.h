@@ -19,13 +19,18 @@
 #include <DirectXMath.h>
 #include <memory>
 
+using namespace DirectX;
+
 #define FILE_PATH(path_) std::string(SOLUTION_DIR) + path_
 
 #include "json/json.h"
 #include "types.h"
 #include "LogManager.h"
-
-using namespace DirectX;
+//#include "WindowManager.h"
+//#include "D3DManager.h"
+//#include "SceneManager.h"
+//#include "GameObjectManager.h"
+//#include "ComponentManager.h"
 
 class Config
 {

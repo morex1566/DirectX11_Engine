@@ -10,6 +10,7 @@ public:
 	Scene(std::string name_);
 	~Scene();
 
+	void Start();
 	void Update();
 	void Render();
 	void Destroy();

@@ -15,6 +15,21 @@ void LogManager::Log(const std::wstring& msg_)
 	std::wcout << msg_;
 }
 
+void LogManager::Log(const std::string& msg_)
+{
+	std::cout << msg_;
+}
+
+void LogManager::LogWarning(const std::wstring& msg_)
+{
+	std::wcout << msg_;
+}
+
+void LogManager::LogWarning(const std::string& msg_)
+{
+	std::cout << msg_;
+}
+
 void LogManager::LogError(const std::wstring& msg_)
 {
 	std::wcout << msg_;

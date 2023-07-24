@@ -1,10 +1,11 @@
 #pragma once
 
-class Component;
+#include "ComponentManager.h"
 
 class GameObject
 {
 	friend class GameObjectManager;
+	template <class T> using IsComponent = std::enable_if_t<std::is_base_of<Component, T>::value, T>;
 
 public:
 	GameObject();
@@ -13,6 +14,8 @@ public:
 	Component*					FindComponent(const std::string& name_);
 	std::vector<GameObject*>&	GetChildren();
 	std::vector<Component*>&	GetComponents();
+	template <class T, class = IsComponent<T>> std::vector<T*> GetComponents();
+
 	void						AttachChild(GameObject* gameObject_);
 	void						DetachChild(const GameObject* gameObject_);
 	void						SetParent(GameObject* gameObject_);
@@ -33,3 +36,22 @@ private:
 	bool						_isActivated;
 
 };
+
+template <class T, class> std::vector<T*> GameObject::GetComponents()
+{
+	std::vector<T*> components;
+
+	for (auto& component : _components)
+	{
+		if (typeid(component) == typeid(T))
+		{
+			T* t = dynamic_cast<T*>(component);
+			if(t != nullptr)
+			{
+				components.emplace_back(t);
+			}
+		}
+	}
+
+	return components;
+}

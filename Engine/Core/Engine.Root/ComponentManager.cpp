@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "ComponentManager.h"
 
-#include "Component.h"
-
 ComponentManager& ComponentManager::Get()
 {
 	static ComponentManager instance;
@@ -15,6 +13,10 @@ void ComponentManager::Initialize()
 
 void ComponentManager::Shutdown()
 {
+	for (const auto& component : _components)
+	{
+		component->Destroy();
+	}
 }
 
 void ComponentManager::Dispose()

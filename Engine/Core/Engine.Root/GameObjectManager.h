@@ -1,6 +1,7 @@
 #pragma once
 
-class GameObject;
+#include "GameObject.h"
+#include "Camera.h"
 
 class GameObjectManager
 {
