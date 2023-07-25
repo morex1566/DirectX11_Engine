@@ -4,6 +4,7 @@
 
 class Shader;
 class Texture;
+class Mesh;
 
 class Material : public Component
 {
@@ -15,6 +16,7 @@ public:
 	void Destroy() override;
 
 private:
+	std::unique_ptr<Mesh>			_mesh;
 	std::unique_ptr<Shader>			_shader;
 	std::unique_ptr<Texture>		_texture;
 };

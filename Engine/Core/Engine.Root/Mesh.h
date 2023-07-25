@@ -1,12 +1,9 @@
 #pragma once
 
-#include "Component.h"
-
-class Mesh : public Component
+class Mesh
 {
 public:
 	Mesh();
-	~Mesh() override;
 
 	void Render();
 

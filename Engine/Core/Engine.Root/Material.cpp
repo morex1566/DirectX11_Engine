@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Material.h"
 // TODO : needs to sort
+#include "Mesh.h"
 #include "Shader.h"
 #include "Texture.h"
 
@@ -18,6 +19,15 @@ Material::~Material()
 
 void Material::Render()
 {
+	if(_mesh != nullptr)
+	{
+		_mesh->Render();
+	}
+
+	if(_shader != nullptr)
+	{
+		_shader->Render();
+	}
 }
 
 void Material::Destroy()

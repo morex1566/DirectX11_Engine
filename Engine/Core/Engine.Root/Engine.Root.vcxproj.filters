@@ -80,6 +80,12 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -140,6 +146,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
