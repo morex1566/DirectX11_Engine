@@ -5,6 +5,7 @@
 #include "GameObjectManager.h"
 #include "ComponentManager.h"
 #include "WindowManager.h"
+#include "ResourceManager.h"
 
 LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -41,6 +42,8 @@ void Application::onDispose()
 	GameObjectManager::Get().Dispose();
 
 	ComponentManager::Get().Dispose();
+
+	ResourceManager::Get().Dispose();
 }
 
 Application& Application::Get()
@@ -90,6 +93,8 @@ bool Application::IsExited() const
 
 void Application::Shutdown()
 {
+	ResourceManager::Get().Shutdown();
+
 	ComponentManager::Get().Shutdown();
 
 	GameObjectManager::Get().Shutdown();
@@ -144,6 +149,11 @@ bool Application::Initialize(HINSTANCE hInstance_)
 	ComponentManager& componentManager = ComponentManager::Get();
 	{
 		componentManager.Initialize();
+	}
+
+	ResourceManager& resourceManager = ResourceManager::Get();
+	{
+		resourceManager.Initialize();
 	}
 
 	return true;

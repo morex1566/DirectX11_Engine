@@ -22,8 +22,8 @@ public:
 	void EndScene();
 	void Clear();
 
-	const ID3D11Device*			GetDevice() const;
-	const ID3D11DeviceContext*	GetDeviceContext() const;
+	ID3D11Device*			GetDevice() const;
+	ID3D11DeviceContext*	GetDeviceContext() const;
 
 	XMMATRIX GetProjectionMatrix();
 	XMMATRIX GetWorldMatrix();

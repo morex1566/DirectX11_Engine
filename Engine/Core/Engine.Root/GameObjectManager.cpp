@@ -27,7 +27,12 @@ void GameObjectManager::Initialize()
 		currentScene->AddHierarchy(new Camera);
 		currentScene->AddHierarchy(go1);
 
+		Material* material = new Material;
+		{
+			material->SetMesh(FILE_PATH("box.fbx"));
+		}
 		go1->AttachComponent(new Material);
+		
 	}
 }
 

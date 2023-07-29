@@ -1,6 +1,8 @@
 #pragma once
+#pragma comment(lib, "assimp-vc143-mt.lib")
 
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 
 #include <vector>
 #include <list>
@@ -18,14 +20,25 @@
 #include <functional>
 #include <DirectXMath.h>
 #include <memory>
+#include <wrl/client.h>
 
 using namespace DirectX;
+using Microsoft::WRL::ComPtr;
 
 #define FILE_PATH(path_) std::string(SOLUTION_DIR) + path_
 
+// External lib
 #include "json/json.h"
+#include "imgui.h"
+#include "assimp/Importer.hpp"
+#include "assimp/postprocess.h" 
+#include "assimp/scene.h"
+
 #include "types.h"
 #include "LogManager.h"
+#include "ISingleton.h"
+#include "IObjectPool.h"
+#include "IManager.h"
 //#include "WindowManager.h"
 //#include "D3DManager.h"
 //#include "SceneManager.h"

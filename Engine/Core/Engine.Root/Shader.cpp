@@ -2,6 +2,11 @@
 #include "Shader.h"
 
 Shader::Shader(const std::string& vsPath_, const std::string& psPath_)
+	:	_vertexShader(nullptr),
+		_pixelShader(nullptr),
+		_layout(nullptr),
+		_sampleState(nullptr),
+		_matrixBuffer(nullptr)
 {
 }
 
@@ -26,4 +31,12 @@ void Shader::Destroy()
 	_layout = nullptr;
 
 	_sampleState->Release();
+	_sampleState = nullptr;
+
+	_matrixBuffer->Release();
+	_matrixBuffer = nullptr;
+}
+
+void Shader::Load(const std::string& vsFilePath_, const std::string& psFilePath_)
+{
 }

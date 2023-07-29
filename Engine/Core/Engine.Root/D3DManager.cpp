@@ -449,12 +449,12 @@ void D3DManager::Clear()
 	_deviceContext->ClearDepthStencilView(_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
-const ID3D11Device* D3DManager::GetDevice() const
+ID3D11Device* D3DManager::GetDevice() const
 {
 	return _device;
 }
 
-const ID3D11DeviceContext* D3DManager::GetDeviceContext() const
+ID3D11DeviceContext* D3DManager::GetDeviceContext() const
 {
 	return _deviceContext;
 }

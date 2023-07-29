@@ -9,6 +9,7 @@ public:
 
 	virtual void Render();
 	virtual void Destroy();
+	void Load(const std::string& vsFilePath_, const std::string& psFilePath_);
 
 private:
 	ID3D11VertexShader*				_vertexShader;

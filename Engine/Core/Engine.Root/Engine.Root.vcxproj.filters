@@ -86,6 +86,33 @@
     <ClCompile Include="Resource.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="IObjectPool.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISingleton.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="IManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\imgui\imgui.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\imgui\backends\imgui_impl_dx11.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\imgui\imgui_draw.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\imgui\imgui_tables.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Libraries\imgui\imgui_widgets.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -152,6 +179,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IObjectPool.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ISingleton.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

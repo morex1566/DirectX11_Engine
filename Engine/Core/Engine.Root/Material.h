@@ -15,8 +15,15 @@ public:
 	void Render();
 	void Destroy() override;
 
+	void SetMesh(const std::string& filePath_);
+	void SetShader(const std::string& vsFilePath_, const std::string& psFilePath_);
+	void SetTexture(const std::string& filePath_);
+
 private:
-	std::unique_ptr<Mesh>			_mesh;
-	std::unique_ptr<Shader>			_shader;
-	std::unique_ptr<Texture>		_texture;
+	void loadMesh(const aiNode* node_, const aiScene* scene_);
+
+private:
+	std::vector<Mesh*>			_meshs;
+	std::vector<Shader*>		_shaders;
+	std::vector<Texture*>		_textures;
 };

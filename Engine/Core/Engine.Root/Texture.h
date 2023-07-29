@@ -1,15 +1,20 @@
 #pragma once
-#include <d3d11.h>
 
-class Texture
+#include <d3d11.h>
+#include "Resource.h"
+
+class Texture : public Resource
 {
 public:
+	Texture();
 	Texture(const std::string& texturePath_);
-	~Texture();
+	~Texture() override;
 
-	void Destroy();
-	ID3D11ShaderResourceView* GetResource();
+	void Destroy() override;
+
+	ID3D11ShaderResourceView*	GetTextureView();
 
 private:
-	ID3D11ShaderResourceView* _resource;	
+	ComPtr<ID3D11ShaderResourceView>	_textureView;
+
 };
