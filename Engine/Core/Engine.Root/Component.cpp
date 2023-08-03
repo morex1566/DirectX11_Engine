@@ -8,6 +8,13 @@ Component::Component()
 	ComponentManager::Get()._components.emplace_back(this);
 }
 
+Component::Component(GameObject* owner_)
+	: _isDestroyed(false), _isActivated(true)
+{
+	_owner = owner_;
+	ComponentManager::Get()._components.emplace_back(this);
+}
+
 Component::~Component()
 {
 	Component::Destroy();
@@ -21,6 +28,11 @@ bool Component::IsDestroyed()
 bool Component::IsActivated()
 {
 	return _isActivated;
+}
+
+GameObject* Component::GetOwner()
+{
+	return _owner;
 }
 
 void Component::Update()

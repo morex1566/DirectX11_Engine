@@ -4,6 +4,8 @@
 
 #include <DirectXMath.h>
 
+using namespace DirectX;
+
 using byte		= unsigned char;
 using int8		= __int8;
 using int16		= __int16;
@@ -27,7 +29,15 @@ struct MatrixBufferType
 struct LightBufferType
 {
 	DirectX::XMFLOAT4 diffuseColor;
+	DirectX::XMFLOAT4 ambientColor;
+	DirectX::XMFLOAT4 specularColor;
 	DirectX::XMFLOAT3 lightDirection;
+	float			  specularIntensity;
+};
+
+struct CameraBufferType
+{
+	DirectX::XMFLOAT3 cameraPosition;
 	float padding;
 };
 

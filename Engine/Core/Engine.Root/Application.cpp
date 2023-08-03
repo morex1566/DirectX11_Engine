@@ -26,6 +26,11 @@ LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
+void Application::onUpdate()
+{
+	SceneManager::Get().GetCurrentScene()->Update();
+}
+
 void Application::onRender()
 {
 	D3DManager::Get().BeginScene();
@@ -67,7 +72,7 @@ void Application::Update()
 
 	if (!_isExited)
 	{
-		SceneManager::Get().GetCurrentScene()->Update();
+		onUpdate();
 		onRender();
 		onDispose();
 	}
@@ -77,6 +82,8 @@ void Application::Update()
 void Application::Start()
 {
 	WindowManager::Get().ShowWindows();
+
+	SceneManager::Get().GetCurrentScene()->Start();
 
 	_isStarted = true;
 }

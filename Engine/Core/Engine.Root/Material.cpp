@@ -5,12 +5,21 @@
 // TODO : needs to sort
 #include "Mesh.h"
 #include "Shader.h"
+#include "UnlitShader.h"
 #include "Texture.h"
-#include "D3DManager.h"
+#include "DirectionalLight.h"
+#include "SceneManager.h"
+#include "DirectXTex/DirectXTex.h"
+
 
 Material::Material()
 {
-	
+	_albedo = std::make_unique<DirectionalLight>(
+		XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f),
+		XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+		XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+		XMFLOAT3(1.0f, 0.0f, 1.0f)
+	);
 }
 
 Material::~Material()
@@ -27,7 +36,7 @@ void Material::Render()
 
 	for (const auto& shader : _shaders)
 	{
-		shader->Render();
+		shader->Render(this, SceneManager::Get().GetCurrentScene()->GetViewportCamera(), this->GetOwner());
 	}
 }
 
@@ -51,6 +60,26 @@ void Material::Destroy()
 	}
 }
 
+std::vector<Mesh*> Material::GetMeshs()
+{
+	return _meshs;
+}
+
+std::vector<Shader*> Material::GetShaders()
+{
+	return _shaders;
+}
+
+std::vector<Texture*> Material::GetTexture()
+{
+	return _textures;
+}
+
+DirectionalLight* Material::GetAlbedo()
+{
+	return _albedo.get();
+}
+
 void Material::SetMesh(const std::string& filePath_)
 {
 	Assimp::Importer importer;
@@ -70,12 +99,20 @@ void Material::SetMesh(const std::string& filePath_)
 	loadMesh(scene->mRootNode, scene);
 }
 
-void Material::SetShader(const std::string& vsFilePath_, const std::string& psFilePath_)
+void Material::SetShader(const std::string& vsPath_, const std::string& psPath_)
 {
+	Shader* shader = new UnlitShader;
+	shader->ReadShader(vsPath_, psPath_);
+
+	_shaders.push_back(shader);
 }
 
 void Material::SetTexture(const std::string& filePath_)
 {
+	Texture* texture = new Texture;
+	texture->ReadFile(filePath_);
+
+	_textures.push_back(texture);
 }
 
 void Material::loadMesh(const aiNode* node_, const aiScene* scene_)

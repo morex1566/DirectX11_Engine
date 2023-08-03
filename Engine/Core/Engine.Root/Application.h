@@ -27,6 +27,7 @@ private:
 	Application();
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	void onUpdate();
 	void onRender();
 	void onDispose();
 

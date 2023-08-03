@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "Scene.h"
 #include "SceneManager.h"
 #include "GameObjectManager.h"
 #include "ComponentManager.h"
@@ -17,14 +16,48 @@ Scene::~Scene()
 
 void Scene::Start()
 {
+	// Create the viewport camera.
+	{
+		Camera* camera = new Camera;
+		camera->GetTransform()->SetPosition(0, 0, -5);
+
+		_gameObjects.emplace_back(camera);
+		_viewportCamera = camera;
+	}
+
+	// Create the cube.
+	{
+		GameObject* cube = new GameObject;
+		{
+			Material* material = new Material;
+
+			material->SetMesh(FROM_RESOURCE_PATH_TO("box.fbx"));
+			material->SetTexture(FROM_RESOURCE_PATH_TO("box.jpg"));
+			material->SetShader(FROM_RESOURCE_PATH_TO("texture.vs"), FROM_RESOURCE_PATH_TO("texture.ps"));
+
+			cube->AttachComponent(material);
+		}
+
+		_gameObjects.emplace_back(cube);
+		
+	}
 }
 
 void Scene::Update()
 {
+	for (const auto& gameObject : _gameObjects)
+	{
+		for (const auto& component : gameObject->GetComponents())
+		{
+			component->Update();
+		}
+	}
 }
 
 void Scene::Render()
 {
+	_viewportCamera->Render();
+
 	for (const auto& gameObject : _gameObjects)
 	{
 		for (const auto& material : gameObject->GetComponents<Material>())
@@ -53,6 +86,11 @@ bool Scene::IsDestroyed()
 bool Scene::IsActivated()
 {
 	return _isActivated;
+}
+
+Camera* Scene::GetViewportCamera()
+{
+	return _viewportCamera;
 }
 
 GameObject* Scene::AddHierarchy(GameObject* gameObject_)

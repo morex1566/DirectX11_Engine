@@ -1,18 +1,18 @@
 #include "pch.h"
 #include "GameObject.h"
 #include "GameObjectManager.h"
+#include "ComponentManager.h"
 
 GameObject::GameObject()
 	: _Name(std::string()), _parent(nullptr), _isDestroyed(false), _isActivated(true)
 {
 	GameObjectManager::Get()._gameObjects.emplace_back(this);
 
-	_components.emplace_back(new Transform);
+	AttachComponent(new Transform);
 }
 
 GameObject::~GameObject()
 {
-	Destroy();
 }
 
 Component* GameObject::FindComponent(const std::string& name_)
@@ -77,6 +77,7 @@ void GameObject::SetParent(GameObject* gameObject_)
 
 void GameObject::AttachComponent(Component* component_)
 {
+	component_->_owner = this;
 	_components.emplace_back(component_);
 }
 
@@ -94,6 +95,11 @@ void GameObject::DetachComponent(const Component* component_)
 			++it;
 		}
 	}
+}
+
+Transform* GameObject::GetTransform()
+{
+ 	return GetComponent<Transform>();
 }
 
 void GameObject::Destroy()

@@ -4,6 +4,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
+#include <codecvt>
 #include <vector>
 #include <list>
 #include <queue>
@@ -19,13 +20,16 @@
 #include <windows.h>
 #include <functional>
 #include <DirectXMath.h>
+#include <locale>
 #include <memory>
 #include <wrl/client.h>
 
-using namespace DirectX;
 using Microsoft::WRL::ComPtr;
 
-#define FILE_PATH(path_) std::string(SOLUTION_DIR) + path_
+#define FROM_SOLUTION_PATH_TO(path_) std::string(SOLUTION_DIR) + path_
+#define FROM_RESOURCE_PATH_TO(path_) std::string(SOLUTION_DIR) + "Resources\\" + path_
+
+#define RADIAN_CONST 0.0174532925f
 
 // External lib
 #include "json/json.h"
@@ -65,3 +69,10 @@ public:
 	static float GET_ENGINE_SETTING_WINDOW_SCREENNEAR();
 
 };
+
+inline std::wstring GetWString(const std::string& string_)
+{
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+
+	return converter.from_bytes(string_);
+}

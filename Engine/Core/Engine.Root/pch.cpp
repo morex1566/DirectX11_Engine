@@ -4,7 +4,7 @@ int Config::GET_ENGINE_SETTING_WINDOW_WIDTH()
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -17,7 +17,7 @@ int Config::SET_ENGINE_SETTING_WINDOW_WIDTH(int value)
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -30,7 +30,7 @@ int Config::SET_ENGINE_SETTING_WINDOW_WIDTH(int value)
 	Json::StyledWriter writer;
 	std::string jsonString = writer.write(root);
 	std::ofstream jsonOFile;
-	jsonOFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonOFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 
 	jsonOFile << jsonString;
 
@@ -44,7 +44,7 @@ int Config::GET_ENGINE_SETTING_WINDOW_HEIGHT()
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -57,7 +57,7 @@ int Config::SET_ENGINE_SETTING_WINDOW_HEIGHT(int value)
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -70,7 +70,7 @@ int Config::SET_ENGINE_SETTING_WINDOW_HEIGHT(int value)
 	Json::StyledWriter writer;
 	std::string jsonString = writer.write(root);
 	std::ofstream jsonOFile;
-	jsonOFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonOFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 
 	jsonOFile << jsonString;
 
@@ -84,7 +84,7 @@ int Config::GET_ENGINE_SETTING_WINDOW_VSYNC()
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -97,7 +97,7 @@ int Config::GET_ENGINE_SETTING_WINDOW_FULLSCREEN()
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -110,7 +110,7 @@ float Config::GET_ENGINE_SETTING_WINDOW_SCREENDEPTH()
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 
@@ -123,7 +123,7 @@ float Config::GET_ENGINE_SETTING_WINDOW_SCREENNEAR()
 {
 	// Read json file.
 	std::ifstream jsonIFile;
-	jsonIFile.open(FILE_PATH("config.json"), std::ios_base::binary);
+	jsonIFile.open(FROM_SOLUTION_PATH_TO("config.json"), std::ios_base::binary);
 	Json::Value root;
 	jsonIFile >> root;
 

@@ -133,3 +133,8 @@ void Mesh::ReadIndices(const aiMesh* mesh_, const aiScene* scene_)
 		return;
 	}
 }
+
+int32 Mesh::GetIndexCount()
+{
+	return _indexCount;
+}

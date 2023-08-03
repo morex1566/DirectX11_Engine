@@ -2,6 +2,8 @@
 
 #include "GameObject.h"
 #include "Camera.h"
+#include "Light.h"
+#include "DirectionalLight.h"
 
 class GameObjectManager
 {

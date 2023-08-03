@@ -1,6 +1,7 @@
 #pragma once
 
 class GameObject;
+class Camera;
 
 class Scene
 {
@@ -18,6 +19,7 @@ public:
 	bool IsDestroyed();
 	bool IsActivated();
 
+	Camera* GetViewportCamera();
 	GameObject* AddHierarchy(GameObject* gameObject_);
 
 public:
@@ -25,7 +27,8 @@ public:
 
 private:
 	std::vector<GameObject*>					_gameObjects;
+	Camera*										_viewportCamera;
 	bool										_isDestroyed;
 	bool										_isActivated;
-
+	
 };

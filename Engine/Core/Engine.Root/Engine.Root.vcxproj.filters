@@ -74,7 +74,7 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Unlit.cpp">
+    <ClCompile Include="UnlitShader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
@@ -112,6 +112,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Libraries\imgui\imgui_widgets.cpp">
       <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionalLight.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +178,7 @@
     <ClInclude Include="Shader.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Unlit.h">
+    <ClInclude Include="UnlitShader.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
@@ -188,6 +197,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="IManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionalLight.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
