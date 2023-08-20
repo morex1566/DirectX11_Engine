@@ -6,10 +6,10 @@ public:
 	IManageable();
 	virtual ~IManageable();
 
-	void Destroy();
-	void Disable();
-	bool IsDestroyed();
-	bool IsDisabled();
+	virtual void		Destroy();
+	void				Disable();
+	bool				IsDestroyed();
+	bool				IsDisabled();
 
 private:
 	bool _isEnabled;

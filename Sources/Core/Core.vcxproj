@@ -198,6 +198,8 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="D3D11Manager.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="IManageable.h" />
     <ClInclude Include="IManager.h" />
     <ClInclude Include="ISingleton.h" />
@@ -278,6 +280,8 @@
     </ClCompile>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="D3D11Manager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="IManageable.cpp" />
     <ClCompile Include="IManager.cpp" />
     <ClCompile Include="ISingleton.cpp" />

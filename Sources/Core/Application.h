@@ -9,6 +9,7 @@ public:
 	void Initialize(const HINSTANCE& hInstance_);
 	void Update();
 	void ClearMemory();
+	void Dispose();
 
 	void Shutdown();
 	bool IsShutdowned();

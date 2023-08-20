@@ -5,6 +5,7 @@
 #include "WindowManager.h"
 #include "D3D11Manager.h"
 #include "SceneManager.h"
+#include "GameObjectManager.h"
 
 Application::~Application()
 {
@@ -72,7 +73,7 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		windowManager.SetAppWindow(appWindow);
 	}
 
-	// Create the D3D11Manager.
+	// Initialize the D3D11Manager.
 	D3D11Manager& d3d11Manager = D3D11Manager::GetInstance();
 	{
 		d3d11Manager.Initialize(
@@ -86,7 +87,7 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		);
 	}
 
-	// Create the SceneManager.
+	// Initialize the SceneManager.
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	{
 		sceneManager.Initialize();
@@ -94,6 +95,27 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		Scene* defaultScene = sceneManager.Create();
 
 		sceneManager.LoadScene(defaultScene);
+	}
+
+	// Initialize the GameobjectManager.
+	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
+	{
+		gameObjectManager.Initialize();
+
+		GameObject* go1 = gameObjectManager.Create();
+		GameObject* go2 = gameObjectManager.Create();
+		GameObject* go3 = gameObjectManager.Create();
+		GameObject* go4 = gameObjectManager.Create();
+
+		Scene* currScene = sceneManager.GetCurrentScene();
+		{
+			currScene->AddHierarchy(go1);
+			currScene->AddHierarchy(go2);
+		}
+
+		Scene* nextScene = sceneManager.Create();
+
+		sceneManager.LoadScene(nextScene);
 	}
 }
 
@@ -116,13 +138,30 @@ void Application::Update()
 
 		d3d11Manager.EndScene();
 	}
+
+	// Dispatch.
+	Dispose();
 }
 
 void Application::ClearMemory()
 {
+	GameObjectManager::GetInstance().ClearMemory();
 	SceneManager::GetInstance().ClearMemory();
 	D3D11Manager::GetInstance().ClearMemory();
 	WindowManager::GetInstance().ClearMemory();
+}
+
+void Application::Dispose()
+{
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	{
+		sceneManager.Dispose();
+	}
+
+	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
+	{
+		gameObjectManager.Dispose();
+	}
 }
 
 void Application::Shutdown()

@@ -8,11 +8,11 @@ public:
 	SceneManager();
 	~SceneManager() override;
 
+	Scene* GetCurrentScene();
 	Scene* LoadScene(const std::string& name_);
 	Scene* LoadScene(const Scene* scene_);
 	Scene* FindScene(const std::string& name_);
 	Scene* FindScene(const Scene* scene_);
-
 
 private:
 	Scene* _currScene;

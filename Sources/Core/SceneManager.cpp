@@ -11,12 +11,21 @@ SceneManager::~SceneManager()
 	
 }
 
+Scene* SceneManager::GetCurrentScene()
+{
+	return _currScene;
+}
+
 Scene* SceneManager::LoadScene(const std::string& name_)
 {
 	Scene* loadedScene = FindScene(name_);
 
 	if (loadedScene)
 	{
+		if (_currScene != nullptr)
+		{
+			_currScene->Destroy();
+		}
 		_currScene = loadedScene;
 	}
 	else
@@ -33,6 +42,10 @@ Scene* SceneManager::LoadScene(const Scene* scene_)
 
 	if (loadedScene)
 	{
+		if (_currScene != nullptr)
+		{
+			_currScene->Destroy();
+		}
 		_currScene = loadedScene;
 	}
 	else

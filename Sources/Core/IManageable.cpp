@@ -9,8 +9,7 @@ IManageable::IManageable()
 
 IManageable::~IManageable()
 {
-	_isEnabled = false;
-	_isDestroyed = true;
+	IManageable::Destroy();
 }
 
 void IManageable::Destroy()
