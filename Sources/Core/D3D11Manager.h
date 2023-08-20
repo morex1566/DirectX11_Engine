@@ -9,6 +9,9 @@
 class D3D11Manager : public ISingleton<D3D11Manager>
 {
 public:
+	D3D11Manager();
+	~D3D11Manager() override;
+
 	bool Initialize(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear);
 	void Update();
 	void ClearMemory();

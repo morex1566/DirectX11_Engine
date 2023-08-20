@@ -48,6 +48,12 @@
     <ClInclude Include="D3D11Manager.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -105,6 +111,12 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="D3D11Manager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

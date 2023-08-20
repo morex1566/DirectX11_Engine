@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "WindowManager.h"
 #include "D3D11Manager.h"
+#include "SceneManager.h"
 
 Application::~Application()
 {
@@ -55,6 +56,8 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	// Create the application's window.
 	WindowManager& windowManager = WindowManager::GetInstance();
 	{
+		windowManager.Initialize();
+
 		Window* appWindow = windowManager.Create(
 			_hInstance,
 			"Sample Window Class",
@@ -82,20 +85,43 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 			0.3f
 		);
 	}
+
+	// Create the SceneManager.
+	SceneManager& sceneManager = SceneManager::GetInstance();
+	{
+		sceneManager.Initialize();
+
+		Scene* defaultScene = sceneManager.Create();
+
+		sceneManager.LoadScene(defaultScene);
+	}
 }
 
 void Application::Update()
 {
-	MSG msg;
-	while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+	// Event.
 	{
-		::TranslateMessage(&msg);
-		::DispatchMessage(&msg);
+		MSG msg;
+		while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+		{
+			::TranslateMessage(&msg);
+			::DispatchMessage(&msg);
+		}
+	}
+
+	// Rendering.
+	D3D11Manager& d3d11Manager = D3D11Manager::GetInstance();
+	{
+		d3d11Manager.BeginScene(0.14f, 0.14f, 0.14f, 1.0f);
+
+		d3d11Manager.EndScene();
 	}
 }
 
 void Application::ClearMemory()
 {
+	SceneManager::GetInstance().ClearMemory();
+	D3D11Manager::GetInstance().ClearMemory();
 	WindowManager::GetInstance().ClearMemory();
 }
 

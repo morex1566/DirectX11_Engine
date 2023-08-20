@@ -24,10 +24,11 @@
 
 #include "json/json.h"
 
+using namespace DirectX;
+using namespace std;
+
 #include "Types.h"
 #include "Utils.h"
 #include "ISingleton.h"
 #include "IManageable.h"
 #include "IManager.h"
-
-using namespace DirectX;

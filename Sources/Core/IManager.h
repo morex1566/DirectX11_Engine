@@ -16,7 +16,7 @@ public:
 	void								Dispose();
 	
 protected:
-	std::vector<std::shared_ptr<T>> _windows;
+	std::vector<std::shared_ptr<T>> _objects;
 };
 
 template <class T, class T0>
@@ -44,10 +44,10 @@ void IManager<T, T0>::Update()
 template <class T, class T0>
 void IManager<T, T0>::ClearMemory()
 {
-	for (auto it = _windows.begin(); it != _windows.end();)
+	for (auto it = _objects.begin(); it != _objects.end();)
 	{
 		it->reset();
-		it = _windows.erase(it);
+		it = _objects.erase(it);
 	}
 }
 
@@ -56,7 +56,7 @@ template <typename... Args>
 T* IManager<T, T0>::Create(Args&&... args)
 {
 	std::shared_ptr<T> object = std::make_shared<T>(std::forward<Args>(args)...);
-	_windows.push_back(object);
+	_objects.push_back(object);
 
 	return object.get();
 }
@@ -64,14 +64,14 @@ T* IManager<T, T0>::Create(Args&&... args)
 template <class T, class T0>
 void IManager<T, T0>::Dispose()
 {
-	for (auto it = _windows.begin(); it != _windows.end();)
+	for (auto it = _objects.begin(); it != _objects.end();)
 	{
 		IManageable* curr = it->get();
 
 		if (curr->IsDestroyed())
 		{
 			it->reset();
-			it = _windows.erase(it);
+			it = _objects.erase(it);
 		}
 		else
 		{

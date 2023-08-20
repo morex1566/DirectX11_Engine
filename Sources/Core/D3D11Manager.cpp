@@ -1,6 +1,28 @@
 #include "pch.h"
 #include "D3D11Manager.h"
 
+D3D11Manager::D3D11Manager(): m_vsync_enabled(false),
+							  m_videoCardMemory(0),
+							  m_videoCardDescription{},
+                              m_swapChain(nullptr),
+							  m_device(nullptr),
+                              m_deviceContext(nullptr),
+                              m_renderTargetView(nullptr),
+                              m_depthStencilBuffer(nullptr),
+                              m_depthStencilState(nullptr),
+                              m_depthStencilView(nullptr),
+                              m_rasterState(nullptr),
+                              m_projectionMatrix(),
+                              m_worldMatrix(), m_orthoMatrix(),
+                              m_viewport()
+{
+}
+
+D3D11Manager::~D3D11Manager()
+{
+	ClearMemory();
+}
+
 bool D3D11Manager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear)
 {
 	HRESULT result;
