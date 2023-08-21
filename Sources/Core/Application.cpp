@@ -107,11 +107,13 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		GameObject* go2 = gameObjectManager.Create();
 		GameObject* go3 = gameObjectManager.Create();
 		GameObject* go4 = gameObjectManager.Create();
+		Light*		light1 = gameObjectManager.Create<Light>();
 
 		Scene* currScene = sceneManager.GetCurrentScene();
 		{
 			currScene->AddHierarchy(go1);
 			currScene->AddHierarchy(go2);
+			currScene->AddHierarchy(light1);
 		}
 
 		Scene* nextScene = sceneManager.Create();
