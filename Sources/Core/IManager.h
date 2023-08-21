@@ -12,7 +12,11 @@ public:
 	virtual void Update();
 	virtual void ClearMemory();
 
-	template <typename... Args> T*		Create(Args&&... args);
+	template <class C, class = IsBaseOf<C, T>, typename... Args>
+	C*		Create(Args&&... args_);
+	template <typename... Args>
+	T*		Create(Args&&... args_);
+
 	void								Dispose();
 	
 protected:
@@ -52,10 +56,20 @@ void IManager<T, T0>::ClearMemory()
 }
 
 template <class T, class T0>
-template <typename... Args>
-T* IManager<T, T0>::Create(Args&&... args)
+template <class C, class, typename ... Args>
+C* IManager<T, T0>::Create(Args&&... args_)
 {
-	std::shared_ptr<T> object = std::make_shared<T>(std::forward<Args>(args)...);
+	std::shared_ptr<C> object = std::make_shared<C>(std::forward<Args>(args_)...);
+	_objects.push_back(object);
+
+	return object.get();
+}
+
+template <class T, class T0>
+template <typename ... Args>
+T* IManager<T, T0>::Create(Args&&... args_)
+{
+	std::shared_ptr<T> object = std::make_shared<T>(std::forward<Args>(args_)...);
 	_objects.push_back(object);
 
 	return object.get();

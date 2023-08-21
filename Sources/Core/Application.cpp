@@ -6,6 +6,7 @@
 #include "D3D11Manager.h"
 #include "SceneManager.h"
 #include "GameObjectManager.h"
+#include "ComponentManager.h"
 
 Application::~Application()
 {
@@ -117,6 +118,14 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 
 		sceneManager.LoadScene(nextScene);
 	}
+
+	// Initialize the ComponentManager.
+	ComponentManager& componentManager = ComponentManager::GetInstance();
+	{
+		componentManager.Initialize();
+
+		Model* model1 = componentManager.Create<Model>();
+	}
 }
 
 void Application::Update()
@@ -161,6 +170,11 @@ void Application::Dispose()
 	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
 	{
 		gameObjectManager.Dispose();
+	}
+
+	ComponentManager& componentManager = ComponentManager::GetInstance();
+	{
+		componentManager.Dispose();
 	}
 }
 
