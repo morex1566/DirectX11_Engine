@@ -125,6 +125,16 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		componentManager.Initialize();
 
 		Model* model1 = componentManager.Create<Model>();
+
+		model1->Initialize(
+			d3d11Manager.GetDevice(),
+			d3d11Manager.GetDeviceContext(),
+			windowManager.GetAppWindow()->GetHWnd(),
+			FROM_SOLUTION_PATH_TO("Resources/box.fbx"),
+			FROM_SOLUTION_PATH_TO("Resources/stone.jpg"),
+			FROM_SOLUTION_PATH_TO("Shaders/light.vs"),
+			FROM_SOLUTION_PATH_TO("Shaders/light.ps")
+		);
 	}
 }
 

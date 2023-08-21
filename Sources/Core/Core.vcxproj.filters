@@ -78,6 +78,9 @@
     <ClInclude Include="ComponentManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -165,6 +168,27 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="ComponentManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\DirectXTex\DDSTextureLoader9.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\DirectXTex\DDSTextureLoader11.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\DirectXTex\DDSTextureLoader12.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\DirectXTex\WICTextureLoader9.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\DirectXTex\WICTextureLoader11.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\DirectXTex\WICTextureLoader12.cpp">
+      <Filter>Externals</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

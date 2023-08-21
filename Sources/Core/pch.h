@@ -19,13 +19,22 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <d3d11.h>
+#include <dxgi.h>
+#include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include <DirectXTex/DirectXTex.h>
 #include <Windows.h>
+#include <wrl/client.h>
 
 #include "json/json.h"
+#include "assimp/Importer.hpp"
+#include "assimp/postprocess.h"
+#include "assimp/scene.h"
 
 using namespace DirectX;
 using namespace std;
+using namespace Microsoft::WRL;
 
 #include "Types.h"
 #include "Utils.h"

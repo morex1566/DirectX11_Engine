@@ -1,7 +1,7 @@
 #pragma once
 
 #define FROM_SOLUTION_PATH_TO(path_) std::string(SOLUTION_DIR) + path_
-#define RADIAN_CONST 0.0174532925f
+#define DEGREE_TO_RADIAN 0.0174532925f
 
 template <typename Derived, typename Base> using IsNotBaseOf	= std::enable_if_t<!std::is_base_of<Base, Derived>::value, Derived>;
 template <typename Derived, typename Base> using IsBaseOf		= std::enable_if_t<std::is_base_of<Base, Derived>::value, Derived>;
