@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "Model.h"
 
+#include "Light.h"
+
 void Model::Initialize(ID3D11Device* device_, ID3D11DeviceContext* deviceContext_, HWND hWnd_,
-					   const std::string& meshFilePath_, const std::string& textureFilePath_, const std::string& vsFilePath_, const std::string& psFilePath_)
+                       const std::string& meshFilePath_, const std::string& textureFilePath_, const std::string& vsFilePath_, const std::string& psFilePath_)
 {
 	// Clear all of member before initialization.
 	ClearMemory();
@@ -19,6 +21,23 @@ void Model::Initialize(ID3D11Device* device_, ID3D11DeviceContext* deviceContext
 		LoadMesh(meshFilePath_);
 		LoadTexture(textureFilePath_);
 		LoadShader(vsFilePath_, psFilePath_);
+	}
+}
+
+void Model::Render(const XMMATRIX& worldMatrix_, const XMMATRIX& viewMatrix_, const XMMATRIX& projectionMatrix_, Light* light_)
+{
+	for (auto& mesh : _meshes)
+	{
+		mesh.SendBufferToAssembly();
+
+		_shader->Render(_deviceContext,
+						_indexCount,
+						worldMatrix_, viewMatrix_, projectionMatrix_,
+						_texture->GetShaderResourceView(),
+						light_->GetDirection(),
+						light_->GetDiffuseColor()
+		);
+
 	}
 }
 

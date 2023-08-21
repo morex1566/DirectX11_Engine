@@ -5,6 +5,8 @@
 #include "Texture.h"
 #include "Shader.h"
 
+class Light;
+
 class Model : public Component
 {
 public:
@@ -15,6 +17,7 @@ public:
 	void Initialize(ID3D11Device* device_, ID3D11DeviceContext* deviceContext_, HWND hWnd_,
 					const std::string& meshFilePath_, const std::string& textureFilePath_, const std::string& vsFilePath_, const std::string& psFilePath_);
 
+	void Render(const XMMATRIX& worldMatrix_, const XMMATRIX& viewMatrix_, const XMMATRIX& projectionMatrix_, Light* light_);
 	void ClearMemory();
 	void ClearMeshes();
 	void ClearTexture();

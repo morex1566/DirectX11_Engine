@@ -92,9 +92,8 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	{
 		sceneManager.Initialize();
-
 		Scene* defaultScene = sceneManager.Create();
-
+		defaultScene->SetName("Untitled");
 		sceneManager.LoadScene(defaultScene);
 	}
 
@@ -102,42 +101,53 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
 	{
 		gameObjectManager.Initialize();
-
-		GameObject* go1 = gameObjectManager.Create();
-		GameObject* go2 = gameObjectManager.Create();
-		GameObject* go3 = gameObjectManager.Create();
-		GameObject* go4 = gameObjectManager.Create();
-		Light*		light1 = gameObjectManager.Create<Light>();
-
-		Scene* currScene = sceneManager.GetCurrentScene();
-		{
-			currScene->AddHierarchy(go1);
-			currScene->AddHierarchy(go2);
-			currScene->AddHierarchy(light1);
-		}
-
-		Scene* nextScene = sceneManager.Create();
-
-		sceneManager.LoadScene(nextScene);
 	}
+
+	GameObject* go1 = gameObjectManager.Create();
+	go1->SetName("go1");
+	GameObject* go2 = gameObjectManager.Create();
+	go2->SetName("go2");
+
+	Camera* camera = gameObjectManager.Create<Camera>();
+	{
+		camera->SetPosition(0.0f, 0.0f, -15.0f);
+		_camera = std::make_shared<Camera>(*camera);
+	}
+
+	Light* light1 = gameObjectManager.Create<Light>();
+	{
+		light1->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+		light1->SetDirection(0.0f, 0.0f, 1.0f);
+	}
+
+	Scene* currScene = sceneManager.GetCurrentScene();
+	{
+		currScene->AddHierarchy(go1);
+		currScene->AddHierarchy(go2);
+		currScene->SetEnviromentLight(light1);
+	}
+
+	sceneManager.LoadScene(currScene);
 
 	// Initialize the ComponentManager.
 	ComponentManager& componentManager = ComponentManager::GetInstance();
 	{
 		componentManager.Initialize();
-
-		Model* model1 = componentManager.Create<Model>();
-
-		model1->Initialize(
-			d3d11Manager.GetDevice(),
-			d3d11Manager.GetDeviceContext(),
-			windowManager.GetAppWindow()->GetHWnd(),
-			FROM_SOLUTION_PATH_TO("Resources/box.fbx"),
-			FROM_SOLUTION_PATH_TO("Resources/stone.jpg"),
-			FROM_SOLUTION_PATH_TO("Shaders/light.vs"),
-			FROM_SOLUTION_PATH_TO("Shaders/light.ps")
-		);
 	}
+
+	Model* model1 = componentManager.Create<Model>();
+
+	model1->Initialize(
+		d3d11Manager.GetDevice(),
+		d3d11Manager.GetDeviceContext(),
+		windowManager.GetAppWindow()->GetHWnd(),
+		FROM_SOLUTION_PATH_TO("Resources/box.fbx"),
+		FROM_SOLUTION_PATH_TO("Resources/stone.jpg"),
+		FROM_SOLUTION_PATH_TO("Shaders/light.vs"),
+		FROM_SOLUTION_PATH_TO("Shaders/light.ps")
+	);
+
+	go1->AttachComponent(model1);
 }
 
 void Application::Update()
@@ -156,6 +166,22 @@ void Application::Update()
 	D3D11Manager& d3d11Manager = D3D11Manager::GetInstance();
 	{
 		d3d11Manager.BeginScene(0.14f, 0.14f, 0.14f, 1.0f);
+
+		_camera->Render();
+
+		// Render objects in scene hierarchy.
+		Scene* currScene = SceneManager::GetInstance().GetCurrentScene();
+		{
+			for (auto& gameObject : currScene->GetHierarchy())
+			{
+				std::vector<Model*> models = gameObject->GetComponents<Model>();
+				for (auto& model : models)
+				{
+					model->Render(d3d11Manager.GetWorldMatrix(), _camera->GetViewMatrix(), d3d11Manager.GetProjectionMatrix(), 
+								  currScene->GetEnviromentLight());
+				}
+			}
+		}
 
 		d3d11Manager.EndScene();
 	}

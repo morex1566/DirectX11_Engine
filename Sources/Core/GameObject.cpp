@@ -2,24 +2,6 @@
 #include "GameObject.h"
 #include "Component.h"
 
-GameObject::GameObject()
-{
-}
-
-GameObject::GameObject(const GameObject& gameObject_)
-	: IManageable(gameObject_)
-{
-}
-
-GameObject::GameObject(const GameObject&& gameObject_) noexcept
-	: IManageable(gameObject_)
-{
-}
-
-GameObject::~GameObject()
-{
-}
-
 void GameObject::Destroy()
 {
 	IManageable::Destroy();
@@ -32,7 +14,7 @@ void GameObject::Destroy()
 
 Component* GameObject::AttachComponent(Component* component_)
 {
-	_components.push_back(shared_ptr<Component>(component_));
+	_components.push_back(std::make_shared<Component>(*component_));
 
 	return _components.back().get();
 }
@@ -51,4 +33,14 @@ void GameObject::DetachComponent(const Component* component_)
 			++it;
 		}
 	}
+}
+
+std::string GameObject::GetName()
+{
+	return _name;
+}
+
+void GameObject::SetName(const std::string& name_)
+{
+	_name = name_;
 }

@@ -5,10 +5,9 @@ class Component;
 class GameObject : public IManageable
 {
 public:
-	GameObject();
-	GameObject(const GameObject& gameObject_);
-	GameObject(const GameObject&& gameObject_) noexcept;
-	~GameObject() override;
+	GameObject()							= default;
+	GameObject(const GameObject&)			= default;
+	~GameObject() override					= default;
 
 	void Destroy() override;
 
@@ -18,9 +17,11 @@ public:
 	T*							GetComponent();
 	template <class T, class = IsBaseOf<T, Component>>
 	std::vector<T*>				GetComponents();
-
+	std::string					GetName();
+	void						SetName(const std::string& name_);
 private:
-	std::vector<std::shared_ptr<Component>> _components;
+	std::string									_name;
+	std::vector<std::shared_ptr<Component>>		_components;
 };
 
 template <class T, class>

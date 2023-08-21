@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GameObjectManager.h"
+
 class Application : public ISingleton<Application>
 {
 public:
@@ -20,6 +22,7 @@ private:
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 private:
+	std::shared_ptr<Camera>		_camera;
 	HINSTANCE					_hInstance;
 	bool						_isShutdowned;
 };
