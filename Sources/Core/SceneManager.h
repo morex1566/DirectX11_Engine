@@ -8,13 +8,11 @@ public:
 	SceneManager();
 	~SceneManager() override;
 
-	Scene* GetCurrentScene();
-	Scene* LoadScene(const std::string& name_);
-	Scene* LoadScene(const Scene* scene_);
-	Scene* FindScene(const std::string& name_);
-	Scene* FindScene(const Scene* scene_);
+	std::shared_ptr<Scene> GetCurrentScene();
+	std::shared_ptr<Scene> LoadScene(const std::string& name_);
+	std::shared_ptr<Scene> FindScene(const std::string& name_);
 
 private:
-	Scene* _currScene;
+	std::shared_ptr<Scene> _currScene;
 };
 

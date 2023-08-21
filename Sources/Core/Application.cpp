@@ -60,7 +60,7 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	{
 		windowManager.Initialize();
 
-		Window* appWindow = windowManager.Create(
+		std::shared_ptr<Window> appWindow = windowManager.Create(
 			_hInstance,
 			"Sample Window Class",
 			"Engine.exe",
@@ -92,9 +92,9 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	SceneManager& sceneManager = SceneManager::GetInstance();
 	{
 		sceneManager.Initialize();
-		Scene* defaultScene = sceneManager.Create();
+		std::shared_ptr<Scene> defaultScene = sceneManager.Create();
 		defaultScene->SetName("Untitled");
-		sceneManager.LoadScene(defaultScene);
+		sceneManager.LoadScene("Untitled");
 	}
 
 	// Initialize the GameobjectManager.
@@ -103,31 +103,30 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		gameObjectManager.Initialize();
 	}
 
-	GameObject* go1 = gameObjectManager.Create();
+	auto go1 = gameObjectManager.Create();
 	go1->SetName("go1");
-	GameObject* go2 = gameObjectManager.Create();
+	auto go2 = gameObjectManager.Create();
 	go2->SetName("go2");
 
-	Camera* camera = gameObjectManager.Create<Camera>();
+	auto camera = gameObjectManager.Create<Camera>();
 	{
 		camera->SetPosition(0.0f, 0.0f, -15.0f);
-		_camera = std::make_shared<Camera>(*camera);
+		_camera = camera;
 	}
 
-	Light* light1 = gameObjectManager.Create<Light>();
+
+	auto light1 = gameObjectManager.Create<Light>();
 	{
 		light1->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
 		light1->SetDirection(0.0f, 0.0f, 1.0f);
 	}
 
-	Scene* currScene = sceneManager.GetCurrentScene();
+	auto currScene = sceneManager.GetCurrentScene();
 	{
 		currScene->AddHierarchy(go1);
 		currScene->AddHierarchy(go2);
 		currScene->SetEnviromentLight(light1);
 	}
-
-	sceneManager.LoadScene(currScene);
 
 	// Initialize the ComponentManager.
 	ComponentManager& componentManager = ComponentManager::GetInstance();
@@ -135,17 +134,18 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 		componentManager.Initialize();
 	}
 
-	Model* model1 = componentManager.Create<Model>();
-
-	model1->Initialize(
-		d3d11Manager.GetDevice(),
-		d3d11Manager.GetDeviceContext(),
-		windowManager.GetAppWindow()->GetHWnd(),
-		FROM_SOLUTION_PATH_TO("Resources/box.fbx"),
-		FROM_SOLUTION_PATH_TO("Resources/stone.jpg"),
-		FROM_SOLUTION_PATH_TO("Shaders/light.vs"),
-		FROM_SOLUTION_PATH_TO("Shaders/light.ps")
-	);
+	auto model1 = componentManager.Create<Model>();
+	{
+		model1->Initialize(
+			d3d11Manager.GetDevice(),
+			d3d11Manager.GetDeviceContext(),
+			windowManager.GetAppWindow()->GetHWnd(),
+			FROM_SOLUTION_PATH_TO("Resources/box.fbx"),
+			FROM_SOLUTION_PATH_TO("Resources/stone.jpg"),
+			FROM_SOLUTION_PATH_TO("Shaders/light.vs"),
+			FROM_SOLUTION_PATH_TO("Shaders/light.ps")
+		);
+	}
 
 	go1->AttachComponent(model1);
 }
@@ -170,11 +170,11 @@ void Application::Update()
 		_camera->Render();
 
 		// Render objects in scene hierarchy.
-		Scene* currScene = SceneManager::GetInstance().GetCurrentScene();
+		std::shared_ptr<Scene> currScene = SceneManager::GetInstance().GetCurrentScene();
 		{
 			for (auto& gameObject : currScene->GetHierarchy())
 			{
-				std::vector<Model*> models = gameObject->GetComponents<Model>();
+				std::vector<std::shared_ptr<Model>> models = gameObject->GetComponents<Model>();
 				for (auto& model : models)
 				{
 					model->Render(d3d11Manager.GetWorldMatrix(), _camera->GetViewMatrix(), d3d11Manager.GetProjectionMatrix(), 

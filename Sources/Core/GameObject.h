@@ -11,25 +11,25 @@ public:
 
 	void Destroy() override;
 
-	Component*					AttachComponent(Component* component_);
-	void						DetachComponent(const Component* component_);
+	std::shared_ptr<Component>		AttachComponent(const std::shared_ptr<Component>& component_);
+	void							DetachComponent(const std::shared_ptr<Component>& component_);
 	template <class T, class = IsBaseOf<T, Component>>
-	T*							GetComponent();
+	std::shared_ptr<T>				GetComponent();
 	template <class T, class = IsBaseOf<T, Component>>
-	std::vector<T*>				GetComponents();
-	std::string					GetName();
-	void						SetName(const std::string& name_);
+	std::vector<std::shared_ptr<T>>	GetComponents();
+	std::string						GetName();
+	void							SetName(const std::string& name_);
 private:
 	std::string									_name;
 	std::vector<std::shared_ptr<Component>>		_components;
 };
 
 template <class T, class>
-T* GameObject::GetComponent()
+std::shared_ptr<T> GameObject::GetComponent()
 {
 	for (auto& component : _components)
 	{
-		if (T* rc = dynamic_cast<T*>(component.get()))
+		if (std::shared_ptr<T> rc = std::dynamic_pointer_cast<T>(component))
 		{
 			return rc;
 		}
@@ -39,13 +39,13 @@ T* GameObject::GetComponent()
 }
 
 template <class T, class>
-std::vector<T*> GameObject::GetComponents()
+std::vector<std::shared_ptr<T>> GameObject::GetComponents()
 {
-	std::vector<T*> rcv;
+	std::vector<std::shared_ptr<T>> rcv;
 
 	for (auto& component : _components)
 	{
-		if (T* rc = dynamic_cast<T*>(component.get()))
+		if (std::shared_ptr<T> rc = std::dynamic_pointer_cast<T>(component))
 		{
 			rcv.push_back(rc);
 		}

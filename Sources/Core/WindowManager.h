@@ -8,10 +8,10 @@ public:
 	WindowManager();
 	~WindowManager() override;
 
-	void SetAppWindow(Window* window_);
+	void SetAppWindow(const std::shared_ptr<Window>& window_);
 	// TODO : Return Window* is quite dangerous. 
-	Window* GetAppWindow();
+	std::shared_ptr<Window> GetAppWindow();
 
 private:
-	Window* _appWindow;
+	std::shared_ptr<Window> _appWindow;
 };

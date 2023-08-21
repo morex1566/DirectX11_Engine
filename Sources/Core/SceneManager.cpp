@@ -8,17 +8,16 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	
 }
 
-Scene* SceneManager::GetCurrentScene()
+std::shared_ptr<Scene> SceneManager::GetCurrentScene()
 {
 	return _currScene;
 }
 
-Scene* SceneManager::LoadScene(const std::string& name_)
+std::shared_ptr<Scene> SceneManager::LoadScene(const std::string& name_)
 {
-	Scene* loadedScene = FindScene(name_);
+	std::shared_ptr<Scene> loadedScene = FindScene(name_);
 
 	if (loadedScene)
 	{
@@ -28,54 +27,17 @@ Scene* SceneManager::LoadScene(const std::string& name_)
 		}
 		_currScene = loadedScene;
 	}
-	else
-	{
-		
-	}
 
 	return _currScene;
 }
 
-Scene* SceneManager::LoadScene(const Scene* scene_)
-{
-	Scene* loadedScene = FindScene(scene_);
-
-	if (loadedScene)
-	{
-		if (_currScene != nullptr)
-		{
-			_currScene->Destroy();
-		}
-		_currScene = loadedScene;
-	}
-	else
-	{
-
-	}
-
-	return _currScene;
-}
-
-Scene* SceneManager::FindScene(const std::string& name_)
+std::shared_ptr<Scene> SceneManager::FindScene(const std::string& name_)
 {
 	for (auto& scene : _objects)
 	{
 		if (scene->GetName() == name_)
 		{
-			return scene.get();
-		}
-	}
-
-	return nullptr;
-}
-
-Scene* SceneManager::FindScene(const Scene* scene_)
-{
-	for (auto& scene : _objects)
-	{
-		if (scene.get() == scene_)
-		{
-			return scene.get();
+			return scene;
 		}
 	}
 

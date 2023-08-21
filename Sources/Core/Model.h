@@ -17,15 +17,15 @@ public:
 	void Initialize(ID3D11Device* device_, ID3D11DeviceContext* deviceContext_, HWND hWnd_,
 					const std::string& meshFilePath_, const std::string& textureFilePath_, const std::string& vsFilePath_, const std::string& psFilePath_);
 
-	void Render(const XMMATRIX& worldMatrix_, const XMMATRIX& viewMatrix_, const XMMATRIX& projectionMatrix_, Light* light_);
+	void Render(const XMMATRIX& worldMatrix_, const XMMATRIX& viewMatrix_, const XMMATRIX& projectionMatrix_, const std::shared_ptr<Light>& light_);
 	void ClearMemory();
 	void ClearMeshes();
 	void ClearTexture();
 	void ClearShader();
 
-	std::vector<Mesh>	GetMeshes();
-	Texture*			GetTexture();
-	Shader*				GetShader();
+	std::vector<Mesh>					GetMeshes();
+	std::unique_ptr<Texture>&			GetTexture();
+	std::unique_ptr<Shader>&			GetShader();
 
 	void LoadMesh(const std::string& filePath_);
 	void LoadTexture(const std::string& filePath_);

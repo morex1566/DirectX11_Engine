@@ -12,18 +12,19 @@ void GameObject::Destroy()
 	}
 }
 
-Component* GameObject::AttachComponent(Component* component_)
+std::shared_ptr<Component> GameObject::AttachComponent(const std::shared_ptr<Component>& component_)
 {
-	_components.push_back(std::make_shared<Component>(*component_));
+	std::shared_ptr<Component> component = component_;
+	_components.push_back(component);
 
-	return _components.back().get();
+	return component;
 }
 
-void GameObject::DetachComponent(const Component* component_)
+void GameObject::DetachComponent(const std::shared_ptr<Component>& component_)
 {
 	for (auto it = _components.begin(); it != _components.end();)
 	{
-		if (it->get() == component_)
+		if (it->get() == component_.get())
 		{
 			it->reset();
 			it = _components.erase(it);

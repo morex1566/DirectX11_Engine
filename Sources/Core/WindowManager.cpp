@@ -10,12 +10,12 @@ WindowManager::~WindowManager()
 {
 }
 
-void WindowManager::SetAppWindow(Window* window_)
+void WindowManager::SetAppWindow(const std::shared_ptr<Window>& window_)
 {
 	_appWindow = window_;
 }
 
-Window* WindowManager::GetAppWindow()
+std::shared_ptr<Window> WindowManager::GetAppWindow()
 {
 	return _appWindow;
 }

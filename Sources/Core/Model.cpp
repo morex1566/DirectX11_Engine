@@ -24,7 +24,7 @@ void Model::Initialize(ID3D11Device* device_, ID3D11DeviceContext* deviceContext
 	}
 }
 
-void Model::Render(const XMMATRIX& worldMatrix_, const XMMATRIX& viewMatrix_, const XMMATRIX& projectionMatrix_, Light* light_)
+void Model::Render(const XMMATRIX& worldMatrix_, const XMMATRIX& viewMatrix_, const XMMATRIX& projectionMatrix_, const std::shared_ptr<Light>& light_)
 {
 	for (auto& mesh : _meshes)
 	{
@@ -62,14 +62,14 @@ std::vector<Mesh> Model::GetMeshes()
 	return _meshes;
 }
 
-Texture* Model::GetTexture()
+std::unique_ptr<Texture>& Model::GetTexture()
 {
-	return _texture.get();
+	return _texture;
 }
 
-Shader* Model::GetShader()
+std::unique_ptr<Shader>& Model::GetShader()
 {
-	return _shader.get();
+	return _shader;
 }
 
 void Model::LoadMesh(const std::string& filePath_)
