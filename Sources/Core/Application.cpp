@@ -1,21 +1,30 @@
 // ReSharper disable CppClangTidyBugproneBranchClone
+// ReSharper disable CppClangTidyPerformanceNoIntToPtr
 
 #include "pch.h"
 #include "Application.h"
 #include "WindowManager.h"
 #include "D3D11Manager.h"
+#include "UIManager.h"
 #include "SceneManager.h"
 #include "GameObjectManager.h"
 #include "ComponentManager.h"
+
 
 Application::~Application()
 {
 	ClearMemory();
 }
 
-LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+// Forward declare message handler from imgui_impl_win32.cpp
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+LRESULT Application::WindowProc(HWND hWnd_, UINT uMsg_, WPARAM wParam_, LPARAM lParam_)
 {
-	switch (uMsg)
+	if (ImGui_ImplWin32_WndProcHandler(hWnd_, uMsg_, wParam_, lParam_))
+		return true;
+
+	switch (uMsg_)
 	{
 	case WM_DESTROY:
 		Application::GetInstance().Shutdown();
@@ -32,16 +41,16 @@ LRESULT Application::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hwnd, &ps);
+		HDC hdc = BeginPaint(hWnd_, &ps);
 
 		// All painting occurs here, between BeginPaint and EndPaint.
-		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-		EndPaint(hwnd, &ps);
+		FillRect(hdc, &ps.rcPaint, reinterpret_cast<HBRUSH>((COLOR_WINDOW + 1)));
+		EndPaint(hWnd_, &ps);
 	}
 	return 0;
 	}
 
-	return DefWindowProc(hwnd, uMsg, wParam, lParam);
+	return DefWindowProc(hWnd_, uMsg_, wParam_, lParam_);
 }
 
 void Application::Initialize(const HINSTANCE& hInstance_)
@@ -87,6 +96,13 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 			0.3f
 		);
 	}
+
+	// Initialize the UIManager.
+	UIManager& uiManager = UIManager::GetInstance();
+	{
+		uiManager.Initialize(d3d11Manager.GetDevice(), d3d11Manager.GetDeviceContext(), windowManager.GetAppWindow()->GetHWnd());
+	}
+
 
 	// Initialize the SceneManager.
 	SceneManager& sceneManager = SceneManager::GetInstance();
@@ -169,6 +185,11 @@ void Application::Update()
 
 		_camera->Render();
 
+		XMMATRIX worldRotation = d3d11Manager.GetWorldMatrix();
+
+		rotation -= 0.0174532925f * 1.0f;
+		worldRotation = XMMatrixRotationY(rotation);
+
 		// Render objects in scene hierarchy.
 		std::shared_ptr<Scene> currScene = SceneManager::GetInstance().GetCurrentScene();
 		{
@@ -177,11 +198,13 @@ void Application::Update()
 				std::vector<std::shared_ptr<Model>> models = gameObject->GetComponents<Model>();
 				for (auto& model : models)
 				{
-					model->Render(d3d11Manager.GetWorldMatrix(), _camera->GetViewMatrix(), d3d11Manager.GetProjectionMatrix(), 
+					model->Render(worldRotation, _camera->GetViewMatrix(), d3d11Manager.GetProjectionMatrix(),
 								  currScene->GetEnviromentLight());
 				}
 			}
 		}
+
+		UIManager::GetInstance().Render();
 
 		d3d11Manager.EndScene();
 	}
@@ -190,10 +213,16 @@ void Application::Update()
 	Dispose();
 }
 
+void Application::Destroy()
+{
+	UIManager::GetInstance().Destroy();
+}
+
 void Application::ClearMemory()
 {
 	GameObjectManager::GetInstance().ClearMemory();
 	SceneManager::GetInstance().ClearMemory();
+	UIManager::GetInstance().ClearMemory();
 	D3D11Manager::GetInstance().ClearMemory();
 	WindowManager::GetInstance().ClearMemory();
 }

@@ -1,5 +1,10 @@
 #pragma once
 
+#pragma warning(disable: 28251)
+#pragma warning(disable: 26451)
+#pragma warning(disable: 4101)
+#pragma warning(disable: 4267)
+
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 

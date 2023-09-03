@@ -12,7 +12,7 @@ int WINAPI wWinMain(HINSTANCE hInstance_, HINSTANCE, PWSTR pCmdLine_, int nCmdSh
 		app.Update();
 	}
 
-	app.Shutdown();
+	app.Destroy();
 
 	return 0;
 }

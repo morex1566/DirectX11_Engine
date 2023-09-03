@@ -54,8 +54,6 @@ ID3D11Buffer* Mesh::createVertexBuffer(const vector<VertexType>& vertices)
 	// Safety
 	if (_vertexBuffer != nullptr) { _vertexBuffer->Release(); }
 
-	this->_stride = std::make_shared<UINT>(sizeof(vertices.data()));
-
 	// Set up the description of the static vertex buffer.
 	D3D11_BUFFER_DESC vertexBufferDesc;
 	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));

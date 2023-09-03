@@ -84,6 +84,12 @@
     <ClInclude Include="Light.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,6 +201,12 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
