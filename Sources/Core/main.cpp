@@ -10,9 +10,9 @@ int WINAPI wWinMain(HINSTANCE hInstance_, HINSTANCE, PWSTR pCmdLine_, int nCmdSh
 	while(!app.IsShutdowned())
 	{
 		app.Update();
+		app.Render();
+		app.Dispose();
 	}
-
-	app.Destroy();
 
 	return 0;
 }

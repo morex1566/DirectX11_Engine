@@ -1,13 +1,31 @@
 #include "pch.h"
 #include "WindowManager.h"
 
-WindowManager::WindowManager()
-	: _appWindow(nullptr)
+void WindowManager::Initialize()
 {
+	IManager<Window>::Initialize();
 }
 
-WindowManager::~WindowManager()
+void WindowManager::Update()
 {
+	IManager<Window>::Update();
+
+	MSG msg;
+	while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+	{
+		::TranslateMessage(&msg);
+		::DispatchMessage(&msg);
+	}
+}
+
+void WindowManager::Dispose()
+{
+	IManager<Window>::Dispose();
+}
+
+void WindowManager::Clear()
+{
+	IManager<Window>::Clear();
 }
 
 void WindowManager::SetAppWindow(const std::shared_ptr<Window>& window_)

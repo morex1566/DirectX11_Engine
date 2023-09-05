@@ -49,7 +49,7 @@ void UIManager::Render()
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void UIManager::ClearMemory()
+void UIManager::Clear()
 {
-	IManager<UIElement>::ClearMemory();
+	IManager<UIElement>::Clear();
 }

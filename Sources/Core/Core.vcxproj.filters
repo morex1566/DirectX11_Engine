@@ -45,7 +45,7 @@
     <ClInclude Include="Types.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="D3D11Manager.h">
+    <ClInclude Include="RenderManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -146,7 +146,7 @@
     <ClCompile Include="IManageable.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="D3D11Manager.cpp">
+    <ClCompile Include="RenderManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">

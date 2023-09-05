@@ -1,20 +1,9 @@
 // ReSharper disable CppClangTidyBugproneBranchClone
 // ReSharper disable CppClangTidyPerformanceNoIntToPtr
+// ReSharper disable CppRedundantQualifier
 
 #include "pch.h"
 #include "Application.h"
-#include "WindowManager.h"
-#include "D3D11Manager.h"
-#include "UIManager.h"
-#include "SceneManager.h"
-#include "GameObjectManager.h"
-#include "ComponentManager.h"
-
-
-Application::~Application()
-{
-	ClearMemory();
-}
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -55,8 +44,8 @@ LRESULT Application::WindowProc(HWND hWnd_, UINT uMsg_, WPARAM wParam_, LPARAM l
 
 void Application::Initialize(const HINSTANCE& hInstance_)
 {
-	// ClearMemory the app before when we initialized.
-	ClearMemory();
+	// Clear the app before when we initialized.
+	Clear();
 
 	// Initialize member variables.
 	{
@@ -65,11 +54,11 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	}
 
 	// Create the application's window.
-	WindowManager& windowManager = WindowManager::GetInstance();
+	_windowManager = std::make_unique<WindowManager>();
 	{
-		windowManager.Initialize();
+		_windowManager->Initialize();
 
-		std::shared_ptr<Window> appWindow = windowManager.Create(
+		std::shared_ptr<Window> appWindow = _windowManager->Create(
 			_hInstance,
 			"Sample Window Class",
 			"Engine.exe",
@@ -80,17 +69,17 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 			Config::Setting::Window::GetHeight()
 		);
 
-		windowManager.SetAppWindow(appWindow);
+		_windowManager->SetAppWindow(appWindow);
 	}
 
-	// Initialize the D3D11Manager.
-	D3D11Manager& d3d11Manager = D3D11Manager::GetInstance();
+	// Initialize the RenderManager.
+	_renderManager = std::make_unique<RenderManager>();
 	{
-		d3d11Manager.Initialize(
+		_renderManager->Initialize(
 			Config::Setting::Window::GetWidth(),
 			Config::Setting::Window::GetHeight(),
 			Config::Setting::Window::GetVsyncEnabled(),
-			windowManager.GetAppWindow()->GetHWnd(),
+			_windowManager->GetAppWindow()->GetHWnd(),
 			Config::Setting::Window::GetFullScreenEnabled(),
 			1000,
 			0.3f
@@ -98,46 +87,45 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	}
 
 	// Initialize the UIManager.
-	UIManager& uiManager = UIManager::GetInstance();
+	_uiManager = std::make_unique<UIManager>();
 	{
-		uiManager.Initialize(d3d11Manager.GetDevice(), d3d11Manager.GetDeviceContext(), windowManager.GetAppWindow()->GetHWnd());
+		_uiManager->Initialize(_renderManager->GetDevice(), _renderManager->GetDeviceContext(), _windowManager->GetAppWindow()->GetHWnd());
 	}
 
 
 	// Initialize the SceneManager.
-	SceneManager& sceneManager = SceneManager::GetInstance();
+	_sceneManager = std::make_unique<SceneManager>();
 	{
-		sceneManager.Initialize();
-		std::shared_ptr<Scene> defaultScene = sceneManager.Create();
+		_sceneManager->Initialize();
+		std::shared_ptr<Scene> defaultScene = _sceneManager->Create();
 		defaultScene->SetName("Untitled");
-		sceneManager.LoadScene("Untitled");
+		_sceneManager->LoadScene("Untitled");
 	}
 
 	// Initialize the GameobjectManager.
-	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
+	_gameObjectManager = std::make_unique<GameObjectManager>();
 	{
-		gameObjectManager.Initialize();
+		_gameObjectManager->Initialize();
 	}
 
-	auto go1 = gameObjectManager.Create();
+	auto go1 = _gameObjectManager->Create();
 	go1->SetName("go1");
-	auto go2 = gameObjectManager.Create();
+	auto go2 = _gameObjectManager->Create();
 	go2->SetName("go2");
 
-	auto camera = gameObjectManager.Create<Camera>();
+	// Initialize the viewport camera.
+	_camera = _gameObjectManager->Create<Camera>();
 	{
-		camera->SetPosition(0.0f, 0.0f, -15.0f);
-		_camera = camera;
+		_camera->SetPosition(0.0f, 0.0f, -15.0f);
 	}
 
-
-	auto light1 = gameObjectManager.Create<Light>();
+	auto light1 = _gameObjectManager->Create<Light>();
 	{
 		light1->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
 		light1->SetDirection(0.0f, 0.0f, 1.0f);
 	}
 
-	auto currScene = sceneManager.GetCurrentScene();
+	auto currScene = _sceneManager->GetCurrentScene();
 	{
 		currScene->AddHierarchy(go1);
 		currScene->AddHierarchy(go2);
@@ -145,17 +133,17 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 	}
 
 	// Initialize the ComponentManager.
-	ComponentManager& componentManager = ComponentManager::GetInstance();
+	_componentManager = std::make_unique<ComponentManager>();
 	{
-		componentManager.Initialize();
+		_componentManager->Initialize();
 	}
 
-	auto model1 = componentManager.Create<Model>();
+	auto model1 = _componentManager->Create<Model>();
 	{
 		model1->Initialize(
-			d3d11Manager.GetDevice(),
-			d3d11Manager.GetDeviceContext(),
-			windowManager.GetAppWindow()->GetHWnd(),
+			_renderManager->GetDevice(),
+			_renderManager->GetDeviceContext(),
+			_windowManager->GetAppWindow()->GetHWnd(),
 			FROM_SOLUTION_PATH_TO("Resources/box.fbx"),
 			FROM_SOLUTION_PATH_TO("Resources/stone.jpg"),
 			FROM_SOLUTION_PATH_TO("Shaders/light.vs"),
@@ -168,80 +156,89 @@ void Application::Initialize(const HINSTANCE& hInstance_)
 
 void Application::Update()
 {
-	// Event.
-	{
-		MSG msg;
-		while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
-		{
-			::TranslateMessage(&msg);
-			::DispatchMessage(&msg);
-		}
-	}
+	_windowManager->Update();
 
 	// Rendering.
-	D3D11Manager& d3d11Manager = D3D11Manager::GetInstance();
 	{
-		d3d11Manager.BeginScene(0.14f, 0.14f, 0.14f, 1.0f);
+		_renderManager->BeginScene(0.14f, 0.14f, 0.14f, 1.0f);
 
 		_camera->Render();
 
-		XMMATRIX worldRotation = d3d11Manager.GetWorldMatrix();
+		XMMATRIX worldRotation = _renderManager->GetWorldMatrix();
 
 		rotation -= 0.0174532925f * 1.0f;
 		worldRotation = XMMatrixRotationY(rotation);
 
 		// Render objects in scene hierarchy.
-		std::shared_ptr<Scene> currScene = SceneManager::GetInstance().GetCurrentScene();
+		std::shared_ptr<Scene> currScene = _sceneManager->GetCurrentScene();
 		{
 			for (auto& gameObject : currScene->GetHierarchy())
 			{
-				std::vector<std::shared_ptr<Model>> models = gameObject->GetComponents<Model>();
+				std::vector<std::weak_ptr<Model>> models = gameObject->GetComponents<Model>();
 				for (auto& model : models)
 				{
-					model->Render(worldRotation, _camera->GetViewMatrix(), d3d11Manager.GetProjectionMatrix(),
+					model.lock()->Render(worldRotation, _camera->GetViewMatrix(), _renderManager->GetProjectionMatrix(),
 								  currScene->GetEnviromentLight());
 				}
 			}
 		}
 
-		UIManager::GetInstance().Render();
+		_uiManager->Render();
 
-		d3d11Manager.EndScene();
+		_renderManager->EndScene();
 	}
-
-	// Dispatch.
-	Dispose();
 }
 
-void Application::Destroy()
+void Application::Render()
 {
-	UIManager::GetInstance().Destroy();
-}
-
-void Application::ClearMemory()
-{
-	GameObjectManager::GetInstance().ClearMemory();
-	SceneManager::GetInstance().ClearMemory();
-	UIManager::GetInstance().ClearMemory();
-	D3D11Manager::GetInstance().ClearMemory();
-	WindowManager::GetInstance().ClearMemory();
 }
 
 void Application::Dispose()
 {
-	SceneManager& sceneManager = SceneManager::GetInstance();
+	_componentManager->Dispose();
+	_gameObjectManager->Dispose();
+	_sceneManager->Dispose();
+	_uiManager->Dispose();
+	_renderManager->Dispose();
+	_windowManager->Dispose();
+}
+
+void Application::Clear()
+{
+	if (_gameObjectManager)
 	{
-		sceneManager.Dispose();
+		_gameObjectManager->Clear();
+		_gameObjectManager.reset();
 	}
 
-	GameObjectManager& gameObjectManager = GameObjectManager::GetInstance();
+	if (_componentManager)
 	{
-		gameObjectManager.Dispose();
+		_componentManager->Clear();
+		_componentManager.reset();
 	}
 
-	ComponentManager& componentManager = ComponentManager::GetInstance();
+	if (_sceneManager)
 	{
-		componentManager.Dispose();
+		_sceneManager->Clear();
+		_sceneManager.reset();
+	}
+
+	if (_uiManager)
+	{
+		_uiManager->Clear();
+		_uiManager.reset();
+	}
+
+	if (_renderManager)
+	{
+		_renderManager->Clear();
+		_renderManager.reset();
+	}
+
+	if (_windowManager)
+	{
+		_windowManager->Clear();
+		_windowManager.reset();
 	}
 }
 

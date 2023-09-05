@@ -1,13 +1,24 @@
 #include "pch.h"
 #include "SceneManager.h"
 
-SceneManager::SceneManager()
-	: _currScene(nullptr)
+void SceneManager::Initialize()
 {
+	IManager<Scene>::Initialize();
 }
 
-SceneManager::~SceneManager()
+void SceneManager::Update()
 {
+	IManager<Scene>::Update();
+}
+
+void SceneManager::Dispose()
+{
+	IManager<Scene>::Dispose();
+}
+
+void SceneManager::Clear()
+{
+	IManager<Scene>::Clear();
 }
 
 std::shared_ptr<Scene> SceneManager::GetCurrentScene()

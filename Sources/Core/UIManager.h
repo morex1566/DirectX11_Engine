@@ -5,7 +5,7 @@
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx11.h"
 
-class UIManager : public ISingleton<UIManager>, public IManager<UIElement>
+class UIManager : public IManager<UIElement>
 {
 public:
 	UIManager()						= default;
@@ -14,7 +14,7 @@ public:
 	void Initialize(ID3D11Device* device_, ID3D11DeviceContext* deviceContext_, HWND hWnd_);
 	void Destroy();
 	void Render();
-	void ClearMemory() override;
+	void Clear() override;
 
 	int counters = 0;
 

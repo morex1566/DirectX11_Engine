@@ -2,14 +2,18 @@
 
 #include "Window.h"
 
-class WindowManager : public ISingleton<WindowManager>, public IManager<Window>
+class WindowManager : public IManager<Window>
 {
 public:
-	WindowManager();
-	~WindowManager() override;
+	WindowManager()				= default;
+	~WindowManager() override	= default;
+
+	void Initialize() override;
+	void Update() override;
+	void Dispose() override;
+	void Clear() override;
 
 	void SetAppWindow(const std::shared_ptr<Window>& window_);
-	// TODO : Return Window* is quite dangerous. 
 	std::shared_ptr<Window> GetAppWindow();
 
 private:

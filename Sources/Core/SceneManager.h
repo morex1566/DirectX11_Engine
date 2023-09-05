@@ -2,11 +2,16 @@
 
 #include "Scene.h"
 
-class SceneManager : public ISingleton<SceneManager>, public IManager<Scene>
+class SceneManager : public IManager<Scene>
 {
 public:
-	SceneManager();
-	~SceneManager() override;
+	SceneManager()					= default;
+	~SceneManager() override		= default;
+
+	void Initialize() override;
+	void Update() override;
+	void Dispose() override;
+	void Clear() override;
 
 	std::shared_ptr<Scene> GetCurrentScene();
 	std::shared_ptr<Scene> LoadScene(const std::string& name_);

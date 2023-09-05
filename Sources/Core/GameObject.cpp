@@ -8,7 +8,7 @@ void GameObject::Destroy()
 
 	for (auto& component : _components)
 	{
-		component->Destroy();
+		component.lock()->Destroy();
 	}
 }
 
@@ -24,7 +24,7 @@ void GameObject::DetachComponent(const std::shared_ptr<Component>& component_)
 {
 	for (auto it = _components.begin(); it != _components.end();)
 	{
-		if (it->get() == component_.get())
+		if (it->lock().get() == component_.get())
 		{
 			it->reset();
 			it = _components.erase(it);

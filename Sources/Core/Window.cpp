@@ -16,7 +16,7 @@ Window::~Window()
 void Window::Initialize(const HINSTANCE& hInstance_, const std::string& serialName_, const std::string& titleName_, WinProc* winProc_, 
 						int posX_, int posY_, int width_, int height_)
 {
-	// ClearMemory the window before when we initialized.
+	// Clear the window before when we initialized.
 	ClearMemory();
 
 	_hInstance = hInstance_;
