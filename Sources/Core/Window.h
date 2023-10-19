@@ -1,25 +1,29 @@
 #pragma once
-
-class Window : public IManageable
+class Window : public Object
 {
 public:
-	Window(const HINSTANCE& hInstance_, const std::string& serialName_, const std::string& titleName_, WinProc* winProc_,
-		   int posX_, int posY_, int width_, int height_);
-	Window() = default;
-	~Window() override;
+	Window()										= default;
+	Window(const Window&)							= default;
+	Window& operator=(const Window&)				= default;
+	Window(Window&&) noexcept						= default;
+	Window& operator=(Window&&) noexcept			= default;
+	~Window();
 
-	void Initialize(const HINSTANCE& hInstance_, const std::string& serialName_, const std::string& titleName_, WinProc* winProc_,
-					int posX_, int posY_, int width_, int height_);
+	bool Initialize(WNDPROC winProc_, const std::wstring& titleName_, int screenWidth_, int screenHeight_);
+	void Show();
 	void Update();
-	void ClearMemory();
 
-	HWND GetHWnd();
+	static unsigned int		GetWidth();
+	static unsigned int		GetHeight();
+
+	HWND			GetHWND() const;
+	std::wstring	GetTitleName() const;
 
 private:
-	HINSTANCE				_hInstance;
-	std::string				_serialName;
-	std::string				_titleName;
-	WinProc*				_winProc;
-	HWND					_hWnd;
+	std::wstring				_titleName;
+	WNDCLASSEX					_wc;
+	static HWND					_hWnd;
+	static unsigned int			_width;
+	static unsigned int			_height;
+	
 };
-

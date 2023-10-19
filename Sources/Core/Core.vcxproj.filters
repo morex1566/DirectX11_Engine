@@ -1,213 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Sources">
+    <Filter Include="소스 파일">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Headers">
+    <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resources">
+    <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Externals">
-      <UniqueIdentifier>{e6670bd1-1369-4344-be27-5fb88c45b843}</UniqueIdentifier>
+    <Filter Include="Includes">
+      <UniqueIdentifier>{62471c27-9a06-47e9-a96b-d290d42b70e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Includes\imgui">
+      <UniqueIdentifier>{0a6b3c16-2576-4654-99bc-c43f55a639ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ISingleton.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IManageable.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="UIElement.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ISingleton.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_demo.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_draw.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx9.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx10.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx11.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx12.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_win32.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_tables.cpp">
-      <Filter>Externals</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Includes\imgui\imgui_widgets.cpp">
-      <Filter>Externals</Filter>
+      <Filter>Includes\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Includes\json\jsoncpp.cpp">
-      <Filter>Externals</Filter>
+    <ClCompile Include="..\..\Includes\imgui\imgui_tables.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_stdlib.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_impl_win32.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx12.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx11.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx10.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx9.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_draw.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui_demo.cpp">
+      <Filter>Includes\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Includes\imgui\imgui.cpp">
+      <Filter>Includes\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>Sources</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="IManager.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="DirectX11.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="IManageable.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="GUI.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="RenderManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>Sources</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\DirectXTex\DDSTextureLoader9.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\DirectXTex\DDSTextureLoader11.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\DirectXTex\DDSTextureLoader12.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\DirectXTex\WICTextureLoader9.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\DirectXTex\WICTextureLoader11.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\DirectXTex\WICTextureLoader12.cpp">
-      <Filter>Externals</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="UIElement.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PCH.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

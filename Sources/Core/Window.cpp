@@ -1,81 +1,63 @@
-#include "pch.h"
+#include "PCH.h"
 #include "Window.h"
 
-Window::Window(const HINSTANCE& hInstance_, const std::string& serialName_, const std::string& titleName_, WinProc* winProc_,
-			   int posX_, int posY_, int width_, int height_)
-{
-	Window::Initialize(hInstance_, serialName_, titleName_, winProc_, 
-					   posX_, posY_, width_, height_);
-}
+unsigned int Window::_width;
+unsigned int Window::_height;
+HWND Window::_hWnd;
 
 Window::~Window()
 {
-	Window::ClearMemory();
+	::DestroyWindow(_hWnd);
+	::UnregisterClassW(_wc.lpszClassName, _wc.hInstance);
 }
 
-void Window::Initialize(const HINSTANCE& hInstance_, const std::string& serialName_, const std::string& titleName_, WinProc* winProc_, 
-						int posX_, int posY_, int width_, int height_)
+bool Window::Initialize(WNDPROC winProc_, const std::wstring& titleName_, int screenWidth_, int screenHeight_)
 {
-	// Clear the window before when we initialized.
-	ClearMemory();
+	_wc = { sizeof(_wc), CS_CLASSDC, winProc_, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, titleName_.c_str(), nullptr };
+	::RegisterClassExW(&_wc);
+	_hWnd = ::CreateWindowW(_wc.lpszClassName, titleName_.c_str(), WS_OVERLAPPEDWINDOW, 100, 100, screenWidth_, screenHeight_, nullptr, nullptr, _wc.hInstance, nullptr);
 
-	_hInstance = hInstance_;
-	_serialName = serialName_;
-	_titleName = titleName_;
-	_winProc = winProc_;
+	// Setup the flag as true.
+	{
+		_isEnabled = true;
+		_isActivated = true;
+	}
 
+	return true;
+}
 
-	// Register the window class.
-	WNDCLASS wc = { };
-	wc.lpfnWndProc = _winProc;
-	wc.hInstance = _hInstance;
-	wc.lpszClassName = _serialName.c_str();
-	RegisterClass(&wc);
-
-
-	// Create the window.
-	_hWnd = CreateWindowEx(
-		0,								// Optional window styles.
-		_serialName.c_str(),			// Window class
-		_titleName.c_str(),				// Window text
-		WS_OVERLAPPEDWINDOW,			// Window style
-		posX_,							// Window instancing x position
-		posY_,							// Window instancing y position
-		width_,							// Window x size
-		height_,						// Window y size
-		NULL,							// Parent window    
-		NULL,							// Menu
-		_hInstance,						// Instance handle
-		NULL							// Additional application data
-	);
-
-
-	// Render the window.
-	ShowWindow(_hWnd, SW_SHOWDEFAULT);
-	UpdateWindow(_hWnd);
+void Window::Show()
+{
+	::ShowWindow(_hWnd, SW_SHOWDEFAULT);
 }
 
 void Window::Update()
 {
-	UpdateWindow(_hWnd);
+	RECT rect;
+	GetClientRect(_hWnd, &rect);
+
+	_width = rect.right - rect.left; 
+	_height = rect.bottom - rect.top; 
+
+	::UpdateWindow(_hWnd);
 }
 
-void Window::ClearMemory()
+unsigned Window::GetWidth()
 {
-	if (_hWnd != nullptr)
-	{
-		DestroyWindow(_hWnd);
-		UnregisterClassW(Utils::ToWString(_serialName).c_str(), _hInstance);
-	}
-
-	_hInstance = nullptr;
-	_serialName = "";
-	_titleName = "";
-	_winProc = nullptr;
-	_hWnd = nullptr;
+	return _width;
 }
 
-HWND Window::GetHWnd()
+unsigned Window::GetHeight()
+{
+	return _height;
+}
+
+HWND Window::GetHWND() const
 {
 	return _hWnd;
+}
+
+std::wstring Window::GetTitleName() const
+{
+	return _titleName;
 }
