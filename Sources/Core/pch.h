@@ -8,6 +8,7 @@
 
 
 #define WIN32_LEAN_AND_MEAN
+#define GET_SHADER_FILE_DIR(SHADER_FILE_NAME_) std::string(SHADERS_FOLDER_DIR) + SHADER_FILE_NAME_
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -37,8 +38,12 @@
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_dx12.h"
 
+#include "json/json_fwd.hpp"
+#include "json/json.hpp"
+
 using namespace DirectX;
 using namespace Microsoft::WRL;
+using namespace nlohmann;
 
 #include "Type.h"
 #include "Utils.h"

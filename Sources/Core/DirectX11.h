@@ -9,28 +9,25 @@ public:
 	DirectX11& operator=(DirectX11&&) noexcept				= default;
 	~DirectX11();
 
-	bool Initialize(HWND hWnd_);
+	bool Initialize(HWND hWnd_,
+					unsigned int clientScreenWidth_,
+					unsigned int clientScreenHeight_,
+					bool isVsyncEnabled_,
+					bool isFullScreenEnabled_);
 
-	ComPtr<ID3D11RenderTargetView>		CreateRenderTargetView();
-	void								ZeroRenderTargetView();
+	ComPtr<ID3D11RenderTargetView>				CreateRenderTargetView();
+	void										ZeroRenderTargetView();
 
-	ComPtr<ID3D11Device>				GetDevice() const;
-	ComPtr<ID3D11DeviceContext>			GetDeviceContext() const;
-	ComPtr<ID3D11RenderTargetView>		GetRenderTargetView() const;
+	ComPtr<ID3D11Device>						GetDevice() const;
+	ComPtr<ID3D11DeviceContext>					GetDeviceContext() const;
+	ComPtr<ID3D11RenderTargetView>				GetRenderTargetView() const;
 
-	void								SyncWithVsync(bool isVsyncEnabled_);
-	static void							OMSetRenderTarget();
-	static void							ResizeRenderTargetView(unsigned int width_, unsigned int height_);
+	void										SyncWithVsync(bool isVsyncEnabled_);
+	static void									OMSetRenderTarget();
+	static void									ResizeRenderTargetView(unsigned int width_, unsigned int height_);
 
 private:
-	DXGI_SWAP_CHAIN_DESC				_swapChainDesc;
-	D3D11_TEXTURE2D_DESC				_depthBufferDesc;
-	D3D11_DEPTH_STENCIL_DESC			_depthStencilDesc;
-	D3D11_DEPTH_STENCIL_VIEW_DESC		_depthStencilViewDesc;
-	D3D11_RASTERIZER_DESC				_rasterDesc;
-	D3D_FEATURE_LEVEL					_currFeatureLevel;
-	D3D_FEATURE_LEVEL					_supfeatureLevels[2];
-
+	static bool									_isVsyncEnabled;
 	static ComPtr<IDXGISwapChain>				_swapChain;
 	static ComPtr<ID3D11Device>					_device;
 	static ComPtr<ID3D11DeviceContext>			_deviceContext;
@@ -39,5 +36,23 @@ private:
 	static ComPtr<ID3D11DepthStencilState>		_depthStencilState;
 	static ComPtr<ID3D11DepthStencilView>		_depthStencilView;
 	static ComPtr<ID3D11RasterizerState>		_rasterState;
+
+	DXGI_SWAP_CHAIN_DESC						_swapChainDesc;
+	D3D11_TEXTURE2D_DESC						_depthBufferDesc;
+	D3D11_DEPTH_STENCIL_DESC					_depthStencilDesc;
+	D3D11_DEPTH_STENCIL_VIEW_DESC				_depthStencilViewDesc;
+	D3D11_RASTERIZER_DESC						_rasterDesc;
+	D3D_FEATURE_LEVEL							_currFeatureLevel;
+	D3D_FEATURE_LEVEL							_supfeatureLevels[2];
+
+	// TODO : Move this variables to camera or main system.
+	D3D11_VIEWPORT								_viewport;
+	XMMATRIX									_projectionMatrix;
+	XMMATRIX									_worldMatrix;
+	XMMATRIX									_orthoMatrix;
+
+	int											_gpuName[128];
+	int											_gpuMemory;
+	int											_refreshRate;
 };
 

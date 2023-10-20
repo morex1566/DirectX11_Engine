@@ -1,0 +1,12 @@
+{
+    "Engine": {
+        "Setting": {
+            "Window": {
+                "IsFullScreenEnabled": false,
+                "IsVsyncEnabled": false,
+                "WindowHeight": 900,
+                "WindowWidth": 1600
+            }
+        }
+    }
+}

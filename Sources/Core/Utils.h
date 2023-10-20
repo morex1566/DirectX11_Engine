@@ -1,7 +1,7 @@
 #pragma once
 #include "filesystem"
 
-inline std::string ToString(const std::wstring& wstring_)
+static std::string ToString(const std::wstring& wstring_)
 {
 	char multiByteBuffer[256] = "";
 
@@ -10,7 +10,16 @@ inline std::string ToString(const std::wstring& wstring_)
 	return std::string(multiByteBuffer);
 }
 
-inline std::string GetFileNameToString(const std::string& path_)
+static std::wstring ToWString(const std::string& string_)
+{
+    wchar_t wideByteBuffer[256] = L"";
+
+    MultiByteToWideChar(CP_ACP, 0, string_.c_str(), -1, wideByteBuffer, sizeof(wideByteBuffer) / sizeof(wideByteBuffer[0]));
+
+    return std::wstring(wideByteBuffer);
+}
+
+static std::string GetFileNameToString(const std::string& path_)
 {
     // Create the file path string.
     std::filesystem::path path = path_;
@@ -27,7 +36,7 @@ inline std::string GetFileNameToString(const std::string& path_)
     return fileName;
 }
 
-inline std::wstring GetFileNameToWString(const std::wstring& path_)
+static std::wstring GetFileNameToWString(const std::wstring& path_)
 {
     // Create the file path string.
     std::filesystem::path path = path_;

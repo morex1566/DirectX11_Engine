@@ -1,29 +1,44 @@
 #include "PCH.h"
 #include "DirectX11.h"
+#include "Config.h"
 
-ComPtr<IDXGISwapChain> DirectX11::_swapChain;
-ComPtr<ID3D11Device> DirectX11::_device;
-ComPtr<ID3D11DeviceContext> DirectX11::_deviceContext;
-ComPtr<ID3D11RenderTargetView> DirectX11::_renderTargetView;
-ComPtr<ID3D11Texture2D> DirectX11::_depthStencilBuffer;
-ComPtr<ID3D11DepthStencilState> DirectX11::_depthStencilState;
-ComPtr<ID3D11DepthStencilView> DirectX11::_depthStencilView;
-ComPtr<ID3D11RasterizerState> DirectX11::_rasterState;
+bool                                    DirectX11::_isVsyncEnabled;
+ComPtr<IDXGISwapChain>                  DirectX11::_swapChain;
+ComPtr<ID3D11Device>                    DirectX11::_device;
+ComPtr<ID3D11DeviceContext>             DirectX11::_deviceContext;
+ComPtr<ID3D11RenderTargetView>          DirectX11::_renderTargetView;
+ComPtr<ID3D11Texture2D>                 DirectX11::_depthStencilBuffer;
+ComPtr<ID3D11DepthStencilState>         DirectX11::_depthStencilState;
+ComPtr<ID3D11DepthStencilView>          DirectX11::_depthStencilView;
+ComPtr<ID3D11RasterizerState>           DirectX11::_rasterState;
 
 DirectX11::~DirectX11()
 {
+    Config::SetIsVsyncEnabled(_isVsyncEnabled);
+    Config::SetDepthBufferDesc(_depthBufferDesc);
+    Config::SetDepthStencilDesc(_depthStencilDesc);
+    Config::SetDepthStencilViewDesc(_depthStencilViewDesc);
+    Config::SetRasterDesc(_rasterDesc);
 }
 
-bool DirectX11::Initialize(HWND hWnd_)
+bool DirectX11::Initialize(HWND hWnd_,
+						   unsigned int clientScreenWidth_,
+                           unsigned int clientScreenHeight_,
+                           bool isVsyncEnabled_,
+                           bool isFullScreenEnabled_)
 {
-	HRESULT result;
+	HRESULT                         result;
+    ComPtr<IDXGIFactory>			factory;
+    ComPtr<IDXGIAdapter>			adapter;
+    ComPtr<IDXGIOutput>				adapterOutput;
+    
 
 	// Setup swap chain desc.
 	ZeroMemory(&_swapChainDesc, sizeof(_swapChainDesc));
 	{
         _swapChainDesc.BufferCount = 1;
-        _swapChainDesc.BufferDesc.Width = 0;
-        _swapChainDesc.BufferDesc.Height = 0;
+        _swapChainDesc.BufferDesc.Width = clientScreenWidth_;
+        _swapChainDesc.BufferDesc.Height = clientScreenHeight_;
         _swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
         _swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
         _swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
@@ -55,9 +70,6 @@ bool DirectX11::Initialize(HWND hWnd_)
     }
 
     if(!CreateRenderTargetView()) { return false; }
-
-    
-    
 
     // Setup the flag as true.
 	{
