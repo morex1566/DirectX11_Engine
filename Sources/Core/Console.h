@@ -20,6 +20,8 @@ public:
 	static void LogSuccess(const std::wstring& log_);
 	static void LogSuccess(const std::string& log_);
 
+	HWND		GetHWnd();
+
 private:
-	
+	HWND		_hWnd;
 };

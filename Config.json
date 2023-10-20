@@ -3,8 +3,12 @@
         "Setting": {
             "Window": {
                 "IsFullScreenEnabled": false,
-                "IsVsyncEnabled": false,
+                "IsVsyncEnabled": true,
+                "RefreshRate": 165,
+                "RefreshRateOption": "Limit",
                 "WindowHeight": 900,
+                "WindowStartPosX": 100,
+                "WindowStartPosY": 100,
                 "WindowWidth": 1600
             }
         }

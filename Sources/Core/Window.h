@@ -10,7 +10,13 @@ public:
 	Window& operator=(Window&&) noexcept			= default;
 	~Window();
 
-	bool Initialize(WNDPROC winProc_, const std::wstring& titleName_, int windowWidth_, int windowHeight_, bool isFullScreenEnabled_);
+	bool Initialize(WNDPROC winProc_,
+					const std::wstring& titleName_, 
+					int windowStartPosX_, 
+					int windowStartPosY_, 
+					int windowWidth_,
+					int windowHeight_,
+					bool isFullScreenEnabled_);
 	void Show();
 	void Update();
 

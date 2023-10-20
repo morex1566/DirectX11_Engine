@@ -1,4 +1,5 @@
 #pragma once
+
 class DirectX11 : public Object
 {
 public:
@@ -13,18 +14,25 @@ public:
 					unsigned int clientScreenWidth_,
 					unsigned int clientScreenHeight_,
 					bool isVsyncEnabled_,
+					Config::ERefreshRateOption option_,
+					unsigned int refreshRate_,
 					bool isFullScreenEnabled_);
 
 	ComPtr<ID3D11RenderTargetView>				CreateRenderTargetView();
 	void										ZeroRenderTargetView();
+	void										WaitForRefreshRate();
+	static void									OMSetRenderTarget();
+	static void									ResizeRenderTargetView(unsigned int width_, unsigned int height_);
 
+	static bool									GetIsVsyncEnabled();
 	ComPtr<ID3D11Device>						GetDevice() const;
 	ComPtr<ID3D11DeviceContext>					GetDeviceContext() const;
 	ComPtr<ID3D11RenderTargetView>				GetRenderTargetView() const;
 
-	void										SyncWithVsync(bool isVsyncEnabled_);
-	static void									OMSetRenderTarget();
-	static void									ResizeRenderTargetView(unsigned int width_, unsigned int height_);
+	static void									SetIsVsyncEnabled(bool toggle_);
+	static void									SetRefreshRate(unsigned int refreshRate_);
+	static void									SetRefreshRateOption(Config::ERefreshRateOption option_);
+
 
 private:
 	static bool									_isVsyncEnabled;
@@ -36,6 +44,8 @@ private:
 	static ComPtr<ID3D11DepthStencilState>		_depthStencilState;
 	static ComPtr<ID3D11DepthStencilView>		_depthStencilView;
 	static ComPtr<ID3D11RasterizerState>		_rasterState;
+	static unsigned int							_refreshRate;
+	static Config::ERefreshRateOption			_refreshRateOption;
 
 	DXGI_SWAP_CHAIN_DESC						_swapChainDesc;
 	D3D11_TEXTURE2D_DESC						_depthBufferDesc;
@@ -51,8 +61,8 @@ private:
 	XMMATRIX									_worldMatrix;
 	XMMATRIX									_orthoMatrix;
 
-	int											_gpuName[128];
+	unsigned int								_displayRefreshRate;
+	char										_gpuName[128];
 	int											_gpuMemory;
-	int											_refreshRate;
 };
 

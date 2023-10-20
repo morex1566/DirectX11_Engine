@@ -1,4 +1,5 @@
 #include "PCH.h"
+#include "Console.h"
 #include "Config.h"
 #include "DirectX11.h"
 #include "GUI.h"
@@ -6,7 +7,6 @@
 #include "Shader.h"
 
 static bool IsLooping = true;
-
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 
@@ -58,6 +58,11 @@ LRESULT WINAPI WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_)
 
 int main()
 {
+	std::unique_ptr<Console> console = std::make_unique<Console>();
+	{
+		if (!console->Initialize()) { return 0; }
+	}
+
 	std::unique_ptr<Config> config = std::make_unique<Config>();
 	{
 		if (!config->Initialize(CONFIG_DIR)) { return 0; }
@@ -65,12 +70,24 @@ int main()
 
 	std::unique_ptr<Window> window = std::make_unique<Window>();
 	{
-		if (!window->Initialize(WndProc, L"Engine", Config::GetWindowWidth(), Config::GetWindowHeight(), Config::GetIsFullScreenEnabled())) { return 0; }
+		if (!window->Initialize(WndProc,
+								L"Engine",
+								Config::GetWindowStartPosX(),
+								Config::GetWindowStartPosY(),
+							    Config::GetWindowWidth(),
+								Config::GetWindowHeight(),
+								Config::GetIsFullScreenEnabled())) { return 0; }
 	}
 
 	std::unique_ptr<DirectX11> directX11 = std::make_unique<DirectX11>();
 	{
-		if (!directX11->Initialize(window->GetHWND(), window->GetClientWidth(), window->GetClientHeight(), Config::GetIsVsyncEnabled(), Config::GetIsFullScreenEnabled())) { return 0; }
+		if (!directX11->Initialize(window->GetHWND(),
+								   window->GetClientWidth(),
+								   window->GetClientHeight(),
+								   Config::GetIsVsyncEnabled(),
+								   Config::GetRefreshRateOption(),
+								   Config::GetRefreshRate(),
+								   Config::GetIsFullScreenEnabled())) { return 0; }
 	}
 
 	std::unique_ptr<GUI> gui = std::make_unique<GUI>();
@@ -100,8 +117,9 @@ int main()
 		directX11->OMSetRenderTarget();
 		gui->Render(directX11->GetDeviceContext().Get(), directX11->GetRenderTargetView().Get());
 
-		directX11->SyncWithVsync(true);
+		directX11->WaitForRefreshRate();
     }
+
 
 	return 0;
 }

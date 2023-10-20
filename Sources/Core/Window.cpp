@@ -16,11 +16,27 @@ Window::~Window()
 	Config::SetWindowHeight(_windowHeight);
 	Config::SetIsFullScreenEnabled(_isFullScreenEnabled);
 
+	RECT windowRect;
+	GetWindowRect(_hWnd, &windowRect);
+	{
+		int currentPosX = windowRect.left;
+		int currentPosY = windowRect.top;
+
+		Config::SetWindowStartPosX(currentPosX);
+		Config::SetWindowStartPosY(currentPosY);
+	}
+
 	::DestroyWindow(_hWnd);
 	::UnregisterClassW(_wc.lpszClassName, _wc.hInstance);
 }
 
-bool Window::Initialize(WNDPROC winProc_, const std::wstring& titleName_, int windowWidth_, int windowHeight_, bool isFullScreenEnabled_)
+bool Window::Initialize(WNDPROC winProc_,
+						const std::wstring& titleName_,
+						int windowStartPosX_,
+						int windowStartPosY_,
+						int windowWidth_,
+						int windowHeight_,
+						bool isFullScreenEnabled_)
 {
 	// Initialize member variable
 	{
@@ -30,10 +46,18 @@ bool Window::Initialize(WNDPROC winProc_, const std::wstring& titleName_, int wi
 		_windowHeight = windowHeight_;
 		_isFullScreenEnabled = isFullScreenEnabled_;
 
+
+		// Create window class.
 		_wc = { sizeof(_wc), CS_CLASSDC, _winProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, _titleName.c_str(), nullptr };
 		::RegisterClassExW(&_wc);
-		_hWnd = ::CreateWindowW(_wc.lpszClassName, _titleName.c_str(), WS_OVERLAPPEDWINDOW, 100, 100, _windowWidth, _windowHeight, nullptr, nullptr, _wc.hInstance, nullptr);
 
+
+		// Create window handle.
+		_hWnd = ::CreateWindowW(_wc.lpszClassName, _titleName.c_str(), WS_OVERLAPPEDWINDOW, windowStartPosX_, windowStartPosY_, _windowWidth, _windowHeight, nullptr, nullptr, _wc.hInstance, nullptr);
+
+
+		// Calculate window and client screen size.
+		CalculateWindowScreen();
 		CalculateClientScreen();
 	}
 
@@ -53,8 +77,6 @@ void Window::Show()
 
 void Window::Update()
 {
-	CalculateClientScreen();
-
 	::UpdateWindow(_hWnd);
 }
 

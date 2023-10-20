@@ -1,5 +1,5 @@
 #pragma once
-#include "filesystem"
+#include <filesystem>
 
 static std::string ToString(const std::wstring& wstring_)
 {
@@ -51,4 +51,57 @@ static std::wstring GetFileNameToWString(const std::wstring& path_)
     }
 
     return fileName;
+}
+
+static std::string GetCurrentTimeAsString() {
+
+    auto now = std::chrono::system_clock::now();
+    std::time_t time = std::chrono::system_clock::to_time_t(now);
+    struct std::tm timeinfo;
+    errno_t errorCode = localtime_s(&timeinfo, &time);
+
+    if (errorCode == 0)
+    {
+        int hours = timeinfo.tm_hour;
+        int minutes = timeinfo.tm_min;
+        int seconds = timeinfo.tm_sec;
+
+        std::stringstream timeString;
+        timeString << std::setfill('0') << std::setw(2) << hours << ":"
+            << std::setfill('0') << std::setw(2) << minutes << ":"
+            << std::setfill('0') << std::setw(2) << seconds;
+
+        return timeString.str();
+    }
+    else
+    {
+        Console::Log("Get Real Time Failure");
+        return "00:00:00";
+    }
+}
+
+static std::wstring GetCurrentTimeAsWString() {
+    auto now = std::chrono::system_clock::now();
+    std::time_t time = std::chrono::system_clock::to_time_t(now);
+    struct std::tm timeinfo;
+    errno_t errorCode = localtime_s(&timeinfo, &time);
+
+    if (errorCode == 0)
+    {
+        int hours = timeinfo.tm_hour;
+        int minutes = timeinfo.tm_min;
+        int seconds = timeinfo.tm_sec;
+
+        std::wstringstream timeString;
+        timeString << std::setfill(L'0') << std::setw(2) << hours << L":"
+            << std::setfill(L'0') << std::setw(2) << minutes << L":"
+            << std::setfill(L'0') << std::setw(2) << seconds;
+
+        return timeString.str();
+    }
+    else
+    {
+        Console::Log("Get Real Time Failure");
+        return L"00:00:00";
+    }
 }
