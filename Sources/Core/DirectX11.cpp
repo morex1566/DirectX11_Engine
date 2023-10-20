@@ -21,7 +21,7 @@ bool DirectX11::Initialize(HWND hWnd_)
 	// Setup swap chain desc.
 	ZeroMemory(&_swapChainDesc, sizeof(_swapChainDesc));
 	{
-        _swapChainDesc.BufferCount = 2;
+        _swapChainDesc.BufferCount = 1;
         _swapChainDesc.BufferDesc.Width = 0;
         _swapChainDesc.BufferDesc.Height = 0;
         _swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -55,6 +55,9 @@ bool DirectX11::Initialize(HWND hWnd_)
     }
 
     if(!CreateRenderTargetView()) { return false; }
+
+    
+    
 
     // Setup the flag as true.
 	{

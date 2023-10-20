@@ -1,4 +1,5 @@
 #pragma once
+#include "filesystem"
 
 inline std::string ToString(const std::wstring& wstring_)
 {
