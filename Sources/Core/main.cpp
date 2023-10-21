@@ -19,10 +19,12 @@ LRESULT WINAPI WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_)
     {
     case WM_SIZE:
 	        if (wParam_ == SIZE_MINIMIZED) { return 0; }
+
 			Window::CalculateWindowScreen();
 			Window::CalculateClientScreen();
-			DirectX11::ResizeRenderTargets(hWnd_, LOWORD(lParam_), HIWORD(lParam_));
-			DirectX11::BindRenderTargets();
+			DirectX11::ResizeRenderTargetView(LOWORD(lParam_), HIWORD(lParam_));
+			DirectX11::OMSetRenderTarget();
+
 			return 0;
 
 	    case WM_SYSCOMMAND:
@@ -112,12 +114,12 @@ int main()
 
 		window->Update();
 
-		directX11->BindState();
-		directX11->BindRenderTargets();
+		directX11->OMSetRenderTarget();
 		gui->Render(directX11->GetDeviceContext().Get(), directX11->GetRenderTargetView().Get());
 
 		directX11->WaitForRefreshRate();
     }
+
 
 	return 0;
 }

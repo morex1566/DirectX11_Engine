@@ -18,24 +18,11 @@ public:
 					unsigned int refreshRate_,
 					bool isFullScreenEnabled_);
 
-	static	bool								CreateDeviceAndSwapChain(HWND hWnd_, unsigned int clientScreenWidth_, unsigned int clientScreenHeight_);
-	static	ComPtr<ID3D11RenderTargetView>		CreateRenderTargetView();
-	static	ComPtr<ID3D11Texture2D>				CreateDepthStencilBuffer(unsigned int clientScreenWidth_, unsigned int clientScreenHeight);
-	static	ComPtr<ID3D11DepthStencilState>		CreateDepthStencilState();
-	static	ComPtr<ID3D11DepthStencilView>		CreateDepthStencilView();
-	static ComPtr<ID3D11RasterizerState>		CreateRasterizerState();
-
-	void										ReleaseSwapChain();
-	void										ReleaseRenderTargetView();
-	void										ReleaseDepthStencilBuffer();
-	void										ReleaseDepthStencilState();
-	void										ReleaseDepthStencilView();
-	void										ReleaseRasterizerState();
-
+	ComPtr<ID3D11RenderTargetView>				CreateRenderTargetView();
+	void										ZeroRenderTargetView();
 	void										WaitForRefreshRate();
-	static void									BindState();
-	static void									BindRenderTargets();
-	static void									ResizeRenderTargets(HWND hWnd_, unsigned int width_, unsigned int height_);
+	static void									OMSetRenderTarget();
+	static void									ResizeRenderTargetView(unsigned int width_, unsigned int height_);
 
 	static bool									GetIsVsyncEnabled();
 	ComPtr<ID3D11Device>						GetDevice() const;
@@ -58,27 +45,23 @@ private:
 	static ComPtr<ID3D11DepthStencilView>		_depthStencilView;
 	static ComPtr<ID3D11RasterizerState>		_rasterState;
 	static unsigned int							_refreshRate;
-	static unsigned int							_displayRefreshRate;
 	static Config::ERefreshRateOption			_refreshRateOption;
 
-	static DXGI_SWAP_CHAIN_DESC					_swapChainDesc;
-	static D3D11_TEXTURE2D_DESC					_depthStencilBufferDesc;
-	static D3D11_DEPTH_STENCIL_DESC				_depthStencilDesc;
-	static D3D11_DEPTH_STENCIL_VIEW_DESC		_depthStencilViewDesc;
-	static D3D11_RASTERIZER_DESC				_rasterDesc;
-	static D3D_FEATURE_LEVEL					_currFeatureLevel;
-	static D3D_FEATURE_LEVEL					_supfeatureLevels[2];
+	DXGI_SWAP_CHAIN_DESC						_swapChainDesc;
+	D3D11_TEXTURE2D_DESC						_depthBufferDesc;
+	D3D11_DEPTH_STENCIL_DESC					_depthStencilDesc;
+	D3D11_DEPTH_STENCIL_VIEW_DESC				_depthStencilViewDesc;
+	D3D11_RASTERIZER_DESC						_rasterDesc;
+	D3D_FEATURE_LEVEL							_currFeatureLevel;
+	D3D_FEATURE_LEVEL							_supfeatureLevels[2];
 
 	// TODO : Move this variables to camera or main system.
 	D3D11_VIEWPORT								_viewport;
-	float										_fov;
-	float										_screenAspect;
-	float										_screenNear;
-	float										_screenDepth;
 	XMMATRIX									_projectionMatrix;
 	XMMATRIX									_worldMatrix;
 	XMMATRIX									_orthoMatrix;
 
+	unsigned int								_displayRefreshRate;
 	char										_gpuName[128];
 	int											_gpuMemory;
 };
