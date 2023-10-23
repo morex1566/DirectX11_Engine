@@ -2,14 +2,6 @@
 #include "Window.h"
 #include "Config.h"
 
-HWND				Window::_hWnd;
-std::wstring		Window::_titleName;
-unsigned int		Window::_windowWidth;
-unsigned int		Window::_windowHeight;
-unsigned int		Window::_clientWidth;
-unsigned int		Window::_clientHeight;
-bool				Window::_isFullScreenEnabled;
-
 Window::~Window()
 {
 	Config::SetWindowWidth(_windowWidth);
@@ -31,12 +23,12 @@ Window::~Window()
 }
 
 bool Window::Initialize(WNDPROC winProc_,
-						const std::wstring& titleName_,
-						int windowStartPosX_,
-						int windowStartPosY_,
-						int windowWidth_,
-						int windowHeight_,
-						bool isFullScreenEnabled_)
+                        const std::wstring& titleName_,
+                        int windowStartPosX_,
+                        int windowStartPosY_,
+                        int windowWidth_,
+                        int windowHeight_,
+                        bool isFullScreenEnabled_)
 {
 	// Initialize member variable
 	{
@@ -54,11 +46,6 @@ bool Window::Initialize(WNDPROC winProc_,
 
 		// Create window handle.
 		_hWnd = ::CreateWindowW(_wc.lpszClassName, _titleName.c_str(), WS_OVERLAPPEDWINDOW, windowStartPosX_, windowStartPosY_, _windowWidth, _windowHeight, nullptr, nullptr, _wc.hInstance, nullptr);
-
-
-		// Calculate window and client screen size.
-		CalculateWindowScreen();
-		CalculateClientScreen();
 	}
 
 	// Setup the flag as true.
@@ -80,7 +67,7 @@ void Window::Update()
 	::UpdateWindow(_hWnd);
 }
 
-void Window::CalculateClientScreen()
+void Window::Resize()
 {
 	RECT clientRect;
 	GetClientRect(_hWnd, &clientRect);
@@ -88,10 +75,7 @@ void Window::CalculateClientScreen()
 		_clientWidth = clientRect.right - clientRect.left;
 		_clientHeight = clientRect.bottom - clientRect.top;
 	}
-}
 
-void Window::CalculateWindowScreen()
-{
 	RECT windowRect;
 	GetWindowRect(_hWnd, &windowRect);
 	{
@@ -99,7 +83,6 @@ void Window::CalculateWindowScreen()
 		_windowHeight = windowRect.bottom - windowRect.top;
 	}
 }
-
 
 HWND Window::GetHWND()
 {

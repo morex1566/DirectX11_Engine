@@ -10,6 +10,6 @@ public:
 	~GUI();
 
 	bool Initialize(HWND hWnd_, ID3D11Device* device_, ID3D11DeviceContext* deviceContext_);
-	void Render(ID3D11DeviceContext* deviceContext_, ID3D11RenderTargetView* renderTargetView_);
+	void Render();
 };
 

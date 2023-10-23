@@ -19,31 +19,29 @@ public:
 					bool isFullScreenEnabled_);
 	void Show();
 	void Update();
-
-	static void					CalculateClientScreen();
-	static void					CalculateWindowScreen();
+	void Resize();
 
 	HWND						GetHWND();
 	std::wstring				GetTitleName();
-	static unsigned int			GetWindowWidth();
-	static unsigned int			GetWindowHeight();
-	static unsigned int			GetClientWidth();
-	static unsigned int			GetClientHeight();
-	static bool					GetIsFullScreenEnabled();
+	unsigned int				GetWindowWidth();
+	unsigned int				GetWindowHeight();
+	unsigned int				GetClientWidth();
+	unsigned int				GetClientHeight();
+	bool						GetIsFullScreenEnabled();
 
-	static void					SetTitleName(const std::wstring& titleName_);
-	static void					SetResolutionWidth(unsigned int width_);
-	static void					SetResolutionHeight(unsigned int height_);
-	static void					SetIsFullScreenEnabled(bool toggle_);
+	void						SetTitleName(const std::wstring& titleName_);
+	void						SetResolutionWidth(unsigned int width_);
+	void						SetResolutionHeight(unsigned int height_);
+	void						SetIsFullScreenEnabled(bool toggle_);
 
 private:
-	static HWND					_hWnd;
-	static std::wstring			_titleName;
-	static unsigned int			_windowWidth;
-	static unsigned int			_windowHeight;
-	static unsigned int			_clientWidth;
-	static unsigned int			_clientHeight;
-	static bool					_isFullScreenEnabled;
+	HWND						_hWnd;
+	std::wstring				_titleName;
+	unsigned int				_windowWidth;
+	unsigned int				_windowHeight;
+	unsigned int				_clientWidth;
+	unsigned int				_clientHeight;
+	bool						_isFullScreenEnabled;
 
 	WNDPROC						_winProc;
 	WNDCLASSEX					_wc;

@@ -7,9 +7,9 @@
                 "RefreshRate": 165,
                 "RefreshRateOption": "Limit",
                 "WindowHeight": 900,
-                "WindowStartPosX": 100,
-                "WindowStartPosY": 100,
-                "WindowWidth": 1600
+                "WindowStartPosX": 536,
+                "WindowStartPosY": 128,
+                "WindowWidth": 1407
             }
         }
     }

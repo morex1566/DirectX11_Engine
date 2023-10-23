@@ -1,5 +1,7 @@
 #pragma once
 
+class Window;
+
 class DirectX11 : public Object
 {
 public:
@@ -10,42 +12,36 @@ public:
 	DirectX11& operator=(DirectX11&&) noexcept				= default;
 	~DirectX11();
 
-	bool Initialize(HWND hWnd_,
-					unsigned int clientScreenWidth_,
-					unsigned int clientScreenHeight_,
-					bool isVsyncEnabled_,
-					Config::ERefreshRateOption option_,
-					unsigned int refreshRate_,
-					bool isFullScreenEnabled_);
+	bool Initialize(Window& window_, bool isVsyncEnabled_, Config::ERefreshRateOption option_, unsigned int refreshRate_);
 
 	ComPtr<ID3D11RenderTargetView>				CreateRenderTargetView();
-	void										ZeroRenderTargetView();
 	void										WaitForRefreshRate();
-	static void									OMSetRenderTarget();
-	static void									ResizeRenderTargetView(unsigned int width_, unsigned int height_);
+	void										BindRenderTarget();
+	void										ResizeRenderTargetView(unsigned int clientWidth_ = 0, unsigned int clientHeight_ = 0);
+	void										ClearRenderTargetView(float clearColor_[4] = nullptr);
 
-	static bool									GetIsVsyncEnabled();
+	bool										GetIsVsyncEnabled();
 	ComPtr<ID3D11Device>						GetDevice() const;
 	ComPtr<ID3D11DeviceContext>					GetDeviceContext() const;
 	ComPtr<ID3D11RenderTargetView>				GetRenderTargetView() const;
 
-	static void									SetIsVsyncEnabled(bool toggle_);
-	static void									SetRefreshRate(unsigned int refreshRate_);
-	static void									SetRefreshRateOption(Config::ERefreshRateOption option_);
+	void										SetIsVsyncEnabled(bool toggle_);
+	void										SetRefreshRate(unsigned int refreshRate_);
+	void										SetRefreshRateOption(Config::ERefreshRateOption option_);
 
 
 private:
-	static bool									_isVsyncEnabled;
-	static ComPtr<IDXGISwapChain>				_swapChain;
-	static ComPtr<ID3D11Device>					_device;
-	static ComPtr<ID3D11DeviceContext>			_deviceContext;
-	static ComPtr<ID3D11RenderTargetView>		_renderTargetView;
-	static ComPtr<ID3D11Texture2D>				_depthStencilBuffer;
-	static ComPtr<ID3D11DepthStencilState>		_depthStencilState;
-	static ComPtr<ID3D11DepthStencilView>		_depthStencilView;
-	static ComPtr<ID3D11RasterizerState>		_rasterState;
-	static unsigned int							_refreshRate;
-	static Config::ERefreshRateOption			_refreshRateOption;
+	bool										_isVsyncEnabled;
+	ComPtr<IDXGISwapChain>						_swapChain;
+	ComPtr<ID3D11Device>						_device;
+	ComPtr<ID3D11DeviceContext>					_deviceContext;
+	ComPtr<ID3D11RenderTargetView>				_renderTargetView;
+	ComPtr<ID3D11Texture2D>						_depthStencilBuffer;
+	ComPtr<ID3D11DepthStencilState>				_depthStencilState;
+	ComPtr<ID3D11DepthStencilView>				_depthStencilView;
+	ComPtr<ID3D11RasterizerState>				_rasterState;
+	unsigned int								_refreshRate;
+	Config::ERefreshRateOption					_refreshRateOption;
 
 	DXGI_SWAP_CHAIN_DESC						_swapChainDesc;
 	D3D11_TEXTURE2D_DESC						_depthBufferDesc;

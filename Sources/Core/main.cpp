@@ -6,7 +6,9 @@
 #include "Window.h"
 #include "Shader.h"
 
+// TODO : Need to better programming design.
 static bool IsLooping = true;
+static bool IsResizing = false;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 
@@ -17,15 +19,9 @@ LRESULT WINAPI WndProc(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_)
 
     switch (msg_)
     {
-    case WM_SIZE:
-	        if (wParam_ == SIZE_MINIMIZED) { return 0; }
-
-			Window::CalculateWindowScreen();
-			Window::CalculateClientScreen();
-			DirectX11::ResizeRenderTargetView(LOWORD(lParam_), HIWORD(lParam_));
-			DirectX11::OMSetRenderTarget();
-
-			return 0;
+		case WM_SIZE:
+			IsResizing = true;
+			break;
 
 	    case WM_SYSCOMMAND:
 	        if ((wParam_ & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
@@ -81,13 +77,10 @@ int main()
 
 	std::unique_ptr<DirectX11> directX11 = std::make_unique<DirectX11>();
 	{
-		if (!directX11->Initialize(window->GetHWND(),
-								   window->GetClientWidth(),
-								   window->GetClientHeight(),
+		if (!directX11->Initialize(*window,
 								   Config::GetIsVsyncEnabled(),
 								   Config::GetRefreshRateOption(),
-								   Config::GetRefreshRate(),
-								   Config::GetIsFullScreenEnabled())) { return 0; }
+								   Config::GetRefreshRate())) { return 0; }
 	}
 
 	std::unique_ptr<GUI> gui = std::make_unique<GUI>();
@@ -110,12 +103,21 @@ int main()
         {
             ::TranslateMessage(&msg);
             ::DispatchMessage(&msg);
+
+			if (IsResizing)
+			{
+				window->Resize();
+				directX11->ResizeRenderTargetView(window->GetClientWidth(), window->GetClientHeight());
+				IsResizing = false;
+			}
         }
 
 		window->Update();
 
-		directX11->OMSetRenderTarget();
-		gui->Render(directX11->GetDeviceContext().Get(), directX11->GetRenderTargetView().Get());
+		// Render interface.
+		directX11->BindRenderTarget();
+		directX11->ClearRenderTargetView();
+		gui->Render();
 
 		directX11->WaitForRefreshRate();
     }

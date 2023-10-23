@@ -44,7 +44,7 @@ bool GUI::Initialize(HWND hWnd_, ID3D11Device* device_, ID3D11DeviceContext* dev
 	return true;
 }
 
-void GUI::Render(ID3D11DeviceContext* deviceContext_, ID3D11RenderTargetView* renderTargetView_)
+void GUI::Render()
 {
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();

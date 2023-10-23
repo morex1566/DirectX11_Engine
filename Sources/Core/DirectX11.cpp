@@ -4,18 +4,6 @@
 #include "Console.h"
 #include "Window.h"
 
-bool                                    DirectX11::_isVsyncEnabled;
-ComPtr<IDXGISwapChain>                  DirectX11::_swapChain;
-ComPtr<ID3D11Device>                    DirectX11::_device;
-ComPtr<ID3D11DeviceContext>             DirectX11::_deviceContext;
-ComPtr<ID3D11RenderTargetView>          DirectX11::_renderTargetView;
-ComPtr<ID3D11Texture2D>                 DirectX11::_depthStencilBuffer;
-ComPtr<ID3D11DepthStencilState>         DirectX11::_depthStencilState;
-ComPtr<ID3D11DepthStencilView>          DirectX11::_depthStencilView;
-ComPtr<ID3D11RasterizerState>           DirectX11::_rasterState;
-unsigned int                            DirectX11::_refreshRate;
-Config::ERefreshRateOption              DirectX11::_refreshRateOption;
-
 
 DirectX11::~DirectX11()
 {
@@ -29,13 +17,7 @@ DirectX11::~DirectX11()
 }
 
 
-bool DirectX11::Initialize(HWND hWnd_,
-                           unsigned int clientScreenWidth_,
-                           unsigned int clientScreenHeight_,
-                           bool isVsyncEnabled_,
-                           Config::ERefreshRateOption option_,
-                           unsigned int refreshRate_,
-                           bool isFullScreenEnabled_)
+bool DirectX11::Initialize(Window& window_, bool isVsyncEnabled_, Config::ERefreshRateOption option_, unsigned int refreshRate_)
 {
 	HRESULT                         result;
     ComPtr<IDXGIFactory>			factory;
@@ -105,9 +87,9 @@ bool DirectX11::Initialize(HWND hWnd_,
     // Get maximum monitor's refresh rate.
     for (unsigned int i = 0; i < numModes; i++)
     {
-        if (displayModeList[i].Width == Window::GetWindowWidth())
+        if (displayModeList[i].Width == window_.GetWindowWidth())
         {
-            if (displayModeList[i].Height == Window::GetWindowHeight())
+            if (displayModeList[i].Height == window_.GetWindowHeight())
             {
                 unsigned int refreshRate = displayModeList[i].RefreshRate.Numerator / displayModeList[i].RefreshRate.Denominator;
                 _displayRefreshRate = (refreshRate > _displayRefreshRate) ? refreshRate : _displayRefreshRate;
@@ -142,14 +124,14 @@ bool DirectX11::Initialize(HWND hWnd_,
 	ZeroMemory(&_swapChainDesc, sizeof(_swapChainDesc));
 	{
         _swapChainDesc.BufferCount = 1;
-        _swapChainDesc.BufferDesc.Width = clientScreenWidth_;
-        _swapChainDesc.BufferDesc.Height = clientScreenHeight_;
+        _swapChainDesc.BufferDesc.Width = window_.GetClientWidth();
+        _swapChainDesc.BufferDesc.Height = window_.GetClientHeight();
         _swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
         _swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
         _swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
         _swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
         _swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        _swapChainDesc.OutputWindow = hWnd_;
+        _swapChainDesc.OutputWindow = window_.GetHWND();
         _swapChainDesc.SampleDesc.Count = 1;
         _swapChainDesc.SampleDesc.Quality = 0;
         _swapChainDesc.Windowed = TRUE;
@@ -241,28 +223,17 @@ ComPtr<ID3D11RenderTargetView> DirectX11::CreateRenderTargetView()
     return _renderTargetView;
 }
 
-void DirectX11::ZeroRenderTargetView()
-{
-	if (_renderTargetView)
-	{
-		_renderTargetView->Release();
-        _renderTargetView = nullptr;
-	}
-}
-
 void DirectX11::WaitForRefreshRate()
 {
     _isVsyncEnabled ? _swapChain->Present(1, 0) : _swapChain->Present(0, 0);
 }
 
-void DirectX11::OMSetRenderTarget()
+void DirectX11::BindRenderTarget()
 {
-    constexpr float cleanColor[4] = { 0.45f, 0.55f, 0.60f, 1.00f };
     _deviceContext->OMSetRenderTargets(1, _renderTargetView.GetAddressOf(), nullptr);
-    _deviceContext->ClearRenderTargetView(_renderTargetView.Get(), cleanColor);
 }
 
-void DirectX11::ResizeRenderTargetView(unsigned width_, unsigned height_)
+void DirectX11::ResizeRenderTargetView(unsigned clientWidth_, unsigned clientHeight_)
 {
     ComPtr<ID3D11Texture2D>         backBuffer;
     HRESULT                         result;
@@ -270,7 +241,7 @@ void DirectX11::ResizeRenderTargetView(unsigned width_, unsigned height_)
     if (_renderTargetView) { _renderTargetView->Release(); }
 
     // Resize the buffer.
-    _swapChain->ResizeBuffers(0, width_, height_, DXGI_FORMAT_UNKNOWN, 0);
+    _swapChain->ResizeBuffers(0, clientWidth_, clientHeight_, DXGI_FORMAT_UNKNOWN, 0);
 
     // Get the back buffer from swap chain.
     result = _swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(backBuffer.GetAddressOf()));
@@ -286,6 +257,20 @@ void DirectX11::ResizeRenderTargetView(unsigned width_, unsigned height_)
     {
         std::cout << "In ResizeRenderTargetView(), device->CreateRenderTargetView() is failed.";
         return;
+    }
+}
+
+void DirectX11::ClearRenderTargetView(float clearColor_[4])
+{
+    // Default color.
+    if (!clearColor_)
+    {
+        constexpr float cleanColor[4] = { 0.45f, 0.55f, 0.60f, 1.00f };
+        _deviceContext->ClearRenderTargetView(_renderTargetView.Get(), cleanColor);
+    }
+    else
+    {
+        _deviceContext->ClearRenderTargetView(_renderTargetView.Get(), clearColor_);
     }
 }
 
