@@ -224,28 +224,38 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="DirectX11.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Sources\$(TargetName)\PCH.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Sources\$(TargetName)\PCH.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Management.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp" />
     <ClInclude Include="..\..\Includes\json\json_fwd.hpp" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DirectX11.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GUI.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Management.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="PCH.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Window.h" />

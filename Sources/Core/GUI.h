@@ -1,5 +1,5 @@
 #pragma once
-class GUI : public Object
+class GUI : public Management
 {
 public:
 	GUI()										= default;

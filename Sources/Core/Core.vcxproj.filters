@@ -69,7 +69,7 @@
     <ClCompile Include="GUI.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="Management.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
@@ -79,6 +79,21 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Console.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,7 +110,7 @@
     <ClInclude Include="GUI.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
+    <ClInclude Include="Management.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
@@ -117,6 +132,21 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

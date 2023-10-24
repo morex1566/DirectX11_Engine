@@ -3,6 +3,7 @@
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+#pragma warning(disable: 26819)
 #pragma warning(disable: 26495)
 #pragma warning(disable: 4267)
 
@@ -50,4 +51,4 @@ using namespace Microsoft::WRL;
 #include "Console.h"
 #include "Utils.h"
 #include "Config.h"
-#include "Object.h"
+#include "Management.h"

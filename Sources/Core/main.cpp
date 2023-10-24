@@ -1,10 +1,15 @@
 #include "PCH.h"
+
+#include "Camera.h"
 #include "Console.h"
 #include "Config.h"
 #include "DirectX11.h"
 #include "GUI.h"
 #include "Window.h"
 #include "Shader.h"
+#include "GameObject.h"
+#include "Transform.h"
+
 
 // TODO : Need to better programming design.
 static bool IsLooping = true;
@@ -88,10 +93,20 @@ int main()
 		if (!gui->Initialize(window->GetHWND(), directX11->GetDevice().Get(), directX11->GetDeviceContext().Get())) { return 0; }
 	}
 
-	std::unique_ptr<Shader> shader = std::make_unique<Shader>();
+	//std::unique_ptr<Shader> shader = std::make_unique<Shader>();
+	//{
+	//	shader->Initialize(directX11->GetDevice().Get(), window->GetHWND(), ToWString(GET_SHADER_FILE_DIR("Unlit.hlsl")));
+	//}
+
+	std::vector<GameObject> gameObjects;
 	{
-		shader->Initialize(directX11->GetDevice().Get(), window->GetHWND(), ToWString(GET_SHADER_FILE_DIR("Unlit.hlsl")));
+		auto& camera = gameObjects.emplace_back(Camera());
+		{
+			camera.AddComponent<Transform>();
+		}
+
 	}
+
 
 	window->Show();
 

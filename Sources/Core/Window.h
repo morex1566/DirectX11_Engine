@@ -1,6 +1,6 @@
 #pragma once
 
-class Window : public Object
+class Window : public Management
 {
 public:
 	Window()										= default;

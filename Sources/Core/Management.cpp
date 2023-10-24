@@ -1,29 +1,29 @@
 #include "PCH.h"
-#include "Object.h"
+#include "Management.h"
 
-Object::Object()
+Management::Management()
 {
 	_isEnabled			= false;
 	_isActivated		= false;
 }
 
-Object::~Object()
+Management::~Management()
 {
 	_isEnabled			= false;
 	_isActivated		= false;
 }
 
-bool Object::CheckIsEnabled() const
+bool Management::CheckIsEnabled() const
 {
 	return _isEnabled;
 }
 
-bool Object::CheckIsActivated() const
+bool Management::CheckIsActivated() const
 {
 	return _isActivated;
 }
 
-void Object::SetActive(bool toggle_)
+void Management::SetActive(bool toggle_)
 {
 	_isActivated = toggle_;
 }

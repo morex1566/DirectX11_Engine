@@ -2,7 +2,7 @@
 
 class Window;
 
-class DirectX11 : public Object
+class DirectX11 : public Management
 {
 public:
 	enum class ERenderTargetViewType

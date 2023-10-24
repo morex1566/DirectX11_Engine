@@ -1,6 +1,11 @@
 #include "PCH.h"
 #include "Shader.h"
 
+Shader::Shader(const GameObject* owner_)
+	: Component(owner_)
+{
+}
+
 Shader::~Shader()
 {
 }
@@ -18,14 +23,14 @@ bool Shader::Initialize(ID3D11Device* device_, HWND hWnd_, const std::wstring& s
 	std::string pixelShaderEntryPoint = ToString(GetFileNameToWString(shaderFilePath_) + L"PixelShader").c_str();
 
 	// Compile the vertex shader code.
-	result = D3DCompileFromFile(shaderFilePath_.c_str(), nullptr, nullptr, vertexShaderEntryPoint.c_str(), "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
+	result = D3DCompileFromFile(shaderFilePath_.c_str(), nullptr, nullptr, vertexShaderEntryPoint.c_str(), "vs_4_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
 		&vertexShaderBuffer, &errorMsg);
 	if (FAILED(result))
 	{
 		// If the shader failed to compile.
 		if (errorMsg)
 		{
-			OutputShaderErrorMessage(errorMsg, hWnd_, shaderFilePath_);
+			outputShaderErrorMessage(errorMsg, hWnd_, shaderFilePath_);
 		}
 		// If simply could not find the shader file itself.
 		else
@@ -37,14 +42,14 @@ bool Shader::Initialize(ID3D11Device* device_, HWND hWnd_, const std::wstring& s
 	}
 
 	// Compile the pixel shader code.
-	result = D3DCompileFromFile(shaderFilePath_.c_str(), nullptr, nullptr, pixelShaderEntryPoint.c_str(), "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
+	result = D3DCompileFromFile(shaderFilePath_.c_str(), nullptr, nullptr, pixelShaderEntryPoint.c_str(), "ps_4_0", D3D10_SHADER_ENABLE_STRICTNESS, 0,
 		&pixelShaderBuffer, &errorMsg);
 	if (FAILED(result))
 	{
 		// If the shader failed to compile.
 		if (errorMsg)
 		{
-			OutputShaderErrorMessage(errorMsg, hWnd_, shaderFilePath_);
+			outputShaderErrorMessage(errorMsg, hWnd_, shaderFilePath_);
 		}
 		// If simply could not find the shader file itself.
 		else
@@ -118,16 +123,11 @@ bool Shader::Initialize(ID3D11Device* device_, HWND hWnd_, const std::wstring& s
 	return true;
 }
 
-void Shader::ZeroInstanceMemory()
-{
-}
-
 void Shader::Render()
 {
-
 }
 
-void Shader::OutputShaderErrorMessage(ID3D10Blob* errorMsg_, HWND hWnd_, const std::wstring& wstring_)
+void Shader::outputShaderErrorMessage(ID3D10Blob* errorMsg_, HWND hWnd_, const std::wstring& wstring_)
 {
 	char* compileErrors;
 	unsigned long long bufferSize, i;
