@@ -218,6 +218,8 @@ bool DirectX11::CreateDeviceAndSwapChain(HWND hWnd_, unsigned int clientScreenWi
 bool DirectX11::CreateRenderTargetView(D3D11_RENDER_TARGET_VIEW_DESC desc_)
 {
     ComPtr<ID3D11Texture2D>         backBuffer;
+    ComPtr<ID3D11RenderTargetView>  interfaceRenderTargetView;
+    ComPtr<ID3D11RenderTargetView>  modelRenderTargetView;
     HRESULT                         result;
 
     // Get the back buffer from swap chain.
@@ -229,7 +231,7 @@ bool DirectX11::CreateRenderTargetView(D3D11_RENDER_TARGET_VIEW_DESC desc_)
     }
 
     // Create the render target view.
-    result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, _interfaceRenderTargetView.GetAddressOf());
+    result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, interfaceRenderTargetView.GetAddressOf());
     if (FAILED(result))
     {
         std::cout << "device->CreateRenderTargetView() is failed.";
@@ -237,12 +239,15 @@ bool DirectX11::CreateRenderTargetView(D3D11_RENDER_TARGET_VIEW_DESC desc_)
     }
 
     // Create the render target view.
-    result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, _modelRenderTargetView.GetAddressOf());
+    result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, modelRenderTargetView.GetAddressOf());
     if (FAILED(result))
     {
         std::cout << "device->CreateRenderTargetView() is failed.";
         return false;
     }
+
+    _renderTargetViews.insert(std::pair<ERenderTargetViewType, ComPtr<ID3D11RenderTargetView>>(ERenderTargetViewType::Interface, interfaceRenderTargetView));
+    _renderTargetViews.insert(std::pair<ERenderTargetViewType, ComPtr<ID3D11RenderTargetView>>(ERenderTargetViewType::Model, modelRenderTargetView));
 
     return true;
 }
@@ -388,7 +393,9 @@ void DirectX11::WaitForRefreshRate()
 
 void DirectX11::BindRenderTarget(DirectX11::ERenderTargetViewType type_)
 {
-    _deviceContext->OMSetRenderTargets(1, _interfaceRenderTargetView.GetAddressOf(), nullptr);
+	_deviceContext->OMSetRenderTargets(1,
+									   _renderTargetViews[type_].GetAddressOf(),
+                                       type_ == ERenderTargetViewType::Interface ? nullptr : _depthStencilView.Get());
 }
 
 void DirectX11::ResizeRenderTargetView(unsigned clientWidth_, unsigned clientHeight_)
@@ -396,8 +403,10 @@ void DirectX11::ResizeRenderTargetView(unsigned clientWidth_, unsigned clientHei
     ComPtr<ID3D11Texture2D>         backBuffer;
     HRESULT                         result;
 
-    if (_interfaceRenderTargetView) { _interfaceRenderTargetView->Release(); }
-    if (_modelRenderTargetView) { _modelRenderTargetView->Release(); }
+    for (auto& renderTargetView : _renderTargetViews)
+    {
+        renderTargetView.second->Release();
+    }
 
     // Resize the buffer.
     _swapChain->ResizeBuffers(0, clientWidth_, clientHeight_, DXGI_FORMAT_UNKNOWN, 0);
@@ -410,20 +419,15 @@ void DirectX11::ResizeRenderTargetView(unsigned clientWidth_, unsigned clientHei
         return;
     }
 
-    // Create the render target view.
-    result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, _interfaceRenderTargetView.GetAddressOf());
-    if (FAILED(result))
+    for (auto& renderTargetView : _renderTargetViews)
     {
-        std::cout << "In ResizeRenderTargetView(), device->CreateRenderTargetView() is failed.";
-        return;
-    }
-
-    // Create the render target view.
-    result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, _modelRenderTargetView.GetAddressOf());
-    if (FAILED(result))
-    {
-        std::cout << "In ResizeRenderTargetView(), device->CreateRenderTargetView() is failed.";
-        return;
+        // Create the render target view.
+        result = _device->CreateRenderTargetView(backBuffer.Get(), nullptr, renderTargetView.second.GetAddressOf());
+        if (FAILED(result))
+        {
+            std::cout << "In ResizeRenderTargetView(), device->CreateRenderTargetView() is failed.";
+            return;
+        }
     }
 }
 
@@ -433,11 +437,11 @@ void DirectX11::ClearRenderTargetView(DirectX11::ERenderTargetViewType type_, fl
     if (!clearColor_)
     {
         constexpr float cleanColor[4] = { 0.45f, 0.55f, 0.60f, 1.00f };
-        _deviceContext->ClearRenderTargetView(_interfaceRenderTargetView.Get(), cleanColor);
+        _deviceContext->ClearRenderTargetView(_renderTargetViews[type_].Get(), cleanColor);
     }
     else
     {
-        _deviceContext->ClearRenderTargetView(_interfaceRenderTargetView.Get(), clearColor_);
+        _deviceContext->ClearRenderTargetView(_renderTargetViews[type_].Get(), clearColor_);
     }
 }
 
@@ -456,11 +460,6 @@ ComPtr<ID3D11Device> DirectX11::GetDevice() const
 ComPtr<ID3D11DeviceContext> DirectX11::GetDeviceContext() const
 {
     return _deviceContext;
-}
-
-ComPtr<ID3D11RenderTargetView> DirectX11::GetRenderTargetView() const
-{
-	return _interfaceRenderTargetView;
 }
 
 

@@ -35,7 +35,6 @@ public:
 	bool										GetIsVsyncEnabled();
 	ComPtr<ID3D11Device>						GetDevice() const;
 	ComPtr<ID3D11DeviceContext>					GetDeviceContext() const;
-	ComPtr<ID3D11RenderTargetView>				GetRenderTargetView() const;
 
 	void										SetIsVsyncEnabled(bool toggle_);
 	void										SetRefreshRate(unsigned int refreshRate_);
@@ -46,8 +45,6 @@ private:
 	ComPtr<IDXGISwapChain>												_swapChain;
 	ComPtr<ID3D11Device>												_device;
 	ComPtr<ID3D11DeviceContext>											_deviceContext;
-	ComPtr<ID3D11RenderTargetView>										_interfaceRenderTargetView;
-	ComPtr<ID3D11RenderTargetView>										_modelRenderTargetView;
 	std::map<ERenderTargetViewType, ComPtr<ID3D11RenderTargetView>>		_renderTargetViews;
 	ComPtr<ID3D11Texture2D>												_depthStencilBuffer;
 	ComPtr<ID3D11DepthStencilState>										_depthStencilState;
