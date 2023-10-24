@@ -53,8 +53,8 @@ public:
 	static void								SetIsVsyncEnabled(bool toggle_);
 	static void								SetIsFullScreenEnabled(bool toggle_);
 	static void								SetSwapChainDesc(DXGI_SWAP_CHAIN_DESC swapChainDesc_);
-	static void								SetDepthBufferDesc(D3D11_TEXTURE2D_DESC depthBufferDesc_);
-	static void								SetDepthStencilDesc(D3D11_DEPTH_STENCIL_DESC depthStencilDesc_);
+	static void								SetDepthStencilBufferDesc(D3D11_TEXTURE2D_DESC depthBufferDesc_);
+	static void								SetDepthStencilStateDesc(D3D11_DEPTH_STENCIL_DESC depthStencilDesc_);
 	static void								SetDepthStencilViewDesc(D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc_);
 	static void								SetRasterDesc(D3D11_RASTERIZER_DESC rasterizerDesc_);
 	static void								SetRefreshRateOption(ERefreshRateOption refreshRateOption_);

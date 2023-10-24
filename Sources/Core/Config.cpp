@@ -131,11 +131,11 @@ void Config::SetSwapChainDesc(DXGI_SWAP_CHAIN_DESC swapChainDesc_)
 {
 }
 
-void Config::SetDepthBufferDesc(D3D11_TEXTURE2D_DESC depthBufferDesc_)
+void Config::SetDepthStencilBufferDesc(D3D11_TEXTURE2D_DESC depthBufferDesc_)
 {
 }
 
-void Config::SetDepthStencilDesc(D3D11_DEPTH_STENCIL_DESC depthStencilDesc_)
+void Config::SetDepthStencilStateDesc(D3D11_DEPTH_STENCIL_DESC depthStencilDesc_)
 {
 }
 

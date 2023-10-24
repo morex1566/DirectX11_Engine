@@ -48,6 +48,8 @@ bool Window::Initialize(WNDPROC winProc_,
 		_hWnd = ::CreateWindowW(_wc.lpszClassName, _titleName.c_str(), WS_OVERLAPPEDWINDOW, windowStartPosX_, windowStartPosY_, _windowWidth, _windowHeight, nullptr, nullptr, _wc.hInstance, nullptr);
 	}
 
+	Resize();
+
 	// Setup the flag as true.
 	{
 		_isEnabled = true;

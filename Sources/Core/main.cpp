@@ -115,8 +115,8 @@ int main()
 		window->Update();
 
 		// Render interface.
-		directX11->BindRenderTarget();
-		directX11->ClearRenderTargetView();
+		directX11->BindRenderTarget(DirectX11::ERenderTargetViewType::Interface);
+		directX11->ClearRenderTargetView(DirectX11::ERenderTargetViewType::Interface);
 		gui->Render();
 
 		directX11->WaitForRefreshRate();
