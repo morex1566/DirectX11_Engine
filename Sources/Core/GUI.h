@@ -1,5 +1,5 @@
 #pragma once
-class GUI : public Management
+class GUI
 {
 public:
 	GUI()										= default;
@@ -10,6 +10,6 @@ public:
 	~GUI();
 
 	bool Initialize(HWND hWnd_, ID3D11Device* device_, ID3D11DeviceContext* deviceContext_);
-	void Render();
+	void Draw();
 };
 

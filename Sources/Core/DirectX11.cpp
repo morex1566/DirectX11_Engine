@@ -1,3 +1,6 @@
+#pragma warning (disable : 6001)
+#pragma warning (disable : 6385)
+
 #include "PCH.h"
 #include "DirectX11.h"
 #include "Config.h"
@@ -125,23 +128,35 @@ bool DirectX11::Initialize(Window& window_, bool isVsyncEnabled_, Config::ERefre
     _supfeatureLevels[1] = D3D_FEATURE_LEVEL_11_0;
     _currFeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
-    if(!CreateDeviceAndSwapChain(window_.GetHWND(), window_.GetClientWidth(), window_.GetClientHeight())) { return false; }
+    if(!CreateDeviceAndSwapChain(window_.GetHWND(), window_.GetClientWidth(), window_.GetClientHeight()))
+    {
+	    return false;
+    }
 
-    if(!CreateRenderTargetView()) { return false; }
+    if(!CreateRenderTargetView())
+    {
+	    return false;
+    }
 
-    //if(!CreateDepthStencilBuffer(window_.GetClientWidth(), window_.GetClientHeight())) { return false; }
+    if(!CreateDepthStencilBuffer(window_.GetClientWidth(), window_.GetClientHeight()))
+    {
+	    return false;
+    }
 
-    //if(!CreateDepthStencilState()) { return false; }
+    if(!CreateDepthStencilState())
+    {
+	    return false;
+    }
 
-    //if(!CreateDepthStencilView()) { return false; }
+    if(!CreateDepthStencilView())
+    {
+	    return false;
+    }
 
-    //if(!CreateRasterizerState()) { return false; }
-
-    // Setup the flag as true.
-	{
-        _isEnabled = true;
-        _isActivated = true;
-	}
+    if(!CreateRasterizerState())
+    {
+	    return false;
+    }
 
     return true;
 }
@@ -393,9 +408,24 @@ void DirectX11::WaitForRefreshRate()
 
 void DirectX11::BindRenderTarget(DirectX11::ERenderTargetViewType type_)
 {
-	_deviceContext->OMSetRenderTargets(1,
-									   _renderTargetViews[type_].GetAddressOf(),
-                                       type_ == ERenderTargetViewType::Interface ? nullptr : _depthStencilView.Get());
+    if (type_ == ERenderTargetViewType::All)
+    {
+        ID3D11RenderTargetView* renderTargetViews[2];
+        int                     i = 0;
+        for (auto& renderTargetView : _renderTargetViews)
+        {
+            renderTargetViews[i] = renderTargetView.second.Get();
+            i++;
+        }
+
+        _deviceContext->OMSetRenderTargets(2, renderTargetViews, _depthStencilView.Get());
+    }
+    else
+    {
+        _deviceContext->OMSetRenderTargets(1,
+            _renderTargetViews[type_].GetAddressOf(),
+            type_ == ERenderTargetViewType::Interface ? nullptr : _depthStencilView.Get());
+    }
 }
 
 void DirectX11::ResizeRenderTargetView(unsigned clientWidth_, unsigned clientHeight_)

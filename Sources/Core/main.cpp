@@ -6,7 +6,6 @@
 #include "DirectX11.h"
 #include "GUI.h"
 #include "Window.h"
-#include "Shader.h"
 #include "GameObject.h"
 #include "Transform.h"
 
@@ -93,21 +92,6 @@ int main()
 		if (!gui->Initialize(window->GetHWND(), directX11->GetDevice().Get(), directX11->GetDeviceContext().Get())) { return 0; }
 	}
 
-	//std::unique_ptr<Shader> shader = std::make_unique<Shader>();
-	//{
-	//	shader->Initialize(directX11->GetDevice().Get(), window->GetHWND(), ToWString(GET_SHADER_FILE_DIR("Unlit.hlsl")));
-	//}
-
-	std::vector<GameObject> gameObjects;
-	{
-		auto& camera = gameObjects.emplace_back(Camera());
-		{
-			camera.AddComponent<Transform>();
-		}
-
-	}
-
-
 	window->Show();
 
 	// main loop
@@ -129,11 +113,19 @@ int main()
 
 		window->Update();
 
-		// Render interface.
+		// Draw model vertex.
+		directX11->BindRenderTarget(DirectX11::ERenderTargetViewType::Model);
+		directX11->ClearRenderTargetView(DirectX11::ERenderTargetViewType::Model);
+
+		// Draw interface vertex.
 		directX11->BindRenderTarget(DirectX11::ERenderTargetViewType::Interface);
 		directX11->ClearRenderTargetView(DirectX11::ERenderTargetViewType::Interface);
-		gui->Render();
+		gui->Draw();
 
+		// Bind all of ID3D11RenderTargetView
+		directX11->BindRenderTarget(DirectX11::ERenderTargetViewType::All);
+
+		// Render all of ID3D11RenderTargetView.
 		directX11->WaitForRefreshRate();
     }
 

@@ -72,9 +72,6 @@
     <ClCompile Include="Management.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Config.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -111,9 +108,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Management.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Type.h">

@@ -12,10 +12,10 @@ public:
 
 public:
 	Mesh(const GameObject* owner_);
-	Mesh(const Mesh&)						= delete;
-	Mesh& operator=(const Mesh&)			= delete;
-	Mesh(Mesh&&) noexcept					= delete;
-	Mesh& operator=(Mesh&&) noexcept		= delete;
+	Mesh(const Mesh&)						= default;
+	Mesh& operator=(const Mesh&)			= default;
+	Mesh(Mesh&&) noexcept					= default;
+	Mesh& operator=(Mesh&&) noexcept		= default;
 	~Mesh() override;
 
 	bool Initialize();

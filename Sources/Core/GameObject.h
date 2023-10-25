@@ -18,9 +18,6 @@ public:
 	T&													AddComponent();
 	void												DeleteComponent();
 
-	template <class T>
-	std::vector<Component&>								FindComponents();
-
 private:
 	std::vector<Component>								_components;
 	std::vector<GameObject>								_children;
@@ -30,11 +27,7 @@ private:
 template <class T>
 T& GameObject::AddComponent()
 {
-	return _components.emplace_back(T());
-}
+	_components.emplace_back(T(this));
 
-template <class T>
-std::vector<Component&> GameObject::FindComponents()
-{
-	return std::vector<Component&>();
+	return static_cast<T&>(_components.back());
 }

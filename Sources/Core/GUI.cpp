@@ -35,16 +35,10 @@ bool GUI::Initialize(HWND hWnd_, ID3D11Device* device_, ID3D11DeviceContext* dev
 	ImGui_ImplWin32_Init(hWnd_);
 	ImGui_ImplDX11_Init(device_, deviceContext_);
 
-	// Setup the flag as true.
-	{
-		_isEnabled = true;
-		_isActivated = true;
-	}
-
 	return true;
 }
 
-void GUI::Render()
+void GUI::Draw()
 {
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
@@ -58,7 +52,7 @@ void GUI::Render()
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-	// Update and Render additional Platform Windows
+	// Update and Draw additional Platform Windows
 	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		ImGui::UpdatePlatformWindows();

@@ -50,12 +50,6 @@ bool Window::Initialize(WNDPROC winProc_,
 
 	Resize();
 
-	// Setup the flag as true.
-	{
-		_isEnabled = true;
-		_isActivated = true;
-	}
-
 	return true;
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-class Camera : public GameObject, public Management
+class Camera : public GameObject
 {
 public:
 	Camera()									= default;

@@ -12,7 +12,8 @@ public:
 	bool				CheckIsEnabled() const;
 	bool				CheckIsActivated() const;
 
-	void				SetActive(bool toggle_);
+	void				SetIsActivated(bool toggle_);
+	void				SetIsEabled(bool toggle_);
 
 protected:
 	bool				_isEnabled;

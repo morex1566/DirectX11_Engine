@@ -6,10 +6,10 @@ class Component
 {
 public:
 	Component(const GameObject* owner_);
-	Component(const Component&)						= delete;
-	Component& operator=(const Component&)			= delete;
-	Component(Component&&) noexcept					= delete;
-	Component& operator=(Component&&) noexcept		= delete;
+	Component(const Component&)						= default;
+	Component& operator=(const Component&)			= default;
+	Component(Component&&) noexcept					= default;
+	Component& operator=(Component&&) noexcept		= default;
 	virtual ~Component();
 
 	virtual void Start();

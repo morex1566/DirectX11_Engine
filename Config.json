@@ -6,10 +6,10 @@
                 "IsVsyncEnabled": true,
                 "RefreshRate": 165,
                 "RefreshRateOption": "Limit",
-                "WindowHeight": 900,
-                "WindowStartPosX": 136,
-                "WindowStartPosY": 130,
-                "WindowWidth": 1716
+                "WindowHeight": 682,
+                "WindowStartPosX": 360,
+                "WindowStartPosY": 218,
+                "WindowWidth": 1298
             }
         }
     }

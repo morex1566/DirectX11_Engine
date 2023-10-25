@@ -237,7 +237,6 @@
     </ClCompile>
     <ClCompile Include="Management.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -254,7 +253,6 @@
     <ClInclude Include="Management.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PCH.h" />
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="Utils.h" />
