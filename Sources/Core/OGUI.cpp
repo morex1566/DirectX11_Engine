@@ -1,14 +1,37 @@
 #include "PCH.h"
-#include "GUI.h"
+#include "OGUI.h"
 
-GUI::~GUI()
+#include "OApplication.h"
+#include "ODirectX11.h"
+#include "OWindow.h"
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
+
+
+OGUI::OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11)
+{
+	Window = &InWindow;
+	DirectX11 = &InDirectX11;
+}
+
+OGUI::~OGUI()
 {
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 }
 
-bool GUI::Initialize(HWND hWnd_, ID3D11Device* device_, ID3D11DeviceContext* deviceContext_)
+OApplication::EHandleResultType OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
+{
+	if (ImGui_ImplWin32_WndProcHandler(InHWnd, InMsg, InWParam, InLParam))
+	{
+		return EHandleResultType::Success;
+	}
+
+	return EHandleResultType::Success;
+}
+
+Object::EHandleResultType OGUI::Initialize()
 {
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -32,13 +55,35 @@ bool GUI::Initialize(HWND hWnd_, ID3D11Device* device_, ID3D11DeviceContext* dev
 	}
 
 	// Setup Platform/Renderer backends
-	ImGui_ImplWin32_Init(hWnd_);
-	ImGui_ImplDX11_Init(device_, deviceContext_);
+	ImGui_ImplWin32_Init(Window->GetHWnd());
+	ImGui_ImplDX11_Init(&DirectX11->GetDevice(), &DirectX11->GetDeviceContext());
 
-	return true;
+	return EHandleResultType::Success;
 }
 
-void GUI::Draw()
+void OGUI::Release()
+{
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+}
+
+void OGUI::Start()
+{
+	Object::Start();
+}
+
+void OGUI::Tick()
+{
+	Object::Tick();
+}
+
+void OGUI::End()
+{
+	Object::End();
+}
+
+void OGUI::Render()
 {
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
@@ -52,7 +97,7 @@ void GUI::Draw()
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-	// Update and Draw additional Platform Windows
+	// Update and Render additional Platform Windows
 	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		ImGui::UpdatePlatformWindows();

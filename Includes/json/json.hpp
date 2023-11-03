@@ -1458,7 +1458,7 @@ NLOHMANN_JSON_NAMESPACE_END
     JSON_HEDLEY_INTEL_VERSION_CHECK(13,0,0) || \
     JSON_HEDLEY_ARM_VERSION_CHECK(5,4,0) || \
     JSON_HEDLEY_MCST_LCC_VERSION_CHECK(1,25,10)
-    #define JSON_HEDLEY_SENTINEL(position) __attribute__((__sentinel__(position)))
+    #define JSON_HEDLEY_SENTINEL(_position) __attribute__((__sentinel__(_position)))
 #else
     #define JSON_HEDLEY_SENTINEL(position)
 #endif
@@ -3025,7 +3025,7 @@ NLOHMANN_JSON_NAMESPACE_BEGIN
 namespace detail
 {
 
-/// struct to capture the start position of the current token
+/// struct to capture the start _position of the current token
 struct position_t
 {
     /// the total number of characters read
@@ -8740,7 +8740,7 @@ scan_number_done:
     // diagnostics
     /////////////////////
 
-    /// return position of last read token
+    /// return _position of last read token
     constexpr position_t get_position() const noexcept
     {
         return position;
@@ -8911,7 +8911,7 @@ scan_number_done:
     /// whether the next get() call should just return current
     bool next_unget = false;
 
-    /// the start position of the current token
+    /// the start _position of the current token
     position_t position {};
 
     /// raw input token string (for error messages)
@@ -14397,8 +14397,8 @@ class json_pointer
         }
 
         // extract the reference tokens:
-        // - slash: position of the last read slash (or end of string)
-        // - start: position after the previous slash
+        // - slash: _position of the last read slash (or end of string)
+        // - start: _position after the previous slash
         for (
             // search for the first slash after the first character
             std::size_t slash = reference_string.find_first_of('/', 1),
@@ -17807,7 +17807,7 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
 
     // v = buf * 10^(n-k)
     // k is the length of the buffer (number of decimal digits)
-    // n is the position of the decimal point relative to the start of the buffer.
+    // n is the _position of the decimal point relative to the start of the buffer.
 
     if (k <= n && n <= max_exp)
     {
@@ -18418,7 +18418,7 @@ class serializer
                         bytes = 0;
                     }
 
-                    // remember the byte position of this accept
+                    // remember the byte _position of this accept
                     bytes_after_last_accept = bytes;
                     undumped_chars = 0;
                     break;

@@ -3,52 +3,152 @@
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-#pragma warning(disable: 26819)
-#pragma warning(disable: 26495)
-#pragma warning(disable: 4267)
-
-
 #define WIN32_LEAN_AND_MEAN
-#define GET_SHADER_FILE_DIR(SHADER_FILE_NAME_) std::string(SHADERS_FOLDER_DIR) + SHADER_FILE_NAME_
 
-#include <d3d11.h>
-#include <d3dcompiler.h>
-#include <DirectXMath.h>
-#include <iostream>
-#include <stack>
-#include <unordered_set>
-#include <unordered_map>
-#include <queue>
-#include <vector>
-#include <iomanip>
-#include <memory>
-#include <time.h>
 #include <Windows.h>
-#include <wrl/client.h>
-#include <sstream>
-#include <conio.h>
+#include <memory>
+#include <cstdint>
+#include <vector>
+#include <queue>
+#include <string>
+#include <map>
+#include <d3d11.h>
+#include <iostream>
 #include <fstream>
-#include <codecvt>
-#include <locale>
-#include <chrono>
+#include <sstream>
+#include <filesystem>
+#include <directxmath.h>
 #include <wrl/client.h>
-
-#include "imgui/imgui.h"
-#include "imgui/imgui_stdlib.h"
-#include "imgui/imgui_impl_win32.h"
-#include "imgui/imgui_impl_dx11.h"
-#include "imgui/imgui_impl_dx12.h"
-
-#include "json/json_fwd.hpp"
-#include "json/json.hpp"
 
 using namespace DirectX;
-using namespace nlohmann;
 using namespace Microsoft::WRL;
+using int8					= int8_t;
+using uint8					= uint8_t;
+using int16					= int16_t;
+using uint16				= uint16_t;
+using int32					= int32_t;
+using uint32				= uint32_t;
+using int64					= int64_t;
+using uint64				= uint64_t;
 
+#include "Types.h"
+#include "Macros.h"
 
-#include "Type.h"
-#include "Console.h"
-#include "Utils.h"
-#include "Config.h"
-#include "Management.h"
+static std::string ToString(const std::wstring& wstring_)
+{
+    char multiByteBuffer[256] = "";
+
+    WideCharToMultiByte(CP_ACP, 0, wstring_.c_str(), -1, multiByteBuffer, sizeof(multiByteBuffer), nullptr, nullptr);
+
+    return std::string(multiByteBuffer);
+}
+
+static std::wstring ToWString(const std::string& string_)
+{
+    wchar_t wideByteBuffer[256] = L"";
+
+    MultiByteToWideChar(CP_ACP, 0, string_.c_str(), -1, wideByteBuffer, sizeof(wideByteBuffer) / sizeof(wideByteBuffer[0]));
+
+    return std::wstring(wideByteBuffer);
+}
+
+static std::string GetFileNameToString(const std::string& path_)
+{
+    // Create the file path string.
+    std::filesystem::path path = path_;
+
+    // Extract the file name.
+    std::string fileName = path.filename().string();
+
+    // Erase the file extension.
+    size_t dotPosition = fileName.find_last_of('.');
+    if (dotPosition != std::string::npos) {
+        fileName = fileName.substr(0, dotPosition);
+    }
+
+    return fileName;
+}
+
+static std::wstring GetFileNameToWString(const std::wstring& path_)
+{
+    // Create the file path string.
+    std::filesystem::path path = path_;
+
+    // Extract the file name.
+    std::wstring fileName = path.filename().wstring();
+
+    // Erase the file extension.
+    size_t dotPosition = fileName.find_last_of(L'.');
+    if (dotPosition != std::wstring::npos) {
+        fileName = fileName.substr(0, dotPosition);
+    }
+
+    return fileName;
+}
+
+static std::string GetCurrentTimeAsString() {
+
+    auto now = std::chrono::system_clock::now();
+    std::time_t time = std::chrono::system_clock::to_time_t(now);
+    struct std::tm timeinfo;
+    errno_t errorCode = localtime_s(&timeinfo, &time);
+
+    if (errorCode == 0)
+    {
+        int hours = timeinfo.tm_hour;
+        int minutes = timeinfo.tm_min;
+        int seconds = timeinfo.tm_sec;
+
+        std::stringstream timeString;
+        timeString << std::setfill('0') << std::setw(2) << hours << ":"
+            << std::setfill('0') << std::setw(2) << minutes << ":"
+            << std::setfill('0') << std::setw(2) << seconds;
+
+        return timeString.str();
+    }
+
+    return "00:00:00";
+}
+
+static std::wstring GetCurrentTimeAsWString() {
+    auto now = std::chrono::system_clock::now();
+    std::time_t time = std::chrono::system_clock::to_time_t(now);
+    struct std::tm timeinfo;
+    errno_t errorCode = localtime_s(&timeinfo, &time);
+
+    if (errorCode == 0)
+    {
+        int hours = timeinfo.tm_hour;
+        int minutes = timeinfo.tm_min;
+        int seconds = timeinfo.tm_sec;
+
+        std::wstringstream timeString;
+        timeString << std::setfill(L'0') << std::setw(2) << hours << L":"
+            << std::setfill(L'0') << std::setw(2) << minutes << L":"
+            << std::setfill(L'0') << std::setw(2) << seconds;
+
+        return timeString.str();
+    }
+
+    return L"00:00:00";
+}
+
+static float ToRadian(float degree_)
+{
+    return degree_ * 0.0174532925f;
+}
+
+static float ToDegree(float radian_)
+{
+    return radian_ * (180.0f / 3.14159265f);
+}
+
+static uint32 GetSystemWidth()
+{
+    return GetSystemMetrics(SM_CXSCREEN);
+}
+
+static uint32 GetSystemHeight()
+{
+	return GetSystemMetrics(SM_CYSCREEN);
+}

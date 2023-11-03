@@ -22,11 +22,11 @@
     <Filter Include="Includes\json">
       <UniqueIdentifier>{bbfd4c0a-7673-4f65-a54a-4b1c442058c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mains">
+      <UniqueIdentifier>{3ae0a4fc-d3a7-49c4-b031-087643f61199}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Includes\imgui\imgui_widgets.cpp">
       <Filter>Includes\imgui</Filter>
     </ClCompile>
@@ -39,16 +39,7 @@
     <ClCompile Include="..\..\Includes\imgui\imgui_impl_win32.cpp">
       <Filter>Includes\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx12.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx11.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx10.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Includes\imgui\imgui_impl_dx9.cpp">
       <Filter>Includes\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Includes\imgui\imgui_draw.cpp">
@@ -60,87 +51,90 @@
     <ClCompile Include="..\..\Includes\imgui\imgui.cpp">
       <Filter>Includes\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
+    <ClCompile Include="OApplication.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="DirectX11.cpp">
+    <ClCompile Include="OWindow.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="GUI.cpp">
+    <ClCompile Include="Object.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Management.cpp">
+    <ClCompile Include="ODirectX11.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Config.cpp">
+    <ClCompile Include="OConsole.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
+    <ClCompile Include="OWorld.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="OGameObject.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
+    <ClCompile Include="GCamera.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
+    <ClCompile Include="GTestObject.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
+    <ClCompile Include="OShader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="Main.cpp">
+      <Filter>Mains</Filter>
+    </ClCompile>
+    <ClCompile Include="OGUI.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PCH.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX11.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Management.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Type.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Includes\json\json.hpp">
       <Filter>Includes\json</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Includes\json\json_fwd.hpp">
       <Filter>Includes\json</Filter>
     </ClInclude>
-    <ClInclude Include="Config.h">
+    <ClInclude Include="PCH.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Console.h">
+    <ClInclude Include="OApplication.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="OWindow.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="Object.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="ODirectX11.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
+    <ClInclude Include="OConsole.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="OWorld.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OGameObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GCamera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GTestObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OShader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Macros.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OGUI.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
