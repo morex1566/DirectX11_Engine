@@ -1,8 +1,7 @@
 #include "PCH.h"
-#include "OGUI.h"
-
 #include "OApplication.h"
 #include "ODirectX11.h"
+#include "OGUI.h"
 #include "OWindow.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
@@ -76,6 +75,13 @@ void OGUI::Start()
 void OGUI::Tick()
 {
 	Object::Tick();
+
+	DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Interface);
+	DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Interface);
+	DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Interface);
+	DirectX11->SetViewport(ODirectX11::ERenderModeType::Interface);
+
+	Render();
 }
 
 void OGUI::End()

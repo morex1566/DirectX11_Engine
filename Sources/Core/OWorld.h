@@ -2,10 +2,14 @@
 #include "Object.h"
 #include "OGameObject.h"
 
+class GCamera;
+class OWindow;
+class ODirectX11;
+
 class OWorld : public Object
 {
 public:
-	OWorld()												= default;
+	OWorld(const OWindow& InWindow, const ODirectX11& InDirectX11, const GCamera& InCamera);
 	OWorld(const OWorld&)									= default;
 	OWorld& operator=(const OWorld&)						= default;
 	OWorld(OWorld&&) noexcept								= default;
@@ -34,6 +38,10 @@ public:
 protected:
 
 private:
+	const OWindow*											Window;
+	const ODirectX11*										DirectX11;
+	const GCamera*											Camera;
+
 	/**
 	 * \brief All of gameobject in world are here.
 	 */

@@ -35,9 +35,9 @@ public:
 	 * \brief Called only once immediately after the main loop is over.
 	 */
 	void													End() override;
+private:
 	void													Render();
 
-private:
 	const OWindow*											Window; // ReadOnly
 	const ODirectX11*										DirectX11; // ReadOnly
 };

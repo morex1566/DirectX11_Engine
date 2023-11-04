@@ -7,7 +7,10 @@
 
 uint8					OWindow::bIsScreenSizeChanged;
 						
-OWindow::OWindow()		
+OWindow::OWindow()
+	: Object(),
+	ClientScreenWidth(0), ClientScreenHeight(0), WindowScreenWidth(0), WindowScreenHeight(0),
+	HWnd(nullptr), WCEX()
 {
 }
 
@@ -57,13 +60,14 @@ LRESULT WINAPI OWindow::WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, L
 	ODirectX11::MessageHandler(HWnd, Msg, WParam, LParam);
 	OGUI::MessageHandler(HWnd, Msg, WParam, LParam);
 	GCamera::MessageHandler(HWnd, Msg, WParam, LParam);
-	
 
 	return ::DefWindowProcW(HWnd, Msg, WParam, LParam);
 }
 
 Object::EHandleResultType OWindow::Initialize()
 {
+	Object::Initialize();
+
 	// Set Window Setting
 	uint32 WindowScreenWidth, WindowScreenHeight;
 	uint32 WindowStartPosX, WindowStartPosY;
@@ -119,17 +123,23 @@ Object::EHandleResultType OWindow::Initialize()
 
 void OWindow::Release()
 {
+	Object::Release();
+
 	::DestroyWindow(HWnd);
 	::UnregisterClassW(WCEX.lpszClassName, WCEX.hInstance);
 }
 
 void OWindow::Start()
 {
+	Object::Start();
+
 	::ShowWindow(HWnd, SW_SHOWDEFAULT);
 }
 
 void OWindow::Tick()
 {
+	Object::Tick();
+
 	if (bIsScreenSizeChanged == 1)
 	{
 		Resize();

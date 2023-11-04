@@ -4,7 +4,7 @@
 class OConsole : public Object
 {
 public:
-	OConsole()													= default;
+	OConsole();
 	OConsole(const OConsole&)									= default;
 	OConsole& operator=(const OConsole&)						= default;
 	OConsole(OConsole&&) noexcept								= default;

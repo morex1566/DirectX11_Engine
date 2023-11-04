@@ -6,14 +6,15 @@
 uint8							ODirectX11::bIsScreenSizeChanged = 0;
 uint8							ODirectX11::bIsVsyncEnabled = 0;
 
-ODirectX11::ODirectX11(const OWindow& Window): Window(&Window), SwapChainDesc(), Viewport2D(), DepthStencilBufferDesc2D(),
+ODirectX11::ODirectX11(const OWindow& Window): Window(&Window), SwapChainDesc(), FeatureLevel(), Viewport2D(),
+                                               DepthStencilBufferDesc2D(),
                                                DepthStencilStateDesc2D(),
                                                DepthStencilViewDesc2D(),
                                                RasterizerDesc2D(), Viewport3D(),
                                                DepthStencilBufferDesc3D(),
                                                DepthStencilStateDesc3D(),
                                                DepthStencilViewDesc3D(),
-                                               RasterizerDesc3D()
+                                               RasterizerDesc3D(), AdapterDesc(), DisplayMaxFPS(0)
 {
 }
 
@@ -38,7 +39,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	ComPtr<IDXGIAdapter>				Adapter;
 	ComPtr<IDXGIOutput>					AdapterOutput;
 	std::unique_ptr<DXGI_MODE_DESC[]>	DisplayModeList;
-	uint32								NumModes;
+	UINT								NumModes;
 
 
 	// Create a DirectX graphics interface factory.
@@ -66,6 +67,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	}
 
 	// Get the number of modes that fit the DXGI_FORMAT_R8G8B8A8_UNORM display format for the adapter output (monitor).
+	NumModes = 0;
 	Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, nullptr);
 	if (FAILED(Result))
 	{
@@ -400,9 +402,14 @@ void ODirectX11::Tick()
 		Resize();
 		bIsScreenSizeChanged = 0;
 	}
+
+	ClearRenderTargetView(ERenderModeType::Model);
+	ClearDepthStencilView(ERenderModeType::Model);
+	ClearRenderTargetView(ERenderModeType::Interface);
+	ClearDepthStencilView(ERenderModeType::Interface);
 }
 
-void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor)
+void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor) const
 {
 	float ClearColor[4];
 
@@ -421,7 +428,7 @@ void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearC
 	}
 }
 
-void ODirectX11::ClearDepthStencilView(ERenderModeType Type)
+void ODirectX11::ClearDepthStencilView(ERenderModeType Type) const
 {
 	if (Type == ERenderModeType::Interface)
 	{
@@ -445,7 +452,7 @@ void ODirectX11::Draw()
 	}
 }
 
-void ODirectX11::SetRenderTargets(ERenderModeType InType)
+void ODirectX11::SetRenderTargets(ERenderModeType InType) const
 {
 	if (InType == ERenderModeType::Interface)
 	{
@@ -457,7 +464,7 @@ void ODirectX11::SetRenderTargets(ERenderModeType InType)
 	}
 }
 
-void ODirectX11::SetDepthStencilState(ERenderModeType InType)
+void ODirectX11::SetDepthStencilState(ERenderModeType InType) const
 {
 	if (InType == ERenderModeType::Interface)
 	{
@@ -469,8 +476,8 @@ void ODirectX11::SetDepthStencilState(ERenderModeType InType)
 	}
 }
 
-void ODirectX11::SetRasterizerState(ERenderModeType InType)
-{
+void ODirectX11::SetRasterizerState(ERenderModeType InType) const
+{ 
 	if (InType == ERenderModeType::Interface)
 	{
 		DeviceContext->RSSetState(RasterizerState2D.Get());
@@ -481,7 +488,7 @@ void ODirectX11::SetRasterizerState(ERenderModeType InType)
 	}
 }
 
-void ODirectX11::SetViewport(ERenderModeType InType)
+void ODirectX11::SetViewport(ERenderModeType InType) const
 {
 	if (InType == ERenderModeType::Interface)
 	{

@@ -34,15 +34,10 @@ public:
 	XMMATRIX										GetViewMatrix() const;
 	XMMATRIX										GetProjectionMatrix() const;
 	XMMATRIX										GetOrthoMatrix() const;
-	XMFLOAT3										GetPosition() const;
-	XMFLOAT3										GetRotation() const;
 	float											GetFOV() const;
 	float											GetScreenAspect() const;
 	float											GetScreenNear() const;
 	float											GetScreenDepth() const;
-
-
-	void											SetPosition(XMFLOAT3 InPosition);
 
 private:
 	/**
@@ -56,8 +51,6 @@ private:
 
 	const OWindow*									Window;
 
-	XMFLOAT3										Position;
-	XMFLOAT3										Rotation;
 	float											FOV;
 	float											ScreenAspect;
 	float											ScreenNear;

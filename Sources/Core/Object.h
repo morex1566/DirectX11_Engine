@@ -8,15 +8,15 @@ public:
 		Success,
 	};
 
-	Object()									= default;
+	Object();
 	Object(const Object&)						= default;
 	Object& operator=(const Object&)			= default;
 	Object(Object&&) noexcept					= default;
 	Object& operator=(Object&&) noexcept		= default;
 	virtual ~Object()							= default;
 
-	virtual EHandleResultType					Initialize() = 0;
-	virtual void								Release() = 0;
+	virtual EHandleResultType					Initialize();
+	virtual void								Release();
 	/**
 	 * \brief Called only once before entering the main loop.
 	 */
@@ -30,8 +30,16 @@ public:
 	 */
 	virtual void								End();
 
-protected:
+	uint8										CheckIsEnbled() const;
 
+	std::wstring								GetName() const;
+
+	void										SetIsEnabled(uint8 InOnOff);
+	void										SetName(const std::wstring& InName);
+
+protected:
+	uint8										bIsEnabled;
+	std::wstring								Name;
 
 private:
 	

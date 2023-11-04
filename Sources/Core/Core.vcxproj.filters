@@ -78,13 +78,22 @@
     <ClCompile Include="GTestObject.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="OShader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Mains</Filter>
     </ClCompile>
     <ClCompile Include="OGUI.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CTransform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CMesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CShader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,9 +134,6 @@
     <ClInclude Include="GTestObject.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="OShader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Macros.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -135,6 +141,18 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OGUI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OComponent.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CTransform.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CMesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CShader.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

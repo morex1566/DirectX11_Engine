@@ -1,10 +1,8 @@
 #pragma once
 #include "GCamera.h"
-#include "GTestObject.h"
 #include "Object.h"
 #include "ODirectX11.h"
 #include "OGUI.h"
-#include "OShader.h"
 #include "OWindow.h"
 #include "OWorld.h"
 
@@ -23,6 +21,8 @@ public:
 	 */
 	static void												Quit();
 
+	static uint8											CheckIsPlaying();
+
 	EHandleResultType										Initialize() override;
 	void													Release() override;
 	/**
@@ -38,10 +38,7 @@ public:
 	 */
 	void													End() override;
 
-	uint8													GetIsPlaying() const;
-	const OWindow&											GetWindow() const;
-
-protected:
+	void													Draw();
 
 private:
 	OApplication();
@@ -63,17 +60,13 @@ private:
 	 */
 	std::shared_ptr<GCamera>								Camera;
 	/**
-	 * \brief Test 2D object.
-	 */
-	std::shared_ptr<GTestObject>							TestObject;
-	/**
-	 * \brief Test shader instance.
-	 */
-	std::shared_ptr<OShader>								Shader;
-	/**
 	 * \brief Engine's gui manager instance.
 	 */
 	std::shared_ptr<OGUI>									GUI;
+	/**
+	 * \brief game objects where located in hierarchy are here.
+	 */
+	std::shared_ptr<OWorld>									World;
 	/**
 	 * \brief Current application's status.
 	 */

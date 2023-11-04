@@ -34,21 +34,21 @@ public:
 	 * \param InClearColor Clear color that erase render target view.
 	 * \param InType ERenderModeType.
 	 */
-	void											ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor = { 0, 0, 0, 1 });
+	void											ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor = { 0, 0, 0, 1 }) const;
 	/**
 	 * \brief Clear current depth stencil view.
 	 * \param Type ERenderModeType.
 	 */
-	void											ClearDepthStencilView(ERenderModeType Type);
+	void											ClearDepthStencilView(ERenderModeType Type) const;
 	/**
 	 * \brief Present the back buffer to the monitor since rendering is complete.
 	 */
 	void											Draw();
 
-	void											SetRenderTargets(ERenderModeType InType);
-	void											SetDepthStencilState(ERenderModeType InType);
-	void											SetRasterizerState(ERenderModeType InType);
-	void											SetViewport(ERenderModeType InType);
+	void											SetRenderTargets(ERenderModeType InType) const;
+	void											SetDepthStencilState(ERenderModeType InType) const;
+	void											SetRasterizerState(ERenderModeType InType) const;
+	void											SetViewport(ERenderModeType InType) const;
 
 	ID3D11Device&									GetDevice() const;
 	ID3D11DeviceContext&							GetDeviceContext() const;

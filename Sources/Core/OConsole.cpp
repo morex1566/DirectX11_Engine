@@ -2,6 +2,11 @@
 #include "OApplication.h"
 #include "OConsole.h"
 
+OConsole::OConsole()
+	: Object(), HWnd(nullptr)
+{
+}
+
 OConsole::~OConsole()
 {
 }
