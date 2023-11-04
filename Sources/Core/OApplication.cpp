@@ -58,7 +58,7 @@ Object::EHandleResultType OApplication::Initialize()
 
 	// Create test gui.
 	{
-		GUI = std::make_shared<OGUI>(*Window, *DirectX11);
+		GUI = std::make_shared<OWidget>(*Window, *DirectX11);
 		Objects.push_back(GUI);
 	}
 

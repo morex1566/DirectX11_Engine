@@ -1,26 +1,26 @@
 #include "PCH.h"
 #include "OApplication.h"
 #include "ODirectX11.h"
-#include "OGUI.h"
+#include "OWidget.h"
 #include "OWindow.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 
 
-OGUI::OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11)
+OWidget::OWidget(const OWindow& InWindow, const ODirectX11& InDirectX11)
 {
 	Window = &InWindow;
 	DirectX11 = &InDirectX11;
 }
 
-OGUI::~OGUI()
+OWidget::~OWidget()
 {
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 }
 
-OApplication::EHandleResultType OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
+OApplication::EHandleResultType OWidget::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
 {
 	if (ImGui_ImplWin32_WndProcHandler(InHWnd, InMsg, InWParam, InLParam))
 	{
@@ -30,7 +30,7 @@ OApplication::EHandleResultType OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WP
 	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType OGUI::Initialize()
+Object::EHandleResultType OWidget::Initialize()
 {
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -41,6 +41,7 @@ Object::EHandleResultType OGUI::Initialize()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+	io.FontGlobalScale = 1.5f;
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -60,19 +61,19 @@ Object::EHandleResultType OGUI::Initialize()
 	return EHandleResultType::Success;
 }
 
-void OGUI::Release()
+void OWidget::Release()
 {
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 }
 
-void OGUI::Start()
+void OWidget::Start()
 {
 	Object::Start();
 }
 
-void OGUI::Tick()
+void OWidget::Tick()
 {
 	Object::Tick();
 
@@ -84,20 +85,28 @@ void OGUI::Tick()
 	Render();
 }
 
-void OGUI::End()
+void OWidget::End()
 {
 	Object::End();
 }
 
-void OGUI::Render()
+void OWidget::Render()
 {
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	bool show_demo_window = true;
-	ImGui::ShowDemoWindow(&show_demo_window);
+	// Create your GUI here
+	ImGui::Begin("My Window");
+
+	// Add widgets to your window
+	ImGui::Text("Hello, ImGui!");
+	if (ImGui::Button("Click Me!")) {
+		// Handle button click
+	}
+
+	ImGui::End();
 
 	// Rendering
 	ImGui::Render();

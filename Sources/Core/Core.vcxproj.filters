@@ -81,7 +81,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Mains</Filter>
     </ClCompile>
-    <ClCompile Include="OGUI.cpp">
+    <ClCompile Include="OWidget.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="OComponent.cpp">
@@ -140,7 +140,7 @@
     <ClInclude Include="Types.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="OGUI.h">
+    <ClInclude Include="OWidget.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OComponent.h">

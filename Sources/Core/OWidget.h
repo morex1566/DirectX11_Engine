@@ -1,23 +1,24 @@
 #pragma once
+#include "Object.h"
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
 #include "imgui/imgui_stdlib.h"
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_win32.h"
-#include "Object.h"
 
 class OWindow;
 class ODirectX11;
 
-class OGUI : public Object
+class OWidget : public Object
 {
 public:
-	OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11);
-	OGUI(const OGUI&)										= default;
-	OGUI& operator=(const OGUI&)							= default;
-	OGUI(OGUI&&) noexcept									= default;
-	OGUI& operator=(OGUI&&) noexcept						= default;
-	~OGUI() override;
+	OWidget(const OWindow& InWindow, const ODirectX11& InDirectX11);
+	OWidget(const OWidget&)										= default;
+	OWidget& operator=(const OWidget&)							= default;
+	OWidget(OWidget&&) noexcept									= default;
+	OWidget& operator=(OWidget&&) noexcept						= default;
+	~OWidget() override;
 
 	static EHandleResultType CALLBACK MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
@@ -35,6 +36,7 @@ public:
 	 * \brief Called only once immediately after the main loop is over.
 	 */
 	void													End() override;
+
 private:
 	void													Render();
 
