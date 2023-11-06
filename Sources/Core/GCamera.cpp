@@ -8,7 +8,7 @@ uint8					GCamera::bIsScreenSizeChanged = 0;
 GCamera::GCamera(const OWindow& InWindow)
 	:   OGameObject(),
 		FOV(3.141592654f / 4.0f),
-        ScreenAspect(static_cast<float>(InWindow.GetWindowScreenWidth()) / static_cast<float>(InWindow.GetWindowScreenHeight())),
+        ScreenAspect(static_cast<float>(InWindow.GetClientScreenWidth()) / static_cast<float>(InWindow.GetClientScreenHeight())),
 		ScreenNear(0.3f),
 		ScreenDepth(1000.0f),
 		ViewMatrix(),
@@ -71,8 +71,8 @@ void GCamera::Tick()
 		ProjectionMatrix = XMMatrixPerspectiveFovLH(FOV, ScreenAspect, ScreenNear, ScreenDepth);
 
 		OrthoMatrix = XMMatrixOrthographicLH(
-			static_cast<float>(Window->GetWindowScreenWidth()),
-			static_cast<float>(Window->GetWindowScreenHeight()),
+			static_cast<float>(Window->GetClientScreenWidth()),
+			static_cast<float>(Window->GetClientScreenHeight()),
 			ScreenNear,
 			ScreenDepth);
 	}
@@ -120,5 +120,5 @@ float GCamera::GetScreenDepth() const
 
 void GCamera::Resize()
 {
-	ScreenAspect = static_cast<float>(Window->GetWindowScreenWidth()) / static_cast<float>(Window->GetWindowScreenHeight());
+	ScreenAspect = static_cast<float>(Window->GetClientScreenWidth()) / static_cast<float>(Window->GetClientScreenHeight());
 }

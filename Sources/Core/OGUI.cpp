@@ -40,7 +40,7 @@ Object::EHandleResultType OGUI::Initialize()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-	io.FontGlobalScale = 1.25;
+	io.FontGlobalScale = 1;
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();

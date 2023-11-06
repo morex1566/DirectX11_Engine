@@ -2,6 +2,7 @@
 #include "WInspector.h"
 
 WInspector::WInspector(const OWorld& InWorld)
+	: OWidget(), InspectTarget(nullptr)
 {
 }
 
@@ -41,6 +42,10 @@ void WInspector::Render()
 	// Create your GUI here
 	ImGui::Begin("Inspector");
 
+	if(InspectTarget)
+	{
+		
+	}
 
 	ImGui::End();
 }

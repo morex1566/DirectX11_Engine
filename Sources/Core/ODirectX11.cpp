@@ -125,8 +125,8 @@ Object::EHandleResultType ODirectX11::Initialize()
 		ZeroMemory(&SwapChainDesc, sizeof(SwapChainDesc));
 		{
 			SwapChainDesc.BufferCount = 2;
-			SwapChainDesc.BufferDesc.Width = Window->GetWindowScreenWidth();
-			SwapChainDesc.BufferDesc.Height = Window->GetWindowScreenHeight();
+			SwapChainDesc.BufferDesc.Width = Window->GetClientScreenWidth();
+			SwapChainDesc.BufferDesc.Height = Window->GetClientScreenHeight();
 			SwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 			if (bIsVsyncEnabled)
@@ -164,8 +164,8 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		ZeroMemory(&DepthStencilBufferDesc2D, sizeof(DepthStencilBufferDesc2D));
 		{
-			DepthStencilBufferDesc2D.Width = Window->GetWindowScreenWidth();
-			DepthStencilBufferDesc2D.Height = Window->GetWindowScreenHeight();
+			DepthStencilBufferDesc2D.Width = Window->GetClientScreenWidth();
+			DepthStencilBufferDesc2D.Height = Window->GetClientScreenHeight();
 			DepthStencilBufferDesc2D.MipLevels = 1;
 			DepthStencilBufferDesc2D.ArraySize = 1;
 			DepthStencilBufferDesc2D.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -190,8 +190,8 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		ZeroMemory(&DepthStencilBufferDesc3D, sizeof(DepthStencilBufferDesc3D));
 		{
-			DepthStencilBufferDesc3D.Width = Window->GetWindowScreenWidth();
-			DepthStencilBufferDesc3D.Height = Window->GetWindowScreenHeight();
+			DepthStencilBufferDesc3D.Width = Window->GetClientScreenWidth();
+			DepthStencilBufferDesc3D.Height = Window->GetClientScreenHeight();
 			DepthStencilBufferDesc3D.MipLevels = 1;
 			DepthStencilBufferDesc3D.ArraySize = 1;
 			DepthStencilBufferDesc3D.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -364,8 +364,8 @@ Object::EHandleResultType ODirectX11::Initialize()
 	{
 		ZeroMemory(&Viewport2D, sizeof(Viewport2D));
 		{
-			Viewport2D.Width = static_cast<float>(Window->GetWindowScreenWidth());
-			Viewport2D.Height = static_cast<float>(Window->GetWindowScreenHeight());
+			Viewport2D.Width = static_cast<float>(Window->GetClientScreenWidth());
+			Viewport2D.Height = static_cast<float>(Window->GetClientScreenHeight());
 			Viewport2D.MinDepth = 0.0f;
 			Viewport2D.MaxDepth = 1.0f;
 			Viewport2D.TopLeftX = 0.0f;
@@ -378,8 +378,8 @@ Object::EHandleResultType ODirectX11::Initialize()
 	{
 		ZeroMemory(&Viewport3D, sizeof(Viewport3D));
 		{
-			Viewport3D.Width = static_cast<float>(Window->GetWindowScreenWidth());
-			Viewport3D.Height = static_cast<float>(Window->GetWindowScreenHeight());
+			Viewport3D.Width = static_cast<float>(Window->GetClientScreenWidth());
+			Viewport3D.Height = static_cast<float>(Window->GetClientScreenHeight());
 			Viewport3D.MinDepth = 0.0f;
 			Viewport3D.MaxDepth = 1.0f;
 			Viewport3D.TopLeftX = 0.0f;
@@ -722,25 +722,25 @@ void ODirectX11::Resize()
 	}
 
 	// Update desc.
-	uint32 WindowScreenWidth = Window->GetWindowScreenWidth();
-	uint32 WindowScreenHeight = Window->GetWindowScreenHeight();
+	uint32 ClientScreenWidth = Window->GetClientScreenWidth();
+	uint32 ClientScreenHeight = Window->GetClientScreenHeight();;
 	{
-		DepthStencilBufferDesc2D.Width = WindowScreenWidth;
-		DepthStencilBufferDesc2D.Height = WindowScreenHeight;
+		DepthStencilBufferDesc2D.Width = ClientScreenWidth;
+		DepthStencilBufferDesc2D.Height = ClientScreenHeight;
 
-		DepthStencilBufferDesc3D.Width = WindowScreenWidth;
-		DepthStencilBufferDesc3D.Height = WindowScreenHeight;
+		DepthStencilBufferDesc3D.Width = ClientScreenWidth;
+		DepthStencilBufferDesc3D.Height = ClientScreenHeight;
 
-		Viewport2D.Width = static_cast<float>(WindowScreenWidth);
-		Viewport2D.Height = static_cast<float>(WindowScreenHeight);
+		Viewport2D.Width = static_cast<float>(ClientScreenWidth);
+		Viewport2D.Height = static_cast<float>(ClientScreenHeight);
 
-		Viewport3D.Width = static_cast<float>(WindowScreenWidth);
-		Viewport3D.Height = static_cast<float>(WindowScreenHeight);
+		Viewport3D.Width = static_cast<float>(ClientScreenWidth);
+		Viewport3D.Height = static_cast<float>(ClientScreenHeight);
 	}
 
 	// Re-Create buffers and views.
 	{
-		SwapChain->ResizeBuffers(0, Window->GetWindowScreenWidth(), Window->GetWindowScreenHeight(), DXGI_FORMAT_UNKNOWN, 0);
+		SwapChain->ResizeBuffers(0, Window->GetClientScreenWidth(), Window->GetClientScreenHeight(), DXGI_FORMAT_UNKNOWN, 0);
 
 		CreateRenderTargetView(RenderTargetView2D.GetAddressOf());
 		CreateRenderTargetView(RenderTargetView3D.GetAddressOf());

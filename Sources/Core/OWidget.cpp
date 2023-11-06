@@ -4,6 +4,7 @@
 
 
 OWidget::OWidget()
+	: Object()
 {
 }
 

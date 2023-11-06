@@ -2,6 +2,7 @@
 #include "WContentBrowser.h"
 
 WContentBrowser::WContentBrowser(const OWorld& InWorld)
+	: OWidget()
 {
 }
 
