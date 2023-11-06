@@ -246,7 +246,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Sources\Core\PCH.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Sources\Core\PCH.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="Reflection.cpp" />
+    <ClCompile Include="SReflection.cpp" />
     <ClCompile Include="WInspector.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</MultiProcessorCompilation>
@@ -289,7 +289,7 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="OConsole.cpp">
+    <ClCompile Include="SConsole.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</MultiProcessorCompilation>
@@ -308,7 +308,7 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="OApplication.cpp">
+    <ClCompile Include="SApplication.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</MultiProcessorCompilation>
@@ -351,7 +351,7 @@
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CTransform.h" />
-    <ClInclude Include="Reflection.h" />
+    <ClInclude Include="SReflection.h" />
     <ClInclude Include="WInspector.h" />
     <ClInclude Include="OComponent.h" />
     <ClInclude Include="OGUI.h" />
@@ -360,12 +360,12 @@
     <ClInclude Include="GCamera.h" />
     <ClInclude Include="OGameObject.h" />
     <ClInclude Include="GTestObject.h" />
-    <ClInclude Include="OConsole.h" />
+    <ClInclude Include="SConsole.h" />
     <ClInclude Include="ODirectX11.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OWorld.h" />
     <ClInclude Include="PCH.h" />
-    <ClInclude Include="OApplication.h" />
+    <ClInclude Include="SApplication.h" />
     <ClInclude Include="OWindow.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="WContentBrowser.h" />

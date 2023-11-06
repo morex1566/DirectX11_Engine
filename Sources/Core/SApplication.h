@@ -1,21 +1,20 @@
 #pragma once
 #include "GCamera.h"
-#include "Object.h"
 #include "ODirectX11.h"
 #include "OGUI.h"
 #include "OWindow.h"
 #include "OWorld.h"
 
-class OApplication final : public Object
+class SApplication
 {
 public:
-	OApplication(const OApplication&)						= delete;
-	OApplication& operator=(const OApplication&)			= delete;
-	OApplication(OApplication&&) noexcept					= delete;
-	OApplication& operator=(OApplication&&) noexcept		= delete;
-	~OApplication() override;
+	SApplication(const SApplication&)							= delete;
+	SApplication& operator=(const SApplication&)				= delete;
+	SApplication(SApplication&&) noexcept						= delete;
+	SApplication& operator=(SApplication&&) noexcept			= delete;
+	~SApplication()											= default;
 
-	static OApplication&									GetInstance();
+	static SApplication&										GetInstance();
 	/**
 	 * \brief End repetition of the main loop.
 	 */
@@ -23,25 +22,25 @@ public:
 
 	static uint8											CheckIsPlaying();
 
-	EHandleResultType										Initialize() override;
-	void													Release() override;
+	void													Initialize();
+	void													Release();
 	/**
 	 * \brief Called only once before entering the main loop.
 	 */
-	void													Start() override;
+	void													Start();
 	/**
 	 * \brief Called once when the every frame.
 	 */
-	void													Tick() override;
+	void													Tick();
 	/**
 	 * \brief Called only once immediately after the main loop is over.
 	 */
-	void													End() override;
+	void													End();
 
 	void													Draw();
 
 private:
-	OApplication();
+	SApplication()											= default;
 
 	/**
 	 * \brief Essential instance vector. etc) Window, DirectX, Config...

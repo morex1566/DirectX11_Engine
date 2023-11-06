@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "GCamera.h"
-#include "OApplication.h"
-#include "OConsole.h"
+#include "SApplication.h"
+#include "SConsole.h"
 #include "OGUI.h"
 #include "OWindow.h"
 
@@ -25,14 +25,14 @@ LRESULT WINAPI OWindow::WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, L
 		case WM_CLOSE:
 		{
 			PostQuitMessage(0);
-			OApplication::Quit();
+			SApplication::Quit();
 
 			return 0;
 		}
 		case WM_DESTROY:
 		{
 			PostQuitMessage(0);
-			OApplication::Quit();
+			SApplication::Quit();
 
 			return 0;
 		}
@@ -110,7 +110,7 @@ Object::EHandleResultType OWindow::Initialize()
 
 		if (HWnd == nullptr)
 		{
-			OConsole::LogError(L"CreateWindowW() is failed.");
+			SConsole::LogError(L"CreateWindowW() is failed.");
 			return EHandleResultType::Failed;
 		}
 	}

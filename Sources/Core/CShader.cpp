@@ -3,7 +3,7 @@
 #include "CShader.h"
 #include "CTransform.h"
 #include "GCamera.h"
-#include "OConsole.h"
+#include "SConsole.h"
 #include "ODirectX11.h"
 #include "OWindow.h"
 
@@ -73,7 +73,7 @@ Object::EHandleResultType CShader::LoadShader(const std::wstring& InVSFilePath, 
 		VertexShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"D3DCompileFromFile() is failed.");
+		SConsole::LogError(L"D3DCompileFromFile() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -82,7 +82,7 @@ Object::EHandleResultType CShader::LoadShader(const std::wstring& InVSFilePath, 
 		PixelShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"D3DCompileFromFile() is failed.");
+		SConsole::LogError(L"D3DCompileFromFile() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -90,7 +90,7 @@ Object::EHandleResultType CShader::LoadShader(const std::wstring& InVSFilePath, 
 	Result = DirectX11->GetDevice().CreateVertexShader(VertexShaderBuffer->GetBufferPointer(), VertexShaderBuffer->GetBufferSize(), nullptr, vertexShader.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateVertexShader() is failed.");
+		SConsole::LogError(L"CreateVertexShader() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -98,7 +98,7 @@ Object::EHandleResultType CShader::LoadShader(const std::wstring& InVSFilePath, 
 	Result = DirectX11->GetDevice().CreatePixelShader(PixelShaderBuffer->GetBufferPointer(), PixelShaderBuffer->GetBufferSize(), nullptr, PixelShader.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreatePixelShader() is failed.");
+		SConsole::LogError(L"CreatePixelShader() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -125,7 +125,7 @@ Object::EHandleResultType CShader::LoadShader(const std::wstring& InVSFilePath, 
 		VertexShaderBuffer->GetBufferSize(), Layout.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateInputLayout() is failed.");
+		SConsole::LogError(L"CreateInputLayout() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -141,7 +141,7 @@ Object::EHandleResultType CShader::LoadShader(const std::wstring& InVSFilePath, 
 	Result = DirectX11->GetDevice().CreateBuffer(&MatrixBufferDesc, nullptr, MatrixBuffer.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateBuffer() is failed.");
+		SConsole::LogError(L"CreateBuffer() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -159,7 +159,7 @@ void CShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InVie
 	Result = DirectX11->GetDeviceContext().Map(MatrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"Map() is failed.");
+		SConsole::LogError(L"Map() is failed.");
 		throw std::exception();
 	}
 

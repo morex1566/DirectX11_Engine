@@ -1,32 +1,33 @@
 #include "PCH.h"
-#include "OApplication.h"
-#include "OConsole.h"
+#include "SApplication.h"
+#include "SConsole.h"
+#include "SReflection.h"
 
 int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, int Cmdshow)
 {
 	// Create logger.
-	OConsole& Console = OConsole::GetInstance();
+	SConsole& Console = SConsole::GetInstance();
 	{
-		if (Console.Initialize() != Object::EHandleResultType::Success)
-		{
-			return 0;
-		}
+		Console.Initialize();
+	}
+
+	// Create Reflection.
+	SReflection& Reflection = SReflection::GetInstance();
+	{
+		Reflection.Initialize();
 	}
 
 	// Create engine application.
-	OApplication& Application = OApplication::GetInstance();
+	SApplication& Application = SApplication::GetInstance();
 	{
-		if (Application.Initialize() != Object::EHandleResultType::Success)
-		{
-			return 0;
-		}
+		Application.Initialize();
 	}
 
 	// Application's main flow.
 	{
 		Application.Start();
 
-		while (Application.CheckIsPlaying())
+		while (SApplication::CheckIsPlaying())
 		{
 			// Handle window msg.
 			MSG Msg;

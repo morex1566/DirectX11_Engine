@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "GCamera.h"
 #include "GTestObject.h"
-#include "OConsole.h"
+#include "SConsole.h"
 #include "ODirectX11.h"
 #include "OWindow.h"
 

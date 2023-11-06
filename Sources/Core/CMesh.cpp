@@ -1,6 +1,6 @@
 #include "PCH.h"
 #include "CMesh.h"
-#include "OConsole.h"
+#include "SConsole.h"
 #include "ODirectX11.h"
 
 CMesh::CMesh(const OGameObject& InOwner, const ODirectX11& InDirectX11)
@@ -108,7 +108,7 @@ Object::EHandleResultType CMesh::CreateVertexBuffer()
 	Result = DirectX11->GetDevice().CreateBuffer(&VertexBufferDesc, &VertexData, VertexBuffer.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"VertexCreateBuffer() is failed.");
+		SConsole::LogError(L"VertexCreateBuffer() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -146,7 +146,7 @@ Object::EHandleResultType CMesh::CreateIndexBuffer()
 	Result = DirectX11->GetDevice().CreateBuffer(&IndexBufferDesc, &IndexData, IndexBuffer.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateBuffer() is failed.");
+		SConsole::LogError(L"CreateBuffer() is failed.");
 		return EHandleResultType::Failed;
 	}
 

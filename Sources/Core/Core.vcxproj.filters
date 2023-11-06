@@ -51,7 +51,7 @@
     <ClCompile Include="..\..\Includes\imgui\imgui.cpp">
       <Filter>Includes\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="OApplication.cpp">
+    <ClCompile Include="SApplication.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="OWindow.cpp">
@@ -63,7 +63,7 @@
     <ClCompile Include="ODirectX11.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="OConsole.cpp">
+    <ClCompile Include="SConsole.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="OWorld.cpp">
@@ -111,7 +111,7 @@
     <ClCompile Include="WInspector.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Reflection.cpp">
+    <ClCompile Include="SReflection.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="PCH.cpp">
@@ -128,7 +128,7 @@
     <ClInclude Include="PCH.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="OApplication.h">
+    <ClInclude Include="SApplication.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OWindow.h">
@@ -140,7 +140,7 @@
     <ClInclude Include="ODirectX11.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="OConsole.h">
+    <ClInclude Include="SConsole.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OWorld.h">
@@ -191,7 +191,7 @@
     <ClInclude Include="WInspector.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection.h">
+    <ClInclude Include="SReflection.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

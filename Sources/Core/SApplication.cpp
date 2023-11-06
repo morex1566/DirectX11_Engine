@@ -1,41 +1,30 @@
 #include "PCH.h"
-#include "OApplication.h"
-#include"WContentBrowser.h"
+#include "SApplication.h"
+#include "WContentBrowser.h"
 #include "WHierarchy.h"
 #include "WInspector.h"
 #include "WTools.h"
 
-uint8							OApplication::bIsPlaying = 1;
+uint8							SApplication::bIsPlaying = 1;
 
-OApplication::~OApplication()
+SApplication& SApplication::GetInstance()
 {
+	static SApplication Instance;
+	return Instance;
 }
 
-OApplication::OApplication()
-	: Object()
-{
-}
-
-OApplication& OApplication::GetInstance()
-{
-	static OApplication System;
-	return System;
-}
-
-void OApplication::Quit()
+void SApplication::Quit()
 {
 	bIsPlaying = 0;
 }
 
-uint8 OApplication::CheckIsPlaying()
+uint8 SApplication::CheckIsPlaying()
 {
 	return bIsPlaying;
 }
 
-Object::EHandleResultType OApplication::Initialize()
+void SApplication::Initialize()
 {
-	Object::Initialize();
-
 	// Create window.
 	{
 		Window = std::make_shared<OWindow>();
@@ -75,24 +64,18 @@ Object::EHandleResultType OApplication::Initialize()
 	{
 		Object->Initialize();
 	}
-
-	return EHandleResultType::Success;
 }
 
-void OApplication::Release()
+void SApplication::Release()
 {
-	Object::Release();
-	
 	for (const auto& object : Objects)
 	{
 		object->Release();
 	}
 }
 
-void OApplication::Start()
+void SApplication::Start()
 {
-	Object::Start();
-
 	for (const auto& object : Objects)
 	{
 		if (object->CheckIsEnabled())
@@ -102,10 +85,8 @@ void OApplication::Start()
 	}
 }
 
-void OApplication::Tick()
+void SApplication::Tick()
 {
-	Object::Tick();
-
 	for (const auto& object : Objects)
 	{
 		if (object->CheckIsEnabled())
@@ -115,10 +96,8 @@ void OApplication::Tick()
 	}
 }
 
-void OApplication::End()
+void SApplication::End()
 {
-	Object::End();
-
 	for (const auto& object : Objects)
 	{
 		if (object->CheckIsEnabled())
@@ -128,7 +107,7 @@ void OApplication::End()
 	}
 }
 
-void OApplication::Draw()
+void SApplication::Draw()
 {
 	DirectX11->Draw();
 }

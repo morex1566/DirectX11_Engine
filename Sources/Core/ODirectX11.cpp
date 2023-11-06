@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "OConsole.h"
+#include "SConsole.h"
 #include "ODirectX11.h"
 #include "OWindow.h"
 
@@ -46,7 +46,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	Result = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(Factory.GetAddressOf()));
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateDXGIFactory() is failed.");
+		SConsole::LogError(L"CreateDXGIFactory() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -54,7 +54,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	Result = Factory->EnumAdapters(0, Adapter.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"EnumAdapters() is failed.");
+		SConsole::LogError(L"EnumAdapters() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -62,7 +62,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	Result = Adapter->EnumOutputs(0, AdapterOutput.GetAddressOf());
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"EnumOutputs() is failed.");
+		SConsole::LogError(L"EnumOutputs() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -71,7 +71,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, nullptr);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"GetDisplayModeList() is failed.");
+		SConsole::LogError(L"GetDisplayModeList() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -82,7 +82,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 		Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, DisplayModeList.get());
 		if (FAILED(Result))
 		{
-			OConsole::LogError(L"GetDisplayModeList() is failed.");
+			SConsole::LogError(L"GetDisplayModeList() is failed.");
 			return EHandleResultType::Failed;
 		}
 
@@ -110,7 +110,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	Result = Adapter->GetDesc(&AdapterDesc);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"GetDesc() is failed.");
+		SConsole::LogError(L"GetDesc() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -520,7 +520,7 @@ Object::EHandleResultType ODirectX11::CreateDeviceAndSwapChain(IDXGISwapChain** 
 		D3D11_SDK_VERSION, &InSwapChainDesc, OutSwapChain, OutDevice, nullptr, OutDeviceContext);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"D3D11CreateDeviceAndSwapChain() is failed.");
+		SConsole::LogError(L"D3D11CreateDeviceAndSwapChain() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -536,7 +536,7 @@ Object::EHandleResultType ODirectX11::CreateRenderTargetView(ID3D11RenderTargetV
 	Result = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(BackBuffer.GetAddressOf()));
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"GetBackBuffer() is failed.");
+		SConsole::LogError(L"GetBackBuffer() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -544,7 +544,7 @@ Object::EHandleResultType ODirectX11::CreateRenderTargetView(ID3D11RenderTargetV
 	Result = Device->CreateRenderTargetView(BackBuffer.Get(), nullptr, OutRenderTargetView);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateRenderTargetView() is failed.");
+		SConsole::LogError(L"CreateRenderTargetView() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -559,7 +559,7 @@ Object::EHandleResultType ODirectX11::CreateDepthStencilBuffer(ID3D11Texture2D**
 	Result = Device->CreateTexture2D(&InDepthStencilBufferDesc, nullptr, OutDepthStencilBuffer);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateDepthStencilBuffer() is failed.");
+		SConsole::LogError(L"CreateDepthStencilBuffer() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -574,7 +574,7 @@ Object::EHandleResultType ODirectX11::CreateDepthStencilState(ID3D11DepthStencil
 	Result = Device->CreateDepthStencilState(&InDepthStencilStateDesc, OutDepthStecilState);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateDepthStencilState() is failed.");
+		SConsole::LogError(L"CreateDepthStencilState() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -589,7 +589,7 @@ Object::EHandleResultType ODirectX11::CreateDepthStencilView(ID3D11Texture2D* In
 	Result = Device->CreateDepthStencilView(InDepthStencilBuffer, &InDepthStencilViewDesc, OutDepthStencilView);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateDepthStencilView() is failed.");
+		SConsole::LogError(L"CreateDepthStencilView() is failed.");
 		return EHandleResultType::Failed;
 	}
 
@@ -604,7 +604,7 @@ Object::EHandleResultType ODirectX11::CreateRasterizerState(ID3D11RasterizerStat
 	Result = Device->CreateRasterizerState(&InRasterStateDesc, OutRasterizerState);
 	if (FAILED(Result))
 	{
-		OConsole::LogError(L"CreateRasterizerState() is failed.");
+		SConsole::LogError(L"CreateRasterizerState() is failed.");
 		return EHandleResultType::Failed;
 	}
 
