@@ -356,7 +356,7 @@
     <ClInclude Include="OComponent.h" />
     <ClInclude Include="OGUI.h" />
     <ClInclude Include="OWidget.h" />
-    <ClInclude Include="Macros.h" />
+    <ClInclude Include="EMacros.h" />
     <ClInclude Include="GCamera.h" />
     <ClInclude Include="OGameObject.h" />
     <ClInclude Include="GTestObject.h" />
@@ -367,7 +367,7 @@
     <ClInclude Include="PCH.h" />
     <ClInclude Include="SApplication.h" />
     <ClInclude Include="OWindow.h" />
-    <ClInclude Include="Types.h" />
+    <ClInclude Include="ETypes.h" />
     <ClInclude Include="WContentBrowser.h" />
     <ClInclude Include="WHierarchy.h" />
     <ClInclude Include="WTools.h" />

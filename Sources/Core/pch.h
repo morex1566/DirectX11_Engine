@@ -31,8 +31,8 @@ using uint32				= uint32_t;
 using int64					= int64_t;
 using uint64				= uint64_t;
 
-#include "Types.h"
-#include "Macros.h"
+#include "ETypes.h"
+#include "EMacros.h"
 
 static std::string ToString(const std::wstring& wstring_)
 {

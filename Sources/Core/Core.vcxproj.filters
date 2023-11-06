@@ -25,6 +25,9 @@
     <Filter Include="Mains">
       <UniqueIdentifier>{3ae0a4fc-d3a7-49c4-b031-087643f61199}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{7b321da6-df6c-4526-aac4-48fc034ad6c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Includes\imgui\imgui_widgets.cpp">
@@ -115,7 +118,7 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="PCH.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Precompiled Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Includes\json\json_fwd.hpp">
       <Filter>Includes\json</Filter>
-    </ClInclude>
-    <ClInclude Include="PCH.h">
-      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="SApplication.h">
       <Filter>Headers</Filter>
@@ -155,10 +155,10 @@
     <ClInclude Include="GTestObject.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Macros.h">
+    <ClInclude Include="EMacros.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Types.h">
+    <ClInclude Include="ETypes.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OWidget.h">
@@ -193,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="SReflection.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PCH.h">
+      <Filter>Precompiled Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
