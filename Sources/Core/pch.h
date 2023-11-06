@@ -150,5 +150,5 @@ static uint32 GetSystemWidth()
 
 static uint32 GetSystemHeight()
 {
-	return GetSystemMetrics(SM_CYSCREEN);
+    return GetSystemMetrics(SM_CYSCREEN);
 }

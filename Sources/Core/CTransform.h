@@ -44,10 +44,15 @@ public:
 	void													SetLookAt(XMFLOAT3 InLookAt);
 
 private:
+	EPROPERTY()
 	XMFLOAT3												Position;
+	EPROPERTY()
 	XMFLOAT3												Rotation;
+	EPROPERTY()
 	XMFLOAT3												Scale;
+	EPROPERTY()
 	XMFLOAT3												Up;
+	EPROPERTY()
 	XMFLOAT3												LookAt;
 	XMMATRIX												WorldMatrix;
 };

@@ -40,7 +40,4 @@ public:
 protected:
 	uint8										bIsEnabled;
 	std::wstring								Name;
-
-private:
-	
 };

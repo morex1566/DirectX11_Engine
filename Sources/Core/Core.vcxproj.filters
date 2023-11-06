@@ -111,6 +111,12 @@
     <ClCompile Include="WInspector.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Reflection.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PCH.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp">
@@ -183,6 +189,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="WInspector.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

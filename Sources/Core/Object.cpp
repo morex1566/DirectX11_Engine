@@ -14,6 +14,19 @@ void Object::Release()
 {
 }
 
+void Object::Start()
+{
+}
+
+void Object::Tick()
+{
+
+}
+
+void Object::End()
+{
+}
+
 uint8 Object::CheckIsEnabled() const
 {
 	return bIsEnabled;
@@ -32,16 +45,4 @@ void Object::SetIsEnabled(uint8 InOnOff)
 void Object::SetName(const std::wstring& InName)
 {
 	Name = InName;
-}
-
-void Object::Start()
-{
-}
-
-void Object::Tick()
-{
-}
-
-void Object::End()
-{
 }
