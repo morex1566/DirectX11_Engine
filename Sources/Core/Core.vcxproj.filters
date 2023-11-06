@@ -105,6 +105,12 @@
     <ClCompile Include="WTools.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="WContentBrowser.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WInspector.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp">
@@ -171,6 +177,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="WTools.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WContentBrowser.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WInspector.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

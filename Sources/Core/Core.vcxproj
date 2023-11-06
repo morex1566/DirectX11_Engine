@@ -213,6 +213,7 @@
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CTransform.cpp" />
+    <ClCompile Include="WInspector.cpp" />
     <ClCompile Include="OComponent.cpp" />
     <ClCompile Include="OGUI.cpp" />
     <ClCompile Include="OWidget.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="OApplication.cpp" />
     <ClCompile Include="OWindow.cpp" />
     <ClCompile Include="OWorld.cpp" />
+    <ClCompile Include="WContentBrowser.cpp" />
     <ClCompile Include="WHierarchy.cpp" />
     <ClCompile Include="WTools.cpp" />
   </ItemGroup>
@@ -235,6 +237,7 @@
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CTransform.h" />
+    <ClInclude Include="WInspector.h" />
     <ClInclude Include="OComponent.h" />
     <ClInclude Include="OGUI.h" />
     <ClInclude Include="OWidget.h" />
@@ -250,6 +253,7 @@
     <ClInclude Include="OApplication.h" />
     <ClInclude Include="OWindow.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="WContentBrowser.h" />
     <ClInclude Include="WHierarchy.h" />
     <ClInclude Include="WTools.h" />
   </ItemGroup>

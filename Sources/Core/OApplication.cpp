@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "OApplication.h"
+#include"WContentBrowser.h"
 #include "WHierarchy.h"
+#include "WInspector.h"
 #include "WTools.h"
 
 uint8							OApplication::bIsPlaying = 1;
@@ -62,8 +64,10 @@ Object::EHandleResultType OApplication::Initialize()
 	{
 		GUI = std::make_shared<OGUI>(*Window, *DirectX11);
 		Objects.push_back(GUI);
-		GUI->TAddWidget<WHierarchy>();
-		GUI->TAddWidget<WTools>();
+		GUI->TAddWidget<WHierarchy>(*World);
+		GUI->TAddWidget<WTools>(*World);
+		GUI->TAddWidget<WContentBrowser>(*World);
+		GUI->TAddWidget<WInspector>(*World);
 	}
 
 	// Initialize all of object.

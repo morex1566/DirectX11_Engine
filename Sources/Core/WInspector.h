@@ -3,15 +3,15 @@
 
 class OWorld;
 
-class WHierarchy : public OWidget
+class WInspector : public OWidget
 {
 public:
-	WHierarchy(const OWorld& InWorld);
-	WHierarchy(const WHierarchy&)							= default;
-	WHierarchy& operator=(const WHierarchy&)				= default;
-	WHierarchy(WHierarchy&&) noexcept						= default;
-	WHierarchy& operator=(WHierarchy&&) noexcept			= default;
-	~WHierarchy() override;
+	WInspector(const OWorld& InWorld);
+	WInspector(const WInspector&)							= default;
+	WInspector& operator=(const WInspector&)				= default;
+	WInspector(WInspector&&) noexcept						= default;
+	WInspector& operator=(WInspector&&) noexcept			= default;
+	~WInspector() override;
 
 	EHandleResultType										Initialize() override;
 	void													Release() override;
@@ -30,7 +30,5 @@ public:
 
 private:
 	void													Render() override;
-
-	const OWorld*											World; // ReadOnly
 };
 

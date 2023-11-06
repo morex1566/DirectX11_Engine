@@ -1,10 +1,12 @@
 #pragma once
 #include "OWidget.h"
 
+class OWorld;
+
 class WTools : public OWidget
 {
 public:
-	WTools();
+	WTools(const OWorld& InWorld);
 	WTools(const WTools&)									= default;
 	WTools& operator=(const WTools&)						= default;
 	WTools(WTools&&) noexcept								= default;
@@ -29,5 +31,6 @@ public:
 private:
 	void													Render() override;
 
+	const OWorld*											World; // ReadOnly
 };
 

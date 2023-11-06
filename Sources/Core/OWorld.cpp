@@ -25,6 +25,8 @@ Object::EHandleResultType OWorld::Initialize()
 
 	OGameObject& TestGameObject = TCreateGameObject<GTestObject>();
 	{
+		TestGameObject.SetName(L"NewObject");
+
 		if (CMesh* Mesh = TestGameObject.TAddComponent<CMesh>(TestGameObject, *DirectX11))
 		{
 			Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));

@@ -1,9 +1,11 @@
 #include "PCH.h"
+#include "OWorld.h"
 #include "WHierarchy.h"
 
-WHierarchy::WHierarchy()
+WHierarchy::WHierarchy(const OWorld& InWorld)
 	: OWidget()
 {
+	World = &InWorld;
 }
 
 WHierarchy::~WHierarchy()
@@ -41,6 +43,12 @@ void WHierarchy::Render()
 {
 	// Create your GUI here
 	ImGui::Begin("Hierarchy");
+
+	auto& GameObjects = World->GetGameObjects();
+	for (const auto& GameObject : GameObjects)
+	{
+		ImGui::Selectable(ToString(GameObject->GetName()).c_str());
+	}
 
 
 	ImGui::End();

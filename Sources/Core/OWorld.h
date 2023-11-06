@@ -34,8 +34,11 @@ public:
 
 	template <typename T, typename... Args>
 	T&														TCreateGameObject(Args&&... Arguments);
-
-protected:
+	/**
+	 * \brief 
+	 * \return World's game object vector. 
+	 */
+	const std::vector<std::shared_ptr<OGameObject>>&		GetGameObjects() const { return GameObjects; }
 
 private:
 	const OWindow*											Window;

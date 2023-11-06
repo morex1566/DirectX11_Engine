@@ -1,9 +1,10 @@
 #include "PCH.h"
 #include "WTools.h"
 
-WTools::WTools()
+WTools::WTools(const OWorld& InWorld)
 	: OWidget()
 {
+	World = &InWorld;
 }
 
 WTools::~WTools()
