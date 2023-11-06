@@ -14,7 +14,7 @@ void Object::Release()
 {
 }
 
-uint8 Object::CheckIsEnbled() const
+uint8 Object::CheckIsEnabled() const
 {
 	return bIsEnabled;
 }

@@ -1,5 +1,7 @@
 #include "PCH.h"
 #include "OApplication.h"
+#include "WHierarchy.h"
+#include "WTools.h"
 
 uint8							OApplication::bIsPlaying = 1;
 
@@ -58,8 +60,10 @@ Object::EHandleResultType OApplication::Initialize()
 
 	// Create test gui.
 	{
-		GUI = std::make_shared<OWidget>(*Window, *DirectX11);
+		GUI = std::make_shared<OGUI>(*Window, *DirectX11);
 		Objects.push_back(GUI);
+		GUI->TAddWidget<WHierarchy>();
+		GUI->TAddWidget<WTools>();
 	}
 
 	// Initialize all of object.
@@ -87,7 +91,7 @@ void OApplication::Start()
 
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnbled())
+		if (object->CheckIsEnabled())
 		{
 			object->Start();
 		}
@@ -100,7 +104,7 @@ void OApplication::Tick()
 
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnbled())
+		if (object->CheckIsEnabled())
 		{
 			object->Tick();
 		}
@@ -113,7 +117,7 @@ void OApplication::End()
 
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnbled())
+		if (object->CheckIsEnabled())
 		{
 			object->End();
 		}

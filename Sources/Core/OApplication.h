@@ -2,7 +2,7 @@
 #include "GCamera.h"
 #include "Object.h"
 #include "ODirectX11.h"
-#include "OWidget.h"
+#include "OGUI.h"
 #include "OWindow.h"
 #include "OWorld.h"
 
@@ -62,7 +62,7 @@ private:
 	/**
 	 * \brief Engine's gui manager instance.
 	 */
-	std::shared_ptr<OWidget>									GUI;
+	std::shared_ptr<OGUI>									GUI;
 	/**
 	 * \brief game objects where located in hierarchy are here.
 	 */

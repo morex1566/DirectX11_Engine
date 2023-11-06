@@ -214,6 +214,7 @@
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CTransform.cpp" />
     <ClCompile Include="OComponent.cpp" />
+    <ClCompile Include="OGUI.cpp" />
     <ClCompile Include="OWidget.cpp" />
     <ClCompile Include="GCamera.cpp" />
     <ClCompile Include="OGameObject.cpp" />
@@ -225,6 +226,8 @@
     <ClCompile Include="OApplication.cpp" />
     <ClCompile Include="OWindow.cpp" />
     <ClCompile Include="OWorld.cpp" />
+    <ClCompile Include="WHierarchy.cpp" />
+    <ClCompile Include="WTools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp" />
@@ -233,6 +236,7 @@
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CTransform.h" />
     <ClInclude Include="OComponent.h" />
+    <ClInclude Include="OGUI.h" />
     <ClInclude Include="OWidget.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="GCamera.h" />
@@ -246,6 +250,8 @@
     <ClInclude Include="OApplication.h" />
     <ClInclude Include="OWindow.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="WHierarchy.h" />
+    <ClInclude Include="WTools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

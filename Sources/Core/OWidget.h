@@ -7,20 +7,15 @@
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_win32.h"
 
-class OWindow;
-class ODirectX11;
-
 class OWidget : public Object
 {
 public:
-	OWidget(const OWindow& InWindow, const ODirectX11& InDirectX11);
+	OWidget();
 	OWidget(const OWidget&)										= default;
 	OWidget& operator=(const OWidget&)							= default;
 	OWidget(OWidget&&) noexcept									= default;
 	OWidget& operator=(OWidget&&) noexcept						= default;
 	~OWidget() override;
-
-	static EHandleResultType CALLBACK MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
 	EHandleResultType										Initialize() override;
 	void													Release() override;
@@ -38,8 +33,5 @@ public:
 	void													End() override;
 
 private:
-	void													Render();
-
-	const OWindow*											Window; // ReadOnly
-	const ODirectX11*										DirectX11; // ReadOnly
+	virtual void											Render() = 0;
 };

@@ -96,6 +96,15 @@
     <ClCompile Include="CShader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="WHierarchy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OGUI.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WTools.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp">
@@ -153,6 +162,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="CShader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WHierarchy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OGUI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WTools.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

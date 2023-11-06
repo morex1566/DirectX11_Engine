@@ -30,7 +30,7 @@ public:
 	 */
 	virtual void								End();
 
-	uint8										CheckIsEnbled() const;
+	uint8										CheckIsEnabled() const;
 
 	std::wstring								GetName() const;
 

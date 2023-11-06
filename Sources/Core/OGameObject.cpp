@@ -20,7 +20,7 @@ Object::EHandleResultType OGameObject::Initialize()
 
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnbled())
+		if (Component->CheckIsEnabled())
 		{
 			Component->Initialize();
 		}
@@ -28,7 +28,7 @@ Object::EHandleResultType OGameObject::Initialize()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnbled())
+		if (Child->CheckIsEnabled())
 		{
 			Child->Initialize();
 		}
@@ -58,7 +58,7 @@ void OGameObject::Start()
 
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnbled())
+		if (Component->CheckIsEnabled())
 		{
 			Component->Start();
 		}
@@ -66,7 +66,7 @@ void OGameObject::Start()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnbled())
+		if (Child->CheckIsEnabled())
 		{
 			Child->Start();
 		}
@@ -79,7 +79,7 @@ void OGameObject::Tick()
 
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnbled())
+		if (Component->CheckIsEnabled())
 		{
 			Component->Tick();
 		}
@@ -87,7 +87,7 @@ void OGameObject::Tick()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnbled())
+		if (Child->CheckIsEnabled())
 		{
 			Child->Tick();
 		}
@@ -100,7 +100,7 @@ void OGameObject::End()
 
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnbled())
+		if (Component->CheckIsEnabled())
 		{
 			Component->End();
 		}
@@ -108,7 +108,7 @@ void OGameObject::End()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnbled())
+		if (Child->CheckIsEnabled())
 		{
 			Child->End();
 		}
