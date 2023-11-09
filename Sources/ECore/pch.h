@@ -15,6 +15,7 @@
 #include <d3d11.h>
 #include <iostream>
 #include <fstream>
+#include <string_view>
 #include <sstream>
 #include <filesystem>
 #include <directxmath.h>
@@ -131,6 +132,16 @@ static std::wstring GetCurrentTimeAsWString() {
     }
 
     return L"00:00:00";
+}
+
+static bool StringEndsWith(const std::string& InSource, const std::string& InEnd) {
+    if (InSource.size() < InEnd.size()) {
+        return false;
+    }
+    std::string_view StringView = InSource;
+    std::string_view SuffixView = InEnd;
+
+    return StringView.substr(StringView.size() - SuffixView.size()) == SuffixView;
 }
 
 static float ToRadian(float degree_)

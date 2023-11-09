@@ -28,12 +28,14 @@ public:
 	 * \brief Called only once immediately after the main loop is over.
 	 */
 	void											End() override;
-
-	FORCEINLINE void								SetInspectGameObject(OGameObject* InInspectTarget) { InspectTarget = InInspectTarget; }
+	/**
+	 * \brief Set game object which is showed at inspector.
+	 */
+	FORCEINLINE void								SetFocus(OGameObject* InInspectTarget) { FocusedGameObject = InInspectTarget; }
 
 private:
 	void											Render() override;
 
-	OGameObject*									InspectTarget;
+	OGameObject*									FocusedGameObject;
 };
 

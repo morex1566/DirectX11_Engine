@@ -1,12 +1,14 @@
 #pragma once
 #include "OWidget.h"
 
+class OGameObject;
 class OWorld;
+class WInspector;
 
 class WHierarchy : public OWidget
 {
 public:
-	WHierarchy(const OWorld& InWorld);
+	WHierarchy(const OWorld& InWorld, WInspector* InInspector);
 	WHierarchy(const WHierarchy&)							= default;
 	WHierarchy& operator=(const WHierarchy&)				= default;
 	WHierarchy(WHierarchy&&) noexcept						= default;
@@ -28,9 +30,13 @@ public:
 	 */
 	void													End() override;
 
-private:
 	void													Render() override;
 
 	const OWorld*											World; // ReadOnly
+	WInspector*												Inspector;
+	/**
+	 * \brief OGameObject* means game object in world, uint8 means is selection flag at hierarchy.
+	 */
+	std::map<OGameObject*, uint8>							GameObjectBlocks;
 };
 

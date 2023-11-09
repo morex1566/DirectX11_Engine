@@ -3,6 +3,7 @@
 
 class ODirectX11;
 
+ECLASS()
 class CMesh : public OComponent
 {
 public:

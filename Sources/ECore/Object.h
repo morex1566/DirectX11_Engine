@@ -36,6 +36,7 @@ public:
 
 	void										SetIsEnabled(uint8 InOnOff);
 	void										SetName(const std::wstring& InName);
+	FORCEINLINE void							SetName(const char* InName) { Name = ToWString(InName); }
 
 protected:
 	uint8										bIsEnabled;

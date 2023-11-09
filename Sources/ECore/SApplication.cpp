@@ -53,10 +53,10 @@ void SApplication::Initialize()
 	{
 		GUI = std::make_shared<OGUI>(*Window, *DirectX11);
 		Objects.push_back(GUI);
-		GUI->TAddWidget<WHierarchy>(*World);
-		GUI->TAddWidget<WTools>(*World);
-		GUI->TAddWidget<WContentBrowser>(*World);
-		GUI->TAddWidget<WInspector>(*World);
+		WInspector* Inspector = GUI->TAddWidget<WInspector>(*World);
+		WHierarchy* Hierarchy = GUI->TAddWidget<WHierarchy>(*World, Inspector);
+		WTools* Tools = GUI->TAddWidget<WTools>(*World);
+		WContentBrowser* ContentBrowser = GUI->TAddWidget<WContentBrowser>(*World);
 	}
 
 	// Initialize all of object.

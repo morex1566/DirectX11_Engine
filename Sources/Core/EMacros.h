@@ -1,8 +1,0 @@
-#pragma once
-
-#define GET_SHADER_FILE_DIR(SHADER_FILE_NAME) std::string(SHADERS_FOLDER_DIR) + SHADER_FILE_NAME
-
-
-#define EPROPERTY() /*EPROPERTY*/
-#define ECLASS()
-#define EFUNCTION()

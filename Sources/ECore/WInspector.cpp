@@ -1,8 +1,9 @@
 #include "PCH.h"
+#include "OGameObject.h"
 #include "WInspector.h"
 
 WInspector::WInspector(const OWorld& InWorld)
-	: OWidget(), InspectTarget(nullptr)
+	: OWidget(), FocusedGameObject(nullptr)
 {
 }
 
@@ -41,10 +42,10 @@ void WInspector::Render()
 {
 	// Create your GUI here
 	ImGui::Begin("Inspector");
-
-	if(InspectTarget)
+	
+	if(FocusedGameObject)
 	{
-		
+		ImGui::Text(ToString(FocusedGameObject->GetName()).c_str());
 	}
 
 	ImGui::End();
