@@ -72,15 +72,17 @@ Object::EHandleResultType OWindow::Initialize()
 	uint32 WindowScreenWidth, WindowScreenHeight;
 	uint32 WindowStartPosX, WindowStartPosY;
 	{
+		SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
+
 		WindowScreenWidth = 1600;
 		WindowScreenHeight = 900;
 
-		WindowStartPosX = (GetSystemMetrics(SM_CXSCREEN) - WindowScreenWidth) / 2;
-		WindowStartPosY = (GetSystemMetrics(SM_CYSCREEN) - WindowScreenHeight) / 2;
+		WindowStartPosX = GetGap(GetSystemMetrics(SM_CXSCREEN), WindowScreenWidth) / 2;
+		WindowStartPosY = GetGap(GetSystemMetrics(SM_CYSCREEN), WindowScreenHeight) / 2;
 	}
 
 	// Create window class.
-	{
+	{	
 		WCEX.style = CS_CLASSDC;
 		WCEX.lpfnWndProc = WindowEventHandler;
 		WCEX.cbClsExtra = 0L;

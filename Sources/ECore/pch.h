@@ -154,6 +154,18 @@ static float ToDegree(float radian_)
     return radian_ * (180.0f / 3.14159265f);
 }
 
+static uint64 GetGap(uint64 Value1, uint64 Value2)
+{
+    if (Value1 > Value2)
+    {
+        return Value1 - Value2;
+    }
+    else
+    {
+        return Value2 - Value1;
+    }
+}
+
 static uint32 GetSystemWidth()
 {
     return GetSystemMetrics(SM_CXSCREEN);

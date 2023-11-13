@@ -4,6 +4,9 @@
 # Ignore all x64 folder
 **/x64/
 
+# Ignore all precompiled-header files.
+**/PCH.pch
+
 # Ignore Resources folder
 Resources/*
 

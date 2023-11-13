@@ -24,9 +24,9 @@ void SReflection::Initialize()
 				if (File)
 				{
 					std::string Line;
-					while (std::getline(File, Line)) 
+					while (std::getline(File, Line))
 					{
-
+						SConsole::Log(Line);
 					}
 				}
 			}

@@ -102,8 +102,15 @@ Object::EHandleResultType ODirectX11::Initialize()
 			}
 		}
 
-		// Get monitor refresh-rate.
-		DisplayMaxFPS = Numerator / Denominator;
+		// Get refresh-rate.
+		if (Numerator == 0 || Denominator == 0)
+		{
+			DisplayMaxFPS = 60;
+		}
+		else
+		{
+			DisplayMaxFPS = Numerator / Denominator;
+		}
 	}
 
 	// Get the adapter (video card) description.
