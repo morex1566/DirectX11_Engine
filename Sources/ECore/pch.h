@@ -154,7 +154,7 @@ static float ToDegree(float radian_)
     return radian_ * (180.0f / 3.14159265f);
 }
 
-static uint64 GetGap(uint64 Value1, uint64 Value2)
+static int GetGap(int Value1, int Value2)
 {
     if (Value1 > Value2)
     {

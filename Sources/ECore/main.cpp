@@ -17,6 +17,8 @@ int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, 
 		Reflection.Initialize();
 	}
 
+	std::cout << "hello";
+
 	// Create engine application.
 	SApplication& Application = SApplication::GetInstance();
 	{

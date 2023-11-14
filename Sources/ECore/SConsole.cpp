@@ -10,10 +10,19 @@ SConsole& SConsole::GetInstance()
 
 void SConsole::Initialize()
 {
+	FILE*		Stream;
+	errno_t		Error;
+
 	AllocConsole();
 
 	HWnd = GetConsoleWindow();
 	if (HWnd == nullptr)
+	{
+		throw std::exception();
+	}
+
+	Error = freopen_s(&Stream, "CONOUT$", "w", stdout);
+	if (Error)
 	{
 		throw std::exception();
 	}
@@ -26,14 +35,12 @@ void SConsole::Release()
 
 void SConsole::Log(const std::wstring& Log)
 {
-	std::wcout << L"[" << GetCurrentTimeAsWString() << L"]"
-		<< L"[Log] " << Log << std::endl;
+	std::wcout << Log << std::endl;
 }
 
 void SConsole::Log(const std::string& Log)
 {
-	std::cout << "[" << GetCurrentTimeAsString() << "]"
-		<< "[Log] " << Log << std::endl;
+	std::cout << Log << std::endl;
 }
 
 // TODO : 1. Change color to orange.
