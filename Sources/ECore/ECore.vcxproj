@@ -137,7 +137,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Includes;$(SolutionDir)Sources;$(SolutionDir)Sources\EUtls;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderOutputFile>$(SolutionDir)Sources\ECore\PCH.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
@@ -348,6 +348,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp" />
     <ClInclude Include="..\..\Includes\json\json_fwd.hpp" />
+    <ClInclude Include="..\EUtls\EMacros.h" />
+    <ClInclude Include="..\EUtls\ETypes.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CTransform.h" />
@@ -356,7 +358,6 @@
     <ClInclude Include="OComponent.h" />
     <ClInclude Include="OGUI.h" />
     <ClInclude Include="OWidget.h" />
-    <ClInclude Include="EMacros.h" />
     <ClInclude Include="GCamera.h" />
     <ClInclude Include="OGameObject.h" />
     <ClInclude Include="GTestObject.h" />
@@ -367,7 +368,6 @@
     <ClInclude Include="PCH.h" />
     <ClInclude Include="SApplication.h" />
     <ClInclude Include="OWindow.h" />
-    <ClInclude Include="ETypes.h" />
     <ClInclude Include="WContentBrowser.h" />
     <ClInclude Include="WHierarchy.h" />
     <ClInclude Include="WTools.h" />

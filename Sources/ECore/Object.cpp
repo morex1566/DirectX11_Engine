@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "Object.h"
+#include "SConsole.h"
 
 Object::Object(): bIsEnabled(1)
 {

@@ -1,6 +1,7 @@
 #pragma once
 #include "OComponent.h"
 
+ECLASS()
 class CTransform : public OComponent
 {
 public:

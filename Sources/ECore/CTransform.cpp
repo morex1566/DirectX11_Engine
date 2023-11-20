@@ -1,5 +1,7 @@
 #include "PCH.h"
 #include "CTransform.h"
+#include "SReflection.h"
+
 
 CTransform::CTransform(const OGameObject& InOwner)
 	: OComponent(InOwner),
@@ -10,6 +12,10 @@ CTransform::CTransform(const OGameObject& InOwner)
 		LookAt(XMFLOAT3(0, 0, 1)),
 		WorldMatrix(XMMatrixIdentity())
 {
+	if (!SReflection::CheckIsRegistered<CTransform>())
+	{
+		SReflection::RegisterClassType<CTransform>();
+	}
 }
 
 CTransform::~CTransform()

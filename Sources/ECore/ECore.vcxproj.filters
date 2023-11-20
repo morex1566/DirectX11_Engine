@@ -151,12 +151,6 @@
     <ClInclude Include="GTestObject.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="EMacros.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ETypes.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="OWidget.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -192,6 +186,12 @@
     </ClInclude>
     <ClInclude Include="PCH.h">
       <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EUtls\EMacros.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EUtls\ETypes.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
