@@ -55,7 +55,7 @@ template <typename T, typename ...Args>
 T* OGameObject::TAddComponent(Args&&... InConstructorArgs)
 {
 	// T(Args...)
-	Components.emplace_back(std::make_shared<T>(std::move(InConstructorArgs)...));
+	Components.emplace_back(std::make_shared<T>(std::move(*this), std::forward<Args>(InConstructorArgs)...));
 
 	return static_cast<T*>(Components.back().get());
 }

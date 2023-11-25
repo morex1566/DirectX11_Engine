@@ -25,26 +25,8 @@ void OWorld::Initialize()
 {
 	Object::Initialize();
 
-	OGameObject& TestGameObject = TCreateGameObject<GTestObject>();
-	{
-		CMesh* Mesh = TestGameObject.TAddComponent<CMesh>(TestGameObject, *DirectX11);
-		{
-			Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)), 
-							FVertex(XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)), 
-							FVertex(XMFLOAT3(1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
-
-			Mesh->AddIndex(0);
-			Mesh->AddIndex(1);
-			Mesh->AddIndex(2);
-		}
-
-		CShader* Shader = TestGameObject.TAddComponent<CShader>(TestGameObject, *Window, *DirectX11, *Camera);
-		{
-			Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
-		}
-	}
-
-	OGameObject& Gizmo = TCreateGameObject<GGizmo>(*Camera, *Window, *DirectX11);
+	GTestObject& TestGameObject = TCreateGameObject<GTestObject>(*Camera, *Window, *DirectX11);
+	GGizmo& Gizmo = TCreateGameObject<GGizmo>(*Camera, *Window, *DirectX11);
 
 	for (const auto& GameObject : GameObjects)
 	{

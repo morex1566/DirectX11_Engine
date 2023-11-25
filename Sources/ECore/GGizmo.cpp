@@ -12,6 +12,16 @@ GGizmo::GGizmo(const GCamera& InCamera, const OWindow& InWindow, const ODirectX1
 	Camera = &InCamera;
 	DirectX11 = &InDirectX11;
 	Window = &InWindow;
+
+	CLine* Line = TAddComponent<CLine>(*DirectX11);
+	{
+		
+	}
+
+	CShader* Shader = TAddComponent<CShader>(*Window, *DirectX11, *Camera);
+	{
+		Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
+	}
 }
 
 GGizmo::~GGizmo()
@@ -20,10 +30,6 @@ GGizmo::~GGizmo()
 
 void GGizmo::Initialize()
 {
-	TAddComponent<CLine>(*this, *DirectX11);
-	TAddComponent<CShader>(*this, *Window, *DirectX11, *Camera);
-
-
 	Object::Initialize();
 }
 

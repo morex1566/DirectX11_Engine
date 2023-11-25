@@ -7,7 +7,7 @@
 OGameObject::OGameObject()
 	: Object()
 {
-	Transform = TAddComponent<CTransform>(*this);
+	Transform = TAddComponent<CTransform>();
 }
 
 OGameObject::~OGameObject()
