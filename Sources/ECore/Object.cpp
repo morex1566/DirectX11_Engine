@@ -6,9 +6,8 @@ Object::Object(): bIsEnabled(1)
 {
 }
 
-Object::EHandleResultType Object::Initialize()
+void Object::Initialize()
 {
-	return EHandleResultType::Success;
 }
 
 void Object::Release()

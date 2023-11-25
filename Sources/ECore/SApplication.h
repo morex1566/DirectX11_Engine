@@ -1,6 +1,7 @@
 #pragma once
 #include "GCamera.h"
 #include "ODirectX11.h"
+#include "OGizmo.h"
 #include "OGUI.h"
 #include "OWindow.h"
 #include "OWorld.h"
@@ -12,9 +13,9 @@ public:
 	SApplication& operator=(const SApplication&)				= delete;
 	SApplication(SApplication&&) noexcept						= delete;
 	SApplication& operator=(SApplication&&) noexcept			= delete;
-	~SApplication()											= default;
+	~SApplication()												= default;
 
-	static SApplication&										GetInstance();
+	static SApplication&									GetInstance();
 	/**
 	 * \brief End repetition of the main loop.
 	 */
@@ -66,6 +67,10 @@ private:
 	 * \brief game objects where located in hierarchy are here.
 	 */
 	std::shared_ptr<OWorld>									World;
+	/**
+	 * \brief default viewpot ui.
+	 */
+	std::shared_ptr<OGizmo>									Gizmo;
 	/**
 	 * \brief Current application's status.
 	 */

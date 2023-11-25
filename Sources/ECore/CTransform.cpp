@@ -22,11 +22,9 @@ CTransform::~CTransform()
 {
 }
 
-Object::EHandleResultType CTransform::Initialize()
+void CTransform::Initialize()
 {
 	OComponent::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void CTransform::Release()

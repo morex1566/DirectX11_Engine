@@ -22,17 +22,15 @@ ODirectX11::~ODirectX11()
 {
 }
 
-Object::EHandleResultType ODirectX11::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
+void ODirectX11::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
 {
 	if (InMsg == WM_SIZE)
 	{
 		bIsScreenSizeChanged = 1;
 	}
-
-	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType ODirectX11::Initialize()
+void ODirectX11::Initialize()
 {
 	HRESULT								Result;
 	ComPtr<IDXGIFactory>				Factory;
@@ -47,7 +45,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	if (FAILED(Result))
 	{
 		SConsole::LogError(L"CreateDXGIFactory() is failed.");
-		return EHandleResultType::Failed;
+		throw std::exception();
 	}
 
 	// Use the factory to create an adapter for the primary graphics interface (video card).
@@ -55,7 +53,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	if (FAILED(Result))
 	{
 		SConsole::LogError(L"EnumAdapters() is failed.");
-		return EHandleResultType::Failed;
+		throw std::exception();
 	}
 
 	// Enumerate the primary adapter output (monitor).
@@ -63,7 +61,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	if (FAILED(Result))
 	{
 		SConsole::LogError(L"EnumOutputs() is failed.");
-		return EHandleResultType::Failed;
+		throw std::exception();
 	}
 
 	// Get the number of modes that fit the DXGI_FORMAT_R8G8B8A8_UNORM display format for the adapter output (monitor).
@@ -72,7 +70,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	if (FAILED(Result))
 	{
 		SConsole::LogError(L"GetDisplayModeList() is failed.");
-		return EHandleResultType::Failed;
+		throw std::exception();
 	}
 
 	// Create a list to hold all the possible display modes for this monitor/video card combination.
@@ -83,7 +81,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 		if (FAILED(Result))
 		{
 			SConsole::LogError(L"GetDisplayModeList() is failed.");
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 
 		// Now go through all the display modes and find the one that matches the screen width and height.
@@ -118,7 +116,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 	if (FAILED(Result))
 	{
 		SConsole::LogError(L"GetDesc() is failed.");
-		return EHandleResultType::Failed;
+		throw std::exception();
 	}
 
 	// Set the feature level to DirectX 11.
@@ -160,7 +158,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDeviceAndSwapChain(SwapChain.GetAddressOf(),Device.GetAddressOf(),DeviceContext.GetAddressOf(), SwapChainDesc) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -186,7 +184,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDepthStencilBuffer(DepthStencilBuffer2D.GetAddressOf(), DepthStencilBufferDesc2D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -212,7 +210,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDepthStencilBuffer(DepthStencilBuffer3D.GetAddressOf(), DepthStencilBufferDesc3D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -244,7 +242,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDepthStencilState(DepthStencilState2D.GetAddressOf(), DepthStencilStateDesc2D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -276,7 +274,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDepthStencilState(DepthStencilState3D.GetAddressOf(), DepthStencilStateDesc3D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -294,7 +292,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDepthStencilView(DepthStencilBuffer2D.Get(), DepthStencilView2D.GetAddressOf(), DepthStencilViewDesc2D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -312,7 +310,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateDepthStencilView(DepthStencilBuffer3D.Get(), DepthStencilView3D.GetAddressOf(), DepthStencilViewDesc3D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -337,7 +335,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateRasterizerState(RasterizerState2D.GetAddressOf(), RasterizerDesc2D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -362,7 +360,7 @@ Object::EHandleResultType ODirectX11::Initialize()
 
 		if (CreateRasterizerState(RasterizerState3D.GetAddressOf(), RasterizerDesc3D) != EHandleResultType::Success)
 		{
-			return EHandleResultType::Failed;
+			throw std::exception();
 		}
 	}
 
@@ -393,9 +391,6 @@ Object::EHandleResultType ODirectX11::Initialize()
 			Viewport3D.TopLeftY = 0.0f;
 		}
 	}
-
-
-	return EHandleResultType::Success;
 }
 
 void ODirectX11::Release()

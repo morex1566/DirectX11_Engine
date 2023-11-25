@@ -12,7 +12,7 @@ public:
 	CTransform& operator=(CTransform&&) noexcept			= default;
 	virtual ~CTransform() override;
 
-	virtual EHandleResultType								Initialize() override;
+	virtual void		 								    Initialize() override;
 	virtual void											Release() override;
 
 	/**

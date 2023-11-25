@@ -15,7 +15,7 @@ public:
 	CShader& operator=(CShader&&) noexcept			= default;
 	virtual ~CShader() override;
 
-	virtual EHandleResultType						Initialize() override;
+	virtual void 								    Initialize() override;
 	virtual void									Release() override;
 
 	/**

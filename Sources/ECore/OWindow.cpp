@@ -64,7 +64,7 @@ LRESULT WINAPI OWindow::WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, L
 	return ::DefWindowProcW(HWnd, Msg, WParam, LParam);
 }
 
-Object::EHandleResultType OWindow::Initialize()
+void OWindow::Initialize()
 {
 	Object::Initialize();
 
@@ -113,14 +113,12 @@ Object::EHandleResultType OWindow::Initialize()
 		if (HWnd == nullptr)
 		{
 			SConsole::LogError(L"CreateWindowW() is failed.");
-			return EHandleResultType::Failed;
+			Object::Initialize();
 		}
 	}
 
 	// Get current window size.
 	Resize();
-
-	return EHandleResultType::Success;
 }
 
 void OWindow::Release()

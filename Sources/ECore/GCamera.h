@@ -13,9 +13,9 @@ public:
 	GCamera& operator=(GCamera&&) noexcept			= default;
 	~GCamera() override;
 
-	static EHandleResultType CALLBACK				MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
+	static void CALLBACK							MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
-	EHandleResultType								Initialize() override;
+	void		 								    Initialize() override;
 	void											Release() override;
 
 	/**

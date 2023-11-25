@@ -12,11 +12,9 @@ OWidget::~OWidget()
 {
 }
 
-Object::EHandleResultType OWidget::Initialize()
+void OWidget::Initialize()
 {
 	Object::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void OWidget::Release()

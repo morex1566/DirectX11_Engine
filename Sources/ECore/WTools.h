@@ -13,7 +13,7 @@ public:
 	WTools& operator=(WTools&&) noexcept					= default;
 	~WTools() override;
 
-	EHandleResultType										Initialize() override;
+	void				 								    Initialize() override;
 	void													Release() override;
 	/**
 	 * \brief Called only once before entering the main loop.

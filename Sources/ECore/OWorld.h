@@ -16,7 +16,7 @@ public:
 	OWorld& operator=(OWorld&&) noexcept					= default;
 	~OWorld() override;
 
-	EHandleResultType										Initialize() override;
+	void													Initialize() override;
 	void													Release() override;
 
 	/**

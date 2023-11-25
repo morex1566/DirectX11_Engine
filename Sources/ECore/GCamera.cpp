@@ -22,23 +22,19 @@ GCamera::~GCamera()
 {
 }
 
-Object::EHandleResultType GCamera::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
+void GCamera::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
 {
 	if (InMsg == WM_SIZE)
 	{
 		bIsScreenSizeChanged = 1;
 	}
-
-	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType GCamera::Initialize()
+void GCamera::Initialize()
 {
 	OGameObject::Initialize();
 
 	Transform->SetPosition(XMFLOAT3(0, 0, -5));
-
-	return EHandleResultType::Success;
 }
 
 void GCamera::Release()

@@ -14,7 +14,7 @@ public:
 	OComponent& operator=(OComponent&&) noexcept		= default;
 	virtual ~OComponent() override;
 
-	EHandleResultType									Initialize() override;
+	void												Initialize() override;
 	void												Release() override;
 
 	/**

@@ -19,7 +19,7 @@ OWorld::~OWorld()
 {
 }
 
-Object::EHandleResultType OWorld::Initialize()
+void OWorld::Initialize()
 {
 	Object::Initialize();
 
@@ -47,8 +47,6 @@ Object::EHandleResultType OWorld::Initialize()
 	{
 		GameObject->Initialize();
 	}
-
-	return EHandleResultType::Success;
 }
 
 void OWorld::Release()

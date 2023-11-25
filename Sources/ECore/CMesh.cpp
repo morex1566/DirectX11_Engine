@@ -13,11 +13,9 @@ CMesh::~CMesh()
 {
 }
 
-Object::EHandleResultType CMesh::Initialize()
+void CMesh::Initialize()
 {
 	OComponent::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void CMesh::Release()

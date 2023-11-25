@@ -10,11 +10,9 @@ WContentBrowser::~WContentBrowser()
 {
 }
 
-Object::EHandleResultType WContentBrowser::Initialize()
+void WContentBrowser::Initialize()
 {
 	OWidget::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void WContentBrowser::Release()

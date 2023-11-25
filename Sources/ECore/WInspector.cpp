@@ -11,11 +11,9 @@ WInspector::~WInspector()
 {
 }
 
-Object::EHandleResultType WInspector::Initialize()
+void WInspector::Initialize()
 {
 	OWidget::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void WInspector::Release()

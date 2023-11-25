@@ -116,6 +116,9 @@
     <ClCompile Include="PCH.cpp">
       <Filter>Precompiled Header</Filter>
     </ClCompile>
+    <ClCompile Include="OGizmo.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp">
@@ -191,6 +194,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\EUtls\ETypes.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OGizmo.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -17,7 +17,7 @@ public:
 	OGameObject& operator=(OGameObject&&) noexcept					= default;
 	virtual ~OGameObject() override;
 
-	virtual EHandleResultType										Initialize() override;
+	virtual void													Initialize() override;
 	virtual void													Release() override;
 
 	/**

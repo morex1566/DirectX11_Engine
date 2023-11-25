@@ -14,7 +14,7 @@ OGameObject::~OGameObject()
 {
 }
 
-Object::EHandleResultType OGameObject::Initialize()
+void OGameObject::Initialize()
 {
 	Object::Initialize();
 
@@ -33,8 +33,6 @@ Object::EHandleResultType OGameObject::Initialize()
 			Child->Initialize();
 		}
 	}
-
-	return EHandleResultType::Success;
 }
 
 void OGameObject::Release()

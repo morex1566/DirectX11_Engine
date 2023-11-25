@@ -17,17 +17,12 @@ OGUI::~OGUI()
 
 }
 
-Object::EHandleResultType OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
+void OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
 {
-	if (ImGui_ImplWin32_WndProcHandler(InHWnd, InMsg, InWParam, InLParam))
-	{
-		return EHandleResultType::Success;
-	}
-
-	return EHandleResultType::Success;
+	ImGui_ImplWin32_WndProcHandler(InHWnd, InMsg, InWParam, InLParam);
 }
 
-Object::EHandleResultType OGUI::Initialize()
+void OGUI::Initialize()
 {
 	Object::Initialize();
 
@@ -40,7 +35,7 @@ Object::EHandleResultType OGUI::Initialize()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-	io.FontGlobalScale = 1;
+	io.FontGlobalScale = 1.75;
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -64,8 +59,6 @@ Object::EHandleResultType OGUI::Initialize()
 			Widget->Initialize();
 		}
 	}
-
-	return EHandleResultType::Success;
 }
 
 void OGUI::Release()

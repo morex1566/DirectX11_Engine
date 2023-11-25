@@ -15,9 +15,9 @@ public:
 	OGUI& operator=(OGUI&&) noexcept						= default;
 	~OGUI() override;
 
-	static EHandleResultType CALLBACK MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
+	static void CALLBACK									MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
-	EHandleResultType										Initialize() override;
+	void													Initialize() override;
 	void													Release() override;
 	/**
 	 * \brief Called only once before entering the main loop.

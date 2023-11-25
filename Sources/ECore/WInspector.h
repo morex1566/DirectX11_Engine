@@ -14,7 +14,7 @@ public:
 	WInspector& operator=(WInspector&&) noexcept	= default;
 	~WInspector() override;
 
-	EHandleResultType								Initialize() override;
+	void											Initialize() override;
 	void											Release() override;
 	/**
 	 * \brief Called only once before entering the main loop.

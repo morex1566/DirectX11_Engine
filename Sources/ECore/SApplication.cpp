@@ -59,6 +59,9 @@ void SApplication::Initialize()
 		WContentBrowser* ContentBrowser = GUI->TAddWidget<WContentBrowser>(*World);
 	}
 
+	// Create gizmo.
+	
+
 	// Initialize all of object.
 	for (const auto& Object : Objects)
 	{

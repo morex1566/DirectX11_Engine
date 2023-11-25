@@ -14,7 +14,7 @@ public:
 	CMesh& operator=(CMesh&&) noexcept			= default;
 	virtual ~CMesh() override;
 
-	virtual EHandleResultType					Initialize() override;
+	virtual void								Initialize() override;
 	virtual void								Release() override;
 
 	/**

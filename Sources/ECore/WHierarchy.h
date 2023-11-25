@@ -15,7 +15,7 @@ public:
 	WHierarchy& operator=(WHierarchy&&) noexcept			= default;
 	~WHierarchy() override;
 
-	EHandleResultType										Initialize() override;
+	void													Initialize() override;
 	void													Release() override;
 	/**
 	 * \brief Called only once before entering the main loop.

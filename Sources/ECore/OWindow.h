@@ -13,7 +13,7 @@ public:
 
 	static LRESULT WINAPI WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam);
 
-	EHandleResultType							Initialize() override;
+	void										Initialize() override;
 	void										Release() override;
 	/**
 	 * \brief Called only once before entering the main loop.

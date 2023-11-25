@@ -11,13 +11,13 @@ class OWidget : public Object
 {
 public:
 	OWidget();
-	OWidget(const OWidget&)										= default;
-	OWidget& operator=(const OWidget&)							= default;
-	OWidget(OWidget&&) noexcept									= default;
-	OWidget& operator=(OWidget&&) noexcept						= default;
+	OWidget(const OWidget&)									= default;
+	OWidget& operator=(const OWidget&)						= default;
+	OWidget(OWidget&&) noexcept								= default;
+	OWidget& operator=(OWidget&&) noexcept					= default;
 	~OWidget() override;
 
-	EHandleResultType										Initialize() override;
+	void													Initialize() override;
 	void													Release() override;
 	/**
 	 * \brief Called only once before entering the main loop.

@@ -12,9 +12,9 @@ OComponent::~OComponent()
 {
 }
 
-Object::EHandleResultType OComponent::Initialize()
+void OComponent::Initialize()
 {
-	return Object::Initialize();
+	Object::Initialize();
 }
 
 void OComponent::Release()

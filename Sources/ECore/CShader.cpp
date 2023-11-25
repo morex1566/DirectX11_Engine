@@ -21,11 +21,9 @@ CShader::~CShader()
 {
 }
 
-Object::EHandleResultType CShader::Initialize()
+void CShader::Initialize()
 {
 	OComponent::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void CShader::Release()

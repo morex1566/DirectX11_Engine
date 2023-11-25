@@ -11,11 +11,9 @@ WTools::~WTools()
 {
 }
 
-Object::EHandleResultType WTools::Initialize()
+void WTools::Initialize()
 {
 	OWidget::Initialize();
-
-	return EHandleResultType::Success;
 }
 
 void WTools::Release()

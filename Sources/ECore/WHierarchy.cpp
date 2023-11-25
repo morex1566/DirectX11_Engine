@@ -15,7 +15,7 @@ WHierarchy::~WHierarchy()
 {
 }
 
-Object::EHandleResultType WHierarchy::Initialize()
+void WHierarchy::Initialize()
 {
 	OWidget::Initialize();
 
@@ -24,8 +24,6 @@ Object::EHandleResultType WHierarchy::Initialize()
 	{
 		GameObjectBlocks.insert(std::pair<OGameObject*, uint8>(GameObject.get(), 0));
 	}
-
-	return EHandleResultType::Success;
 }
 
 void WHierarchy::Release()

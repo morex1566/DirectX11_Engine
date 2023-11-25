@@ -15,7 +15,7 @@ public:
 	Object& operator=(Object&&) noexcept		= default;
 	virtual ~Object()							= default;
 
-	virtual EHandleResultType					Initialize();
+	virtual void								Initialize();
 	virtual void								Release();
 	/**
 	 * \brief Called only once before entering the main loop.

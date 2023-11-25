@@ -15,7 +15,7 @@ public:
 	GTestObject& operator=(GTestObject&&) noexcept			= default;
 	~GTestObject() override;
 
-	EHandleResultType										Initialize() override;
+	void			    								    Initialize() override;
 	void													Release() override;
 
 	/**

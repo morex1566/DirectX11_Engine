@@ -14,9 +14,9 @@ GTestObject::~GTestObject()
 {
 }
 
-Object::EHandleResultType GTestObject::Initialize()
+void GTestObject::Initialize()
 {
-	return OGameObject::Initialize();
+	OGameObject::Initialize();
 }
 
 void GTestObject::Release()
