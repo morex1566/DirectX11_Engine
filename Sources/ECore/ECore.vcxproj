@@ -236,7 +236,8 @@
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="OGizmo.cpp" />
+    <ClCompile Include="EUtls.cpp" />
+    <ClCompile Include="GGizmo.cpp" />
     <ClCompile Include="PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -354,7 +355,8 @@
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CTransform.h" />
-    <ClInclude Include="OGizmo.h" />
+    <ClInclude Include="EUtls.h" />
+    <ClInclude Include="GGizmo.h" />
     <ClInclude Include="SReflection.h" />
     <ClInclude Include="WInspector.h" />
     <ClInclude Include="OComponent.h" />

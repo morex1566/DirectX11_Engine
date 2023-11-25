@@ -116,7 +116,10 @@
     <ClCompile Include="PCH.cpp">
       <Filter>Precompiled Header</Filter>
     </ClCompile>
-    <ClCompile Include="OGizmo.cpp">
+    <ClCompile Include="GGizmo.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="EUtls.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -196,7 +199,10 @@
     <ClInclude Include="..\EUtls\ETypes.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="OGizmo.h">
+    <ClInclude Include="GGizmo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EUtls.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

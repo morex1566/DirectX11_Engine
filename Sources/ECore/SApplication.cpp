@@ -51,16 +51,9 @@ void SApplication::Initialize()
 
 	// Create test gui.
 	{
-		GUI = std::make_shared<OGUI>(*Window, *DirectX11);
+		GUI = std::make_shared<OGUI>(*Window, *DirectX11, *World);
 		Objects.push_back(GUI);
-		WInspector* Inspector = GUI->TAddWidget<WInspector>(*World);
-		WHierarchy* Hierarchy = GUI->TAddWidget<WHierarchy>(*World, Inspector);
-		WTools* Tools = GUI->TAddWidget<WTools>(*World);
-		WContentBrowser* ContentBrowser = GUI->TAddWidget<WContentBrowser>(*World);
 	}
-
-	// Create gizmo.
-	
 
 	// Initialize all of object.
 	for (const auto& Object : Objects)

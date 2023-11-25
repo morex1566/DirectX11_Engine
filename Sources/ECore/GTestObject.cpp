@@ -1,9 +1,5 @@
 #include "PCH.h"
-#include "GCamera.h"
 #include "GTestObject.h"
-#include "SConsole.h"
-#include "ODirectX11.h"
-#include "OWindow.h"
 
 GTestObject::GTestObject()
 	: OGameObject()

@@ -2,13 +2,14 @@
 #include "Object.h"
 #include "OWidget.h"
 
-class OWindow;
 class ODirectX11;
+class OWindow;
+class OWorld;
 
 class OGUI : public Object
 {
 public:
-	OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11);
+	OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11, const OWorld& InWorld);
 	OGUI(const OGUI&)										= default;
 	OGUI& operator=(const OGUI&)							= default;
 	OGUI(OGUI&&) noexcept									= default;
@@ -38,8 +39,9 @@ public:
 	void													TDeleteComponent();
 
 private:
-	const OWindow*											Window; // ReadOnly
-	const ODirectX11*										DirectX11; // ReadOnly
+	const OWindow*											Window; // Readonly
+	const OWorld*											World; // Readonly
+	const ODirectX11*										DirectX11; // Readonly
 
 	std::vector<std::shared_ptr<OWidget>>					Widgets;
 };

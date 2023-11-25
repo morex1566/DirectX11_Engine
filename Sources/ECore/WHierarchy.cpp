@@ -4,11 +4,10 @@
 #include "WHierarchy.h"
 #include "WInspector.h"
 
-WHierarchy::WHierarchy(const OWorld& InWorld, WInspector* InInspector)
+WHierarchy::WHierarchy(const OWorld& InWorld)
 	: OWidget()
 {
 	World = &InWorld;
-	Inspector = InInspector;
 }
 
 WHierarchy::~WHierarchy()
@@ -56,10 +55,8 @@ void WHierarchy::Render()
 		if (ImGui::Selectable(ToString(GameObjectBlock.first->GetName()).c_str(), GameObjectBlock.second))
 		{
 			GameObjectBlock.second = 1;
-			Inspector->SetFocus(GameObjectBlock.first);
 		}
 	}
-	
 
 	ImGui::End();
 }

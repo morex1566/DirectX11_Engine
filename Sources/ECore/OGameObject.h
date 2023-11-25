@@ -3,9 +3,6 @@
 #include "OComponent.h"
 
 class CTransform;
-class GCamera;
-class OWindow;
-class ODirectX11;
 
 class OGameObject : public Object
 {

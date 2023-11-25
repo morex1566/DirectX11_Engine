@@ -1,16 +1,17 @@
 #pragma once
-#include "GCamera.h"
-#include "Object.h"
+#include "OGameObject.h"
 
-class OGizmo : public Object
+class GCamera;
+
+class GGizmo : public OGameObject
 {
 public:
-	OGizmo(const GCamera& InCamera);
-	OGizmo(const OGizmo&)									= default;
-	OGizmo& operator=(const OGizmo&)						= default;
-	OGizmo(OGizmo&&) noexcept								= default;
-	OGizmo& operator=(OGizmo&&) noexcept					= default;
-	~OGizmo() override;
+	GGizmo(const GCamera& InCamera);
+	GGizmo(const GGizmo&)									= default;
+	GGizmo& operator=(const GGizmo&)						= default;
+	GGizmo(GGizmo&&) noexcept								= default;
+	GGizmo& operator=(GGizmo&&) noexcept					= default;
+	~GGizmo() override;
 
 	void													Initialize() override;
 	void													Release() override;

@@ -2,14 +2,22 @@
 #include "ODirectX11.h"
 #include "OGUI.h"
 #include "OWindow.h"
+#include "OWorld.h"
+#include "WContentBrowser.h"
+#include "WTools.h"
+#include "WHierarchy.h"
+#include "WInspector.h"
+#include "WTools.h"
+
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
 
-OGUI::OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11)
+OGUI::OGUI(const OWindow& InWindow, const ODirectX11& InDirectX11, const OWorld& InWorld)
 	: Object()
 {
 	Window = &InWindow;
 	DirectX11 = &InDirectX11;
+	World = &InWorld;
 }
 
 OGUI::~OGUI()
@@ -26,7 +34,7 @@ void OGUI::Initialize()
 {
 	Object::Initialize();
 
-	// Setup Dear ImGui context
+	// Setup Dear ImGui context.
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
@@ -37,7 +45,7 @@ void OGUI::Initialize()
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 	io.FontGlobalScale = 1.75;
 
-	// Setup Dear ImGui style
+	// Setup Dear ImGui style.
 	ImGui::StyleColorsDark();
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
@@ -48,9 +56,17 @@ void OGUI::Initialize()
 		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
 
-	// Setup Platform/Renderer backends
+	// Setup Platform/Renderer backends.
 	ImGui_ImplWin32_Init(Window->GetHWnd());
 	ImGui_ImplDX11_Init(&DirectX11->GetDevice(), &DirectX11->GetDeviceContext());
+
+	// Add default gui.
+	{
+		TAddWidget<WInspector>(*World);
+		TAddWidget<WHierarchy>(*World);
+		TAddWidget<WTools>(*World);
+		TAddWidget<WContentBrowser>(*World);
+	}
 
 	for (const auto& Widget : Widgets)
 	{

@@ -54,8 +54,36 @@ private:
 template <typename T, typename... Args>
 T& OWorld::TCreateGameObject(Args&&... Arguments)
 {
+	// Create and attach.
 	std::shared_ptr<T> TGameObject = std::make_shared<T>(std::move(Arguments)...);
 	GameObjects.push_back(TGameObject);
+
+	// name as default.
+	bool IsDone = false;
+	int Index = 0;
+	while (!IsDone)
+	{
+		bool Found = false;
+
+		// Find same name.
+		// When is found, raise the index.
+		for (const auto& GameObject : GameObjects)
+		{
+			if (GameObject->GetName() == ToWString(GetTypeToString<T>() + std::to_string(Index)))
+			{
+				Found = true;
+				Index++;
+				break;
+			}
+		}
+
+		// Not found, set current index to name.
+		if (!Found)
+		{
+			std::static_pointer_cast<Object>(TGameObject)->SetName(ToWString(GetTypeToString<T>() + std::to_string(Index)));
+			IsDone = true;
+		}
+	}
 
 	return *TGameObject;
 }
