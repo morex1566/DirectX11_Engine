@@ -122,6 +122,9 @@
     <ClCompile Include="EUtls.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="CLine.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Includes\json\json.hpp">
@@ -203,6 +206,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="EUtls.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CLine.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

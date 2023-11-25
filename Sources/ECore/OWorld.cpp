@@ -1,4 +1,5 @@
 #include "PCH.h"
+#include "CLine.h"
 #include "CMesh.h"
 #include "CShader.h"
 #include "GCamera.h"
@@ -28,9 +29,10 @@ void OWorld::Initialize()
 	{
 		CMesh* Mesh = TestGameObject.TAddComponent<CMesh>(TestGameObject, *DirectX11);
 		{
-			Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
-			Mesh->AddVertex(FVertex(XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
-			Mesh->AddVertex(FVertex(XMFLOAT3(1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
+			Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)), 
+							FVertex(XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)), 
+							FVertex(XMFLOAT3(1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
+
 			Mesh->AddIndex(0);
 			Mesh->AddIndex(1);
 			Mesh->AddIndex(2);
@@ -42,21 +44,7 @@ void OWorld::Initialize()
 		}
 	}
 
-	OGameObject& Gizmo1 = TCreateGameObject<GGizmo>(*Camera);
-	{
-		CMesh* Mesh = Gizmo1.TAddComponent<CMesh>(Gizmo1, *DirectX11);
-		{
-			Mesh->AddVertex(FVertex(XMFLOAT3(-1.5f, 0.0f, -1.5f), XMFLOAT4(-1.5f, 0, 1.5f, 1)));
-			Mesh->AddVertex(FVertex(XMFLOAT3(1.5f, 0.0f, -1.5f), XMFLOAT4(1.5f, 0, 1.5f, 1)));
-			Mesh->AddIndex(0);
-			Mesh->AddIndex(1);
-		}
-
-		CShader* Shader = Gizmo1.TAddComponent<CShader>(Gizmo1, *Window, *DirectX11, *Camera);
-		{
-			Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
-		}
-	}
+	OGameObject& Gizmo = TCreateGameObject<GGizmo>(*Camera, *Window, *DirectX11);
 
 	for (const auto& GameObject : GameObjects)
 	{

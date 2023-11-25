@@ -218,6 +218,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CLine.cpp" />
     <ClCompile Include="CMesh.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</MultiProcessorCompilation>
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</MultiProcessorCompilation>
@@ -352,6 +353,7 @@
     <ClInclude Include="..\..\Includes\json\json_fwd.hpp" />
     <ClInclude Include="..\EUtls\EMacros.h" />
     <ClInclude Include="..\EUtls\ETypes.h" />
+    <ClInclude Include="CLine.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CTransform.h" />

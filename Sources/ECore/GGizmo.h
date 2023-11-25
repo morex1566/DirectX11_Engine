@@ -2,11 +2,15 @@
 #include "OGameObject.h"
 
 class GCamera;
+class ODirectX11;
+class OWindow;
 
 class GGizmo : public OGameObject
 {
 public:
-	GGizmo(const GCamera& InCamera);
+	GGizmo(const GCamera& InCamera,
+		   const OWindow& InWindow,
+		   const ODirectX11& InDirectX11);
 	GGizmo(const GGizmo&)									= default;
 	GGizmo& operator=(const GGizmo&)						= default;
 	GGizmo(GGizmo&&) noexcept								= default;
@@ -30,5 +34,7 @@ public:
 
 private:
 	const GCamera*											Camera;
+	const ODirectX11*										DirectX11;
+	const OWindow*											Window;
 };
 

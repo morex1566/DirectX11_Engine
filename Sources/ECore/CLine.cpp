@@ -1,29 +1,29 @@
 #include "PCH.h"
-#include "CMesh.h"
-#include "SConsole.h"
+#include "CLine.h"
 #include "ODirectX11.h"
+#include "SConsole.h"
 
-CMesh::CMesh(const OGameObject& InOwner, const ODirectX11& InDirectX11)
+CLine::CLine(const OGameObject& InOwner, const ODirectX11& InDirectX11)
 	: OComponent(InOwner)
 {
 	DirectX11 = &InDirectX11;
 }
 
-CMesh::~CMesh()
+CLine::~CLine()
 {
 }
 
-void CMesh::Initialize()
+void CLine::Initialize()
 {
 	OComponent::Initialize();
 }
 
-void CMesh::Release()
+void CLine::Release()
 {
 	OComponent::Release();
 }
 
-void CMesh::Start()
+void CLine::Start()
 {
 	OComponent::Start();
 
@@ -38,7 +38,7 @@ void CMesh::Start()
 	}
 }
 
-void CMesh::Tick()
+void CLine::Tick()
 {
 	OComponent::Tick();
 
@@ -50,24 +50,23 @@ void CMesh::Tick()
 	Render();
 }
 
-void CMesh::End()
+void CLine::End()
 {
 	OComponent::End();
 }
 
-void CMesh::AddVertex(const FVertex& InFirst, const FVertex& InSecond, const FVertex& InThird)
+void CLine::AddVertex(const FVertex& InFirst, const FVertex& InSecond)
 {
 	Vertices.emplace_back(InFirst);
 	Vertices.emplace_back(InSecond);
-	Vertices.emplace_back(InThird);
 }
 
-void CMesh::AddIndex(UINT InIndex)
+void CLine::AddIndex(UINT InIndex)
 {
 	Indices.emplace_back(InIndex);
 }
 
-bool CMesh::CreateVertexBuffer()
+bool CLine::CreateVertexBuffer()
 {
 	D3D11_BUFFER_DESC			VertexBufferDesc;
 	D3D11_SUBRESOURCE_DATA		VertexData;
@@ -105,7 +104,7 @@ bool CMesh::CreateVertexBuffer()
 	return true;
 }
 
-bool CMesh::CreateIndexBuffer()
+bool CLine::CreateIndexBuffer()
 {
 	D3D11_BUFFER_DESC			IndexBufferDesc;
 	D3D11_SUBRESOURCE_DATA		IndexData;
@@ -143,7 +142,7 @@ bool CMesh::CreateIndexBuffer()
 	return true;
 }
 
-void CMesh::Render()
+void CLine::Render()
 {
 	UINT				 Stride = sizeof(FVertex);
 	UINT				 Offset = 0;
@@ -156,6 +155,6 @@ void CMesh::Render()
 		DeviceContext.IASetIndexBuffer(IndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 		// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
-		DeviceContext.IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		DeviceContext.IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 	}
 }

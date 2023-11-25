@@ -4,16 +4,16 @@
 class ODirectX11;
 
 ECLASS()
-class CMesh : public OComponent
+class CLine : public OComponent
 {
 public:
-	CMesh(const OGameObject& InOwner,
+	CLine(const OGameObject& InOwner,
 		  const ODirectX11& InDirectX11);
-	CMesh(const CMesh&)							= default;
-	CMesh& operator=(const CMesh&)				= default;
-	CMesh(CMesh&&) noexcept						= default;
-	CMesh& operator=(CMesh&&) noexcept			= default;
-	~CMesh() override;
+	CLine(const CLine&)							= default;
+	CLine& operator=(const CLine&)				= default;
+	CLine(CLine&&) noexcept						= default;
+	CLine& operator=(CLine&&) noexcept			= default;
+	~CLine() override;
 
 	virtual void								Initialize() override;
 	virtual void								Release() override;
@@ -31,16 +31,16 @@ public:
 	 */
 	virtual void								End() override;
 	/**
-	 * \brief Add vertex which is used drawing triangle.
+	 * \brief Add vertex which is used drawing line.
 	 */
-	void										AddVertex(const FVertex& InFirst, const FVertex& InSecond, const FVertex& InThird);
+	void										AddVertex(const FVertex& InFirst, const FVertex& InSecond);
 	/**
-	 * \brief Add index which is used drawing triangle order.
+	 * \brief Add index which is used drawing line order.
 	 */
 	void										AddIndex(UINT InIndex);
 
-	FORCEINLINE UINT							GetVertexCount() { return Vertices.size(); }
-	FORCEINLINE UINT							GetIndexCount() { return Indices.size(); }
+	FORCEINLINE UINT							GetVertexCount() const { return Vertices.size(); }
+	FORCEINLINE UINT							GetIndexCount() const { return Indices.size(); }
 
 private:
 	bool										CreateVertexBuffer();
@@ -51,6 +51,7 @@ private:
 	ComPtr<ID3D11Buffer>						VertexBuffer;
 	ComPtr<ID3D11Buffer>						IndexBuffer;
 	std::vector<FVertex>						Vertices;
+
 	std::vector<UINT>							Indices;
 };
 
