@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "SApplication.h"
 
+#include "CTransform.h"
+
 std::vector<std::shared_ptr<Object>>	SApplication::Objects;
 std::shared_ptr<OWindow>				SApplication::Window;
 std::shared_ptr<ODirectX11>				SApplication::DirectX11;
@@ -42,6 +44,9 @@ void SApplication::Initialize()
 	// Create viewport camera.
 	{
 		Camera = std::make_shared<GCamera>(*Window);
+
+		Camera->GetTransform()->SetPosition(XMFLOAT3(0, 0, -5));
+
 		Objects.push_back(Camera);
 	}
 

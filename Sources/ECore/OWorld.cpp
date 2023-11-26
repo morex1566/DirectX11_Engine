@@ -4,6 +4,8 @@
 #include "ODirectX11.h"
 #include "OWorld.h"
 
+#include "CTransform.h"
+
 OWorld::OWorld()
 	: Object()
 {
@@ -18,6 +20,7 @@ void OWorld::Initialize()
 	Object::Initialize();
 
 	GTestObject& TestGameObject = TCreateGameObject<GTestObject>();
+
 	GGizmo& Gizmo = TCreateGameObject<GGizmo>();
 
 	for (const auto& GameObject : GameObjects)

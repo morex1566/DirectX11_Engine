@@ -33,8 +33,6 @@ void GCamera::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM In
 void GCamera::Initialize()
 {
 	OGameObject::Initialize();
-
-	Transform->SetPosition(XMFLOAT3(0, 0, -5));
 }
 
 void GCamera::Release()

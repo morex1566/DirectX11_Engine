@@ -38,7 +38,7 @@ void CTransform::Tick()
 	WorldMatrix = XMMatrixIdentity();
 
 	// Update world matrix.
-	XMMATRIX TranslationMatrix ;
+	XMMATRIX TranslationMatrix;
 	XMMATRIX RotationMatrix;
 	XMMATRIX ScaleMatrix;
 	{
@@ -54,16 +54,18 @@ void CTransform::Tick()
 	// Update lookAt.
 	XMVECTOR LookAtVector;
 	{
-		LookAtVector = XMVector3TransformCoord(GetLookAtVector(), RotationMatrix);
+		LookAtVector = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f); // Default forward vector in object space.
+		LookAtVector = XMVector3TransformCoord(LookAtVector, RotationMatrix);
 		LookAtVector = XMVectorAdd(GetPositionVector(), LookAtVector);
-		XMStoreFloat3(&LookAt, XMVector3Normalize(LookAtVector));
+		XMStoreFloat3(&LookAt, LookAtVector);
 	}
 
 	// Update up.
 	XMVECTOR UpVector;
 	{
-		UpVector = XMVector3TransformCoord(GetUpVector(), RotationMatrix);
-		XMStoreFloat3(&Up, XMVector3Normalize(UpVector));
+		UpVector = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // Default up vector in object space.
+		UpVector = XMVector3TransformCoord(UpVector, RotationMatrix);
+		XMStoreFloat3(&Up, UpVector);
 	}
 }
 
