@@ -1,24 +1,18 @@
 #include "PCH.h"
 #include "CLine.h"
 #include "CShader.h"
-#include "GCamera.h"
 #include "GGizmo.h"
 #include "ODirectX11.h"
-#include "OWindow.h"
 
-GGizmo::GGizmo(const GCamera& InCamera, const OWindow& InWindow, const ODirectX11& InDirectX11)
+GGizmo::GGizmo()
 	: OGameObject()
 {
-	Camera = &InCamera;
-	DirectX11 = &InDirectX11;
-	Window = &InWindow;
-
-	CLine* Line = TAddComponent<CLine>(*DirectX11);
+	CLine* Line = TAddComponent<CLine>();
 	{
 		
 	}
 
-	CShader* Shader = TAddComponent<CShader>(*Window, *DirectX11, *Camera);
+	CShader* Shader = TAddComponent<CShader>();
 	{
 		Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
 	}

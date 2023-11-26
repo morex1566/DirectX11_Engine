@@ -5,7 +5,7 @@ ECLASS()
 class CTransform : public OComponent
 {
 public:
-	CTransform(const OGameObject& InOwner);
+	CTransform(const OGameObject* InOwner);
 	CTransform(const CTransform&)						= default;
 	CTransform& operator=(const CTransform&)			= default;
 	CTransform(CTransform&&) noexcept					= default;
@@ -28,21 +28,21 @@ public:
 	 */
 	virtual void										End() override;
 
-	XMFLOAT3											GetPosition() const;
-	XMVECTOR											GetPositionVector() const;
-	XMFLOAT3											GetRotation() const;
-	XMFLOAT3											GetScale() const;
-	XMFLOAT3											GetUp() const;
-	XMVECTOR											GetUpVector() const;
-	XMFLOAT3											GetLookAt() const;
-	XMVECTOR											GetLookAtVector() const;
-	XMMATRIX											GetWorldMatrix() const;
+	FORCEINLINE XMFLOAT3								GetPosition() const { return Position; }
+	FORCEINLINE XMVECTOR								GetPositionVector() const { return XMLoadFloat3(&Position); }
+	FORCEINLINE XMFLOAT3								GetRotation() const { return Rotation; }
+	FORCEINLINE XMFLOAT3								GetScale() const { return Scale; }
+	FORCEINLINE XMFLOAT3								GetUp() const { return Up; }
+	FORCEINLINE XMVECTOR								GetUpVector() const { return XMLoadFloat3(&Up); }
+	FORCEINLINE XMFLOAT3								GetLookAt() const { return LookAt; }
+	FORCEINLINE XMVECTOR								GetLookAtVector() const { return XMLoadFloat3(&LookAt); }
+	FORCEINLINE XMMATRIX								GetWorldMatrix() const { return WorldMatrix; }
 
-	void												SetPosition(XMFLOAT3 InPosition);
-	void												SetRotation(XMFLOAT3 InRotation);
-	void												SetScale(XMFLOAT3 InScale);
-	void												SetUp(XMFLOAT3 InUp);
-	void												SetLookAt(XMFLOAT3 InLookAt);
+	FORCEINLINE void									SetPosition(XMFLOAT3 InPosition) { Position = InPosition; }
+	FORCEINLINE void									SetRotation(XMFLOAT3 InRotation) { Rotation = InRotation; }
+	FORCEINLINE void									SetScale(XMFLOAT3 InScale) { Scale = InScale; }
+	FORCEINLINE void									SetUp(XMFLOAT3 InUp) { Up = InUp;}
+	FORCEINLINE void									SetLookAt(XMFLOAT3 InLookAt) { LookAt = InLookAt; }
 
 private:
 	EPROPERTY()

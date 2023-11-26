@@ -8,9 +8,7 @@ class OWindow;
 class GGizmo : public OGameObject
 {
 public:
-	GGizmo(const GCamera& InCamera,
-		   const OWindow& InWindow,
-		   const ODirectX11& InDirectX11);
+	GGizmo();
 	GGizmo(const GGizmo&)									= default;
 	GGizmo& operator=(const GGizmo&)						= default;
 	GGizmo(GGizmo&&) noexcept								= default;
@@ -31,10 +29,5 @@ public:
 	 * \brief Called only once immediately after the main loop is over.
 	 */
 	void													End() override;
-
-private:
-	const GCamera*											Camera;
-	const ODirectX11*										DirectX11;
-	const OWindow*											Window;
 };
 

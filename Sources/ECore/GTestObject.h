@@ -8,9 +8,7 @@ class OWindow;
 class GTestObject : public OGameObject
 {
 public:
-	GTestObject(const GCamera& InCamera,
-				const OWindow& InWindow,
-				const ODirectX11& InDirectX11);
+	GTestObject();
 	GTestObject(const GTestObject&)							= default;
 	GTestObject& operator=(const GTestObject&)				= default;
 	GTestObject(GTestObject&&) noexcept						= default;
@@ -32,9 +30,5 @@ public:
 	 * \brief Called only once immediately after the main loop is over.
 	 */
 	void													End() override;
-private:
-	const GCamera*											Camera;
-	const ODirectX11*										DirectX11;
-	const OWindow*											Window;
 };
 

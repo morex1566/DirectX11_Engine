@@ -8,20 +8,18 @@
 class SApplication
 {
 public:
-	SApplication(const SApplication&)							= delete;
-	SApplication& operator=(const SApplication&)				= delete;
-	SApplication(SApplication&&) noexcept						= delete;
-	SApplication& operator=(SApplication&&) noexcept			= delete;
-	~SApplication()												= default;
+	SApplication(const SApplication&)						= delete;
+	SApplication& operator=(const SApplication&)			= delete;
+	SApplication(SApplication&&) noexcept					= delete;
+	SApplication& operator=(SApplication&&) noexcept		= delete;
+	~SApplication()											= default;
 
 	static SApplication&									GetInstance();
 	/**
 	 * \brief End repetition of the main loop.
 	 */
 	static void												Quit();
-
 	static uint8											CheckIsPlaying();
-
 	void													Initialize();
 	void													Release();
 	/**
@@ -39,33 +37,46 @@ public:
 
 	void													Draw();
 
+	/**
+	 * \brief Get current program's main window class.
+	 */
+	FORCEINLINE static const OWindow*						GetWindow() { return Window.get(); }
+	/**
+	 * \brief Get current d3d11 class.
+	 */
+	FORCEINLINE static const ODirectX11*					GetDirectX11() { return DirectX11.get(); }
+	/**
+	 * \brief Get current viewport camera class.
+	 */
+	FORCEINLINE static const GCamera*						GetCamera() { return Camera.get(); }
+
 private:
 	SApplication()											= default;
 
 	/**
 	 * \brief Essential instance vector. etc) Window, DirectX, Config...
 	 */
-	std::vector<std::shared_ptr<Object>>					Objects;
+	static std::vector<std::shared_ptr<Object>>				Objects;
 	/**
 	 * \brief Application Window frame instance.
 	 */
-	std::shared_ptr<OWindow>								Window;
+	static std::shared_ptr<OWindow>							Window;
 	/**
 	 * \brief Renderer instance.
 	 */
-	std::shared_ptr<ODirectX11>								DirectX11;
+	static std::shared_ptr<ODirectX11>						DirectX11;
 	/**
 	 * \brief Viewport camera instance.
 	 */
-	std::shared_ptr<GCamera>								Camera;
+	static std::shared_ptr<GCamera>							Camera;
 	/**
 	 * \brief Engine's gui manager instance.
 	 */
-	std::shared_ptr<OGUI>									GUI;
+	static std::shared_ptr<OGUI>							GUI;
 	/**
 	 * \brief game objects where located in hierarchy are here.
 	 */
-	std::shared_ptr<OWorld>									World;
+	static std::shared_ptr<OWorld>							World;
 	/**
 	 * \brief Current application's status.
 	 */

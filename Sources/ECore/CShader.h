@@ -1,14 +1,10 @@
 #pragma once
 #include "OComponent.h"
 
-class GCamera;
-class ODirectX11;
-class OWindow;
-
 class CShader : public OComponent
 {
 public:
-	CShader(const OGameObject& InOwner, const OWindow& InWindow, const ODirectX11& InDirectX11, const GCamera& InCamera);
+	CShader(const OGameObject* InOwner);
 	CShader(const CShader&)							= default;
 	CShader& operator=(const CShader&)				= default;
 	CShader(CShader&&) noexcept						= default;
@@ -31,15 +27,11 @@ public:
 	 */
 	virtual void									End() override;
 
-	EHandleResultType								LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
+	bool											LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 
 private:
 	void											SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection);
 	void											Render(UINT InIndexCount, UINT InStartIndexToProcessing, INT InBaseVertexLocation);
-
-	const ODirectX11*								DirectX11;
-	const OWindow*									Window;
-	const GCamera*									Camera;
 
 	ComPtr<ID3D11VertexShader>						vertexShader;
 	ComPtr<ID3D11PixelShader>						PixelShader;

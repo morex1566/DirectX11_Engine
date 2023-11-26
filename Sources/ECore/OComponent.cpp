@@ -2,10 +2,10 @@
 #include "OComponent.h"
 #include "OGameObject.h"
 
-OComponent::OComponent(const OGameObject& InOwner)
+OComponent::OComponent(const OGameObject* InOwner)
 	: Object()
 {
-	Owner = &InOwner;
+	Owner = InOwner;
 }
 
 OComponent::~OComponent()

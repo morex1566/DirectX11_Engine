@@ -3,7 +3,6 @@
 #include "ODirectX11.h"
 #include "OGameObject.h"
 
-
 OGameObject::OGameObject()
 	: Object()
 {
@@ -111,9 +110,4 @@ void OGameObject::End()
 			Child->End();
 		}
 	}
-}
-
-CTransform* OGameObject::GetTransform() const
-{
-	return Transform;
 }

@@ -9,7 +9,7 @@ class ODirectX11;
 class OWorld : public Object
 {
 public:
-	OWorld(const OWindow& InWindow, const ODirectX11& InDirectX11, const GCamera& InCamera);
+	OWorld();
 	OWorld(const OWorld&)									= default;
 	OWorld& operator=(const OWorld&)						= default;
 	OWorld(OWorld&&) noexcept								= default;
@@ -41,10 +41,6 @@ public:
 	const std::vector<std::shared_ptr<OGameObject>>&		GetGameObjects() const { return GameObjects; }
 
 private:
-	const OWindow*											Window;
-	const ODirectX11*										DirectX11;
-	const GCamera*											Camera;
-
 	/**
 	 * \brief All of gameobject in world are here.
 	 */

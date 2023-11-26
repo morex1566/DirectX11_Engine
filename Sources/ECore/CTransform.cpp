@@ -1,21 +1,15 @@
 #include "PCH.h"
 #include "CTransform.h"
-#include "SReflection.h"
 
-
-CTransform::CTransform(const OGameObject& InOwner)
-	: OComponent(InOwner),
-		Position(XMFLOAT3(0, 0, 0)),
-		Rotation(XMFLOAT3(0, 0, 0)),
-		Scale(XMFLOAT3(1, 1, 1)),
-		Up(XMFLOAT3(0, 1, 0)),
-		LookAt(XMFLOAT3(0, 0, 1)),
-		WorldMatrix(XMMatrixIdentity())
+CTransform::CTransform(const OGameObject* InOwner)
+	: OComponent(InOwner)
 {
-	if (!SReflection::CheckIsRegistered<CTransform>())
-	{
-		SReflection::RegisterClassType<CTransform>();
-	}
+	Position = XMFLOAT3(0, 0, 0);
+	Rotation = XMFLOAT3(0, 0, 0);
+	Scale = XMFLOAT3(1, 1, 1);
+	Up = XMFLOAT3(0, 1, 0);
+	LookAt = XMFLOAT3(0, 0, 1);
+	WorldMatrix = XMMatrixIdentity();
 }
 
 CTransform::~CTransform()
@@ -76,74 +70,4 @@ void CTransform::Tick()
 void CTransform::End()
 {
 	OComponent::End();
-}
-
-XMFLOAT3 CTransform::GetPosition() const
-{
-	return Position;
-}
-
-XMVECTOR CTransform::GetPositionVector() const
-{
-	return XMLoadFloat3(&Position);
-}
-
-XMFLOAT3 CTransform::GetRotation() const
-{
-	return Rotation;
-}
-
-XMFLOAT3 CTransform::GetScale() const
-{
-	return Scale;
-}
-
-XMFLOAT3 CTransform::GetUp() const
-{
-	return Up;
-}
-
-XMVECTOR CTransform::GetUpVector() const
-{
-	return XMLoadFloat3(&Up);
-}
-
-XMFLOAT3 CTransform::GetLookAt() const
-{
-	return LookAt;
-}
-
-XMVECTOR CTransform::GetLookAtVector() const
-{
-	return XMLoadFloat3(&LookAt);
-}
-
-XMMATRIX CTransform::GetWorldMatrix() const
-{
-	return WorldMatrix;
-}
-
-void CTransform::SetPosition(XMFLOAT3 InPosition)
-{
-	Position = InPosition;
-}
-
-void CTransform::SetRotation(XMFLOAT3 InRotation)
-{
-	Rotation = InRotation;
-}
-
-void CTransform::SetScale(XMFLOAT3 InScale)
-{
-	Scale = InScale;
-}
-
-void CTransform::SetUp(XMFLOAT3 InUp)
-{
-	Up = InUp;
-}
-
-void CTransform::SetLookAt(XMFLOAT3 InLookAt)
-{
-	LookAt = InLookAt;
 }

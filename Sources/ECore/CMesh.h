@@ -1,14 +1,11 @@
 #pragma once
 #include "OComponent.h"
 
-class ODirectX11;
-
 ECLASS()
 class CMesh : public OComponent
 {
 public:
-	CMesh(const OGameObject& InOwner,
-		  const ODirectX11& InDirectX11);
+	CMesh(const OGameObject* InOwner);
 	CMesh(const CMesh&)							= default;
 	CMesh& operator=(const CMesh&)				= default;
 	CMesh(CMesh&&) noexcept						= default;
@@ -47,7 +44,6 @@ private:
 	bool										CreateIndexBuffer();
 	void										Render();
 
-	const ODirectX11*							DirectX11;
 	ComPtr<ID3D11Buffer>						VertexBuffer;
 	ComPtr<ID3D11Buffer>						IndexBuffer;
 	std::vector<FVertex>						Vertices;

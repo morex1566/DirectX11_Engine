@@ -1,14 +1,11 @@
 #pragma once
 #include "OComponent.h"
 
-class ODirectX11;
-
 ECLASS()
 class CLine : public OComponent
 {
 public:
-	CLine(const OGameObject& InOwner,
-		  const ODirectX11& InDirectX11);
+	CLine(const OGameObject* InOwner);
 	CLine(const CLine&)							= default;
 	CLine& operator=(const CLine&)				= default;
 	CLine(CLine&&) noexcept						= default;
@@ -47,11 +44,9 @@ private:
 	bool										CreateIndexBuffer();
 	void										Render();
 
-	const ODirectX11*							DirectX11;
 	ComPtr<ID3D11Buffer>						VertexBuffer;
 	ComPtr<ID3D11Buffer>						IndexBuffer;
 	std::vector<FVertex>						Vertices;
-
 	std::vector<UINT>							Indices;
 };
 

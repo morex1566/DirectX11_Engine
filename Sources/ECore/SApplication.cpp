@@ -1,11 +1,13 @@
 #include "PCH.h"
 #include "SApplication.h"
-#include "WContentBrowser.h"
-#include "WHierarchy.h"
-#include "WInspector.h"
-#include "WTools.h"
 
-uint8							SApplication::bIsPlaying = 1;
+std::vector<std::shared_ptr<Object>>	SApplication::Objects;
+std::shared_ptr<OWindow>				SApplication::Window;
+std::shared_ptr<ODirectX11>				SApplication::DirectX11;
+std::shared_ptr<GCamera>				SApplication::Camera;
+std::shared_ptr<OGUI>					SApplication::GUI;
+std::shared_ptr<OWorld>					SApplication::World;
+uint8									SApplication::bIsPlaying = 1;
 
 SApplication& SApplication::GetInstance()
 {
@@ -45,7 +47,7 @@ void SApplication::Initialize()
 
 	// Create world.
 	{
-		World = std::make_shared<OWorld>(*Window, *DirectX11, *Camera);
+		World = std::make_shared<OWorld>();
 		Objects.push_back(World);
 	}
 

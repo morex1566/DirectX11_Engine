@@ -1,12 +1,12 @@
 #include "PCH.h"
 #include "CMesh.h"
+#include "SApplication.h"
 #include "SConsole.h"
 #include "ODirectX11.h"
 
-CMesh::CMesh(const OGameObject& InOwner, const ODirectX11& InDirectX11)
+CMesh::CMesh(const OGameObject* InOwner)
 	: OComponent(InOwner)
 {
-	DirectX11 = &InDirectX11;
 }
 
 CMesh::~CMesh()
@@ -42,10 +42,13 @@ void CMesh::Tick()
 {
 	OComponent::Tick();
 
-	DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Model);
-	DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Model);
-	DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Model);
-	DirectX11->SetViewport(ODirectX11::ERenderModeType::Model);
+	auto DirectX11 = SApplication::GetDirectX11();
+	{
+		DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetViewport(ODirectX11::ERenderModeType::Model);
+	}
 
 	Render();
 }
@@ -95,11 +98,14 @@ bool CMesh::CreateVertexBuffer()
 	}
 
 	// Create vertex buffer.
-	Result = DirectX11->GetDevice().CreateBuffer(&VertexBufferDesc, &VertexData, VertexBuffer.GetAddressOf());
-	if (FAILED(Result))
+	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
 	{
-		SConsole::LogError(L"VertexCreateBuffer() is failed.");
-		return false;
+		Result = Device.CreateBuffer(&VertexBufferDesc, &VertexData, VertexBuffer.GetAddressOf());
+		if (FAILED(Result))
+		{
+			SConsole::LogError(L"VertexCreateBuffer() is failed.");
+			return false;
+		}
 	}
 
 	return true;
@@ -133,11 +139,14 @@ bool CMesh::CreateIndexBuffer()
 	}
 
 	// Create index buffer.
-	Result = DirectX11->GetDevice().CreateBuffer(&IndexBufferDesc, &IndexData, IndexBuffer.GetAddressOf());
-	if (FAILED(Result))
+	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
 	{
-		SConsole::LogError(L"CreateBuffer() is failed.");
-		return false;
+		Result = Device.CreateBuffer(&IndexBufferDesc, &IndexData, IndexBuffer.GetAddressOf());
+		if (FAILED(Result))
+		{
+			SConsole::LogError(L"CreateBuffer() is failed.");
+			return false;
+		}
 	}
 
 	return true;
@@ -145,9 +154,12 @@ bool CMesh::CreateIndexBuffer()
 
 void CMesh::Render()
 {
-	UINT				 Stride = sizeof(FVertex);
-	UINT				 Offset = 0;
-	ID3D11DeviceContext& DeviceContext = DirectX11->GetDeviceContext();
+	UINT				 Stride;
+	UINT				 Offset;
+
+	Stride = sizeof(FVertex);
+	Offset = 0;
+	ID3D11DeviceContext& DeviceContext = SApplication::GetDirectX11()->GetDeviceContext();
 	{
 		// Set the vertex buffer to active in the input assembler so it can be rendered.
 		DeviceContext.IASetVertexBuffers(0, 1, VertexBuffer.GetAddressOf(), &Stride, &Offset);

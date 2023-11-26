@@ -7,12 +7,12 @@ ECLASS()
 class OComponent : public Object
 {
 public:
-	OComponent(const OGameObject& InOwner);
+	OComponent(const OGameObject* InOwner);
 	OComponent(const OComponent&)						= default;
 	OComponent& operator=(const OComponent&)			= default;
 	OComponent(OComponent&&) noexcept					= default;
 	OComponent& operator=(OComponent&&) noexcept		= default;
-	virtual ~OComponent() override;
+	~OComponent() override;
 
 	void												Initialize() override;
 	void												Release() override;

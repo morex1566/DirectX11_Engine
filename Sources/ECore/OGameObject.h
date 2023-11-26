@@ -8,54 +8,52 @@ class OGameObject : public Object
 {
 public:
 	OGameObject();
-	OGameObject(const OGameObject&)									= default;
-	OGameObject& operator=(const OGameObject&)						= default;
-	OGameObject(OGameObject&&) noexcept								= default;
-	OGameObject& operator=(OGameObject&&) noexcept					= default;
+	OGameObject(const OGameObject&)							= default;
+	OGameObject& operator=(const OGameObject&)				= default;
+	OGameObject(OGameObject&&) noexcept						= default;
+	OGameObject& operator=(OGameObject&&) noexcept			= default;
 	virtual ~OGameObject() override;
 
-	virtual void													Initialize() override;
-	virtual void													Release() override;
+	virtual void											Initialize() override;
+	virtual void											Release() override;
 
 	/**
 	 * \brief Called only once before entering the main loop.
 	 */
-	virtual void													Start() override;
+	virtual void											Start() override;
 	/**
 	 * \brief Called once when the every frame.
 	 */
-	virtual void													Tick() override;
+	virtual void											Tick() override;
 	/**
 	 * \brief Called only once immediately after the main loop is over.
 	 */
-	virtual void													End() override;
+	virtual void											End() override;
 
 	template <typename T, typename ...Args>
-	T*																TAddComponent(Args&&... InConstructorArgs);
+	T*														TAddComponent(Args&&... InConstructorArgs);
 	template <typename T>
-	void															TDeleteComponent();
+	void													TDeleteComponent();
 	template <typename T>
-	T*																TFindComponent() const;
+	T*														TFindComponent() const;
 	template <typename T>
-	std::vector<T*>													TFindComponents() const;
+	std::vector<T*>											TFindComponents() const;
 
-	CTransform*														GetTransform() const;
+	FORCEINLINE CTransform*									GetTransform() const { return Transform; }
 
 protected:
-	CTransform*														Transform;
-	const OGameObject*												Parent;
-	std::vector<std::shared_ptr<OComponent>>						Components;
-	std::vector<std::shared_ptr<OGameObject>>						Children;
+	CTransform*												Transform;
+	const OGameObject*										Parent;
+	std::vector<std::shared_ptr<OComponent>>				Components;
+	std::vector<std::shared_ptr<OGameObject>>				Children;
 
-private:
-	
 };
 
 template <typename T, typename ...Args>
 T* OGameObject::TAddComponent(Args&&... InConstructorArgs)
 {
 	// T(Args...)
-	Components.emplace_back(std::make_shared<T>(std::move(*this), std::forward<Args>(InConstructorArgs)...));
+	Components.emplace_back(std::make_shared<T>(std::move(this), std::forward<Args>(InConstructorArgs)...));
 
 	return static_cast<T*>(Components.back().get());
 }

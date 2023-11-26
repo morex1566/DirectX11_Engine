@@ -1,20 +1,12 @@
 #include "PCH.h"
-#include "CLine.h"
-#include "CMesh.h"
-#include "CShader.h"
-#include "GCamera.h"
 #include "GGizmo.h"
 #include "GTestObject.h"
 #include "ODirectX11.h"
-#include "OWindow.h"
 #include "OWorld.h"
 
-OWorld::OWorld(const OWindow& InWindow, const ODirectX11& InDirectX11, const GCamera& InCamera)
+OWorld::OWorld()
 	: Object()
 {
-	Window = &InWindow;
-	DirectX11 = &InDirectX11;
-	Camera = &InCamera;
 }
 
 OWorld::~OWorld()
@@ -25,8 +17,8 @@ void OWorld::Initialize()
 {
 	Object::Initialize();
 
-	GTestObject& TestGameObject = TCreateGameObject<GTestObject>(*Camera, *Window, *DirectX11);
-	GGizmo& Gizmo = TCreateGameObject<GGizmo>(*Camera, *Window, *DirectX11);
+	GTestObject& TestGameObject = TCreateGameObject<GTestObject>();
+	GGizmo& Gizmo = TCreateGameObject<GGizmo>();
 
 	for (const auto& GameObject : GameObjects)
 	{
