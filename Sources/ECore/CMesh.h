@@ -36,13 +36,14 @@ public:
 	 */
 	void										AddIndex(UINT InIndex);
 
+	void										Render();
+
 	FORCEINLINE UINT							GetVertexCount() { return Vertices.size(); }
 	FORCEINLINE UINT							GetIndexCount() { return Indices.size(); }
 
 private:
 	bool										CreateVertexBuffer();
 	bool										CreateIndexBuffer();
-	void										Render();
 
 	ComPtr<ID3D11Buffer>						VertexBuffer;
 	ComPtr<ID3D11Buffer>						IndexBuffer;

@@ -3,7 +3,7 @@
 #include "GTestObject.h"
 #include "ODirectX11.h"
 #include "OWorld.h"
-
+#include "CMesh.h"
 #include "CTransform.h"
 
 OWorld::OWorld()
@@ -19,7 +19,7 @@ void OWorld::Initialize()
 {
 	Object::Initialize();
 
-	GTestObject& TestGameObject = TCreateGameObject<GTestObject>();
+	GTestObject& TestGameObject1 = TCreateGameObject<GTestObject>();
 
 	GGizmo& Gizmo = TCreateGameObject<GGizmo>();
 

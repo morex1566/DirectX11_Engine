@@ -41,16 +41,6 @@ void CMesh::Start()
 void CMesh::Tick()
 {
 	OComponent::Tick();
-
-	auto DirectX11 = SApplication::GetDirectX11();
-	{
-		DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetViewport(ODirectX11::ERenderModeType::Model);
-	}
-
-	Render();
 }
 
 void CMesh::End()

@@ -41,6 +41,14 @@ void CShader::Tick()
 	const GCamera* Camera;
 	const CTransform* Transform;
 
+	auto DirectX11 = SApplication::GetDirectX11();
+	{
+		DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetViewport(ODirectX11::ERenderModeType::Model);
+	}
+
 	// Set shader essential params.
 	Camera = SApplication::GetCamera();
 	Transform = Owner->GetTransform();
@@ -51,7 +59,9 @@ void CShader::Tick()
 	// Set index order.
 	for (const auto& Mesh : Owner->TFindComponents<CMesh>())
 	{
-		Render(Mesh->GetIndexCount(), 0, 0);
+		Mesh->Render();
+
+		this->Render(Mesh->GetIndexCount(), 0, 0);
 	}
 }
 
