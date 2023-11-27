@@ -2,6 +2,8 @@
 #include "CMesh.h"
 #include "CShader.h"
 #include "GTestObject.h"
+#include "SConsole.h"
+#include "SInput.h"
 
 GTestObject::GTestObject()
 	: OGameObject()
@@ -45,6 +47,11 @@ void GTestObject::Start()
 void GTestObject::Tick()
 {
 	OGameObject::Tick();
+
+	if (SInput::GetKeyDown(VK_A))
+	{
+		SConsole::Log("Hello World!");
+	}
 }
 
 void GTestObject::End()

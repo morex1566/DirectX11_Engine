@@ -249,6 +249,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Sources\ECore\PCH.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Sources\Core\PCH.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="SInput.cpp" />
     <ClCompile Include="SReflection.cpp" />
     <ClCompile Include="WInspector.cpp">
       <MultiProcessorCompilation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</MultiProcessorCompilation>
@@ -359,6 +360,7 @@
     <ClInclude Include="CTransform.h" />
     <ClInclude Include="EUtls.h" />
     <ClInclude Include="GGizmo.h" />
+    <ClInclude Include="SInput.h" />
     <ClInclude Include="SReflection.h" />
     <ClInclude Include="WInspector.h" />
     <ClInclude Include="OComponent.h" />
