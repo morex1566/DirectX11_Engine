@@ -12,12 +12,12 @@ public:
 		Model
 	};
 
-	ODirectX11()									= delete;
+public:
 	ODirectX11(const OWindow& Window);
-	ODirectX11(const ODirectX11&)					= delete;
-	ODirectX11& operator=(const ODirectX11&)		= delete;
-	ODirectX11(ODirectX11&&) noexcept				= delete;
-	ODirectX11& operator=(ODirectX11&&) noexcept	= delete;
+	ODirectX11(const ODirectX11&)					= default;
+	ODirectX11& operator=(const ODirectX11&)		= default;
+	ODirectX11(ODirectX11&&) noexcept				= default;
+	ODirectX11& operator=(ODirectX11&&) noexcept	= default;
 	~ODirectX11() override;
 
 	static void CALLBACK							MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);

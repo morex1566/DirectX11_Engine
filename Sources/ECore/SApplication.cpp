@@ -1,9 +1,8 @@
 #include "PCH.h"
 #include "SApplication.h"
 
-#include "CTransform.h"
-
 std::vector<std::shared_ptr<Object>>	SApplication::Objects;
+std::shared_ptr<OTime>					SApplication::Time;
 std::shared_ptr<OWindow>				SApplication::Window;
 std::shared_ptr<ODirectX11>				SApplication::DirectX11;
 std::shared_ptr<OInput>					SApplication::Input;
@@ -33,6 +32,12 @@ void SApplication::Initialize(HINSTANCE InHInstance)
 {
 	HInstance = InHInstance;
 
+	// Create time.
+	{
+		Time = std::make_shared<OTime>();
+		Objects.push_back(Time);
+	}
+
 	// Create window.
 	{
 		Window = std::make_shared<OWindow>();
@@ -54,9 +59,6 @@ void SApplication::Initialize(HINSTANCE InHInstance)
 	// Create viewport camera.
 	{
 		Camera = std::make_shared<GCamera>(*Window);
-
-		Camera->GetTransform()->SetPosition(XMFLOAT3(0, 0, -5));
-
 		Objects.push_back(Camera);
 	}
 

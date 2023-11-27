@@ -11,7 +11,7 @@ public:
 	GCamera& operator=(const GCamera&)				= default;
 	GCamera(GCamera&&) noexcept						= default;
 	GCamera& operator=(GCamera&&) noexcept			= default;
-	~GCamera() override;
+	~GCamera() override;	
 
 	static void CALLBACK							MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 

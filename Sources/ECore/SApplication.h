@@ -3,6 +3,7 @@
 #include "ODirectX11.h"
 #include "OGUI.h"
 #include "OInput.h"
+#include "OTime.h"
 #include "OWindow.h"
 #include "OWorld.h"
 
@@ -61,6 +62,10 @@ private:
 	 * \brief Essential instance vector. etc) Window, DirectX, Config...
 	 */
 	static std::vector<std::shared_ptr<Object>>				Objects;
+	/**
+	 * \brief Delta time instance.
+	 */
+	static std::shared_ptr<OTime>							Time;
 	/**
 	 * \brief Application Window frame instance.
 	 */

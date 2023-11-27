@@ -14,7 +14,8 @@ ODirectX11::ODirectX11(const OWindow& Window): Window(&Window), SwapChainDesc(),
                                                DepthStencilBufferDesc3D(),
                                                DepthStencilStateDesc3D(),
                                                DepthStencilViewDesc3D(),
-                                               RasterizerDesc3D(), AdapterDesc(), DisplayMaxFPS(0)
+                                               RasterizerDesc3D(), AdapterDesc(), DisplayMaxFPS(0),
+	Object()
 {
 }
 
@@ -405,9 +406,9 @@ void ODirectX11::Tick()
 		bIsScreenSizeChanged = 0;
 	}
 
-	ClearRenderTargetView(ERenderModeType::Model);
+	ClearRenderTargetView(ERenderModeType::Model, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
 	ClearDepthStencilView(ERenderModeType::Model);
-	ClearRenderTargetView(ERenderModeType::Interface);
+	ClearRenderTargetView(ERenderModeType::Interface, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
 	ClearDepthStencilView(ERenderModeType::Interface);
 }
 

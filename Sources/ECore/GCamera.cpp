@@ -2,7 +2,7 @@
 #include "CTransform.h"
 #include "GCamera.h"
 #include "OWindow.h"
-#include "SConsole.h"
+#include "OTime.h"
 #include "OInput.h"
 
 uint8					GCamera::bIsScreenSizeChanged = 0;
@@ -19,6 +19,8 @@ GCamera::GCamera(const OWindow& InWindow)
         OrthoMatrix()
 {
 	Window = &InWindow;
+
+	GetTransform()->SetPosition(XMFLOAT3(0, 0, -5));
 }
 
 GCamera::~GCamera()
@@ -75,7 +77,10 @@ void GCamera::Tick()
 	}
 
 	// Move camera from keyboard input.
-	Move();
+	if (OInput::GetMouseButtonDown(OInput::EMouseButton::Right))
+	{
+		Move();
+	}
 }
 
 void GCamera::End()
@@ -127,24 +132,24 @@ void GCamera::Move()
 {
 	CTransform* Transform = GetTransform();
 	{
-		if (OInput::GetKeyDown(VK_W))
+		if (OInput::GetKeyDown(DIK_W))
 		{
-			Transform->Move(XMFLOAT3(0, 0, 0.5));
+			Transform->Move(XMFLOAT3(0, 0, 2.0f * OTime::GetDeltaTime()));
 		}
 
-		if (OInput::GetKeyDown(VK_A))
+		if (OInput::GetKeyDown(DIK_A))
 		{
-			Transform->Move(XMFLOAT3(-0.5, 0, 0));
+			Transform->Move(XMFLOAT3(-2.0f * OTime::GetDeltaTime(), 0, 0));
 		}
 
-		if (OInput::GetKeyDown(VK_S))
+		if (OInput::GetKeyDown(DIK_S))
 		{
-			Transform->Move(XMFLOAT3(0, 0, -0.5));
+			Transform->Move(XMFLOAT3(0, 0, -2.0f * OTime::GetDeltaTime()));
 		}
 
-		if (OInput::GetKeyDown(VK_D))
+		if (OInput::GetKeyDown(DIK_D))
 		{
-			Transform->Move(XMFLOAT3(0.5, 0, 0));
+			Transform->Move(XMFLOAT3(2.0f * OTime::GetDeltaTime(), 0, 0));
 		}
 	}
 }
