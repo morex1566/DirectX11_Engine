@@ -47,11 +47,6 @@ void GTestObject::Start()
 void GTestObject::Tick()
 {
 	OGameObject::Tick();
-
-	if (SInput::GetKeyDown(VK_A))
-	{
-		SConsole::Log("Hello World!");
-	}
 }
 
 void GTestObject::End()

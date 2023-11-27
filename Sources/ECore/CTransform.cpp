@@ -73,3 +73,10 @@ void CTransform::End()
 {
 	OComponent::End();
 }
+
+void CTransform::Move(XMFLOAT3 InPosition)
+{
+	Position = XMFLOAT3(Position.x + InPosition.x, 
+						Position.y + InPosition.y,
+						Position.z + InPosition.z);
+}

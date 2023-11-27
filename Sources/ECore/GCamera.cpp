@@ -2,8 +2,11 @@
 #include "CTransform.h"
 #include "GCamera.h"
 #include "OWindow.h"
+#include "SConsole.h"
+#include "SInput.h"
 
 uint8					GCamera::bIsScreenSizeChanged = 0;
+uint8					GCamera::bIsMoveAvailabled = 0;
 
 GCamera::GCamera(const OWindow& InWindow)
 	:   OGameObject(),
@@ -70,6 +73,20 @@ void GCamera::Tick()
 			ScreenNear,
 			ScreenDepth);
 	}
+
+	// toggle on/off camera move.
+	if (SInput::GetKeyDown(VK_CONTROL) &&
+		SInput::GetKeyDown(VK_V))
+	{
+		SConsole::Log("Camera move is " + std::to_string(bIsMoveAvailabled));
+		bIsMoveAvailabled = 1;
+	}
+
+	// Move camera from keyboard input.
+	if (bIsMoveAvailabled)
+	{
+		Move();
+	}
 }
 
 void GCamera::End()
@@ -115,4 +132,30 @@ float GCamera::GetScreenDepth() const
 void GCamera::Resize()
 {
 	ScreenAspect = static_cast<float>(Window->GetClientScreenWidth()) / static_cast<float>(Window->GetClientScreenHeight());
+}
+
+void GCamera::Move()
+{
+	CTransform* Transform = GetTransform();
+	{
+		if (SInput::GetKeyDown(VK_W))
+		{
+			Transform->Move(XMFLOAT3(0, 0, 0.5));
+		}
+
+		if (SInput::GetKeyDown(VK_A))
+		{
+			Transform->Move(XMFLOAT3(-0.5, 0, 0));
+		}
+
+		if (SInput::GetKeyDown(VK_S))
+		{
+			Transform->Move(XMFLOAT3(0, 0, -0.5));
+		}
+
+		if (SInput::GetKeyDown(VK_D))
+		{
+			Transform->Move(XMFLOAT3(0.5, 0, 0));
+		}
+	}
 }

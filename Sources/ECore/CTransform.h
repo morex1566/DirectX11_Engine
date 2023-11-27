@@ -28,6 +28,8 @@ public:
 	 */
 	virtual void										End() override;
 
+	void												Move(XMFLOAT3 InPosition);
+
 	FORCEINLINE XMFLOAT3								GetPosition() const { return Position; }
 	FORCEINLINE XMVECTOR								GetPositionVector() const { return XMLoadFloat3(&Position); }
 	FORCEINLINE XMFLOAT3								GetRotation() const { return Rotation; }

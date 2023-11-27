@@ -45,6 +45,8 @@ private:
 	 */
 	void											Resize();
 
+	void											Move();
+
 	/*
 	 * Read only member variables...
 	 */
@@ -60,5 +62,6 @@ private:
 	XMMATRIX										OrthoMatrix;
 
 	static uint8									bIsScreenSizeChanged;
+	static uint8									bIsMoveAvailabled;
 };
 
