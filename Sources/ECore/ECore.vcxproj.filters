@@ -125,7 +125,7 @@
     <ClCompile Include="CLine.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="SInput.cpp">
+    <ClCompile Include="OInput.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -214,7 +214,7 @@
     <ClInclude Include="CLine.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="SInput.h">
+    <ClInclude Include="OInput.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

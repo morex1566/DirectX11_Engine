@@ -2,7 +2,7 @@
 #include "GCamera.h"
 #include "SApplication.h"
 #include "SConsole.h"
-#include "SInput.h"
+#include "OInput.h"
 #include "OGUI.h"
 #include "OWindow.h"
 
@@ -34,12 +34,6 @@ LRESULT WINAPI OWindow::WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, L
 		{
 			PostQuitMessage(0);
 			SApplication::Quit();
-
-			return 0;
-		}
-		case WM_KEYDOWN:
-		{
-			SInput::SetKeyDown(static_cast<uint8>(WParam));
 
 			return 0;
 		}

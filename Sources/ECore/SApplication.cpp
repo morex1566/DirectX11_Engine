@@ -6,10 +6,12 @@
 std::vector<std::shared_ptr<Object>>	SApplication::Objects;
 std::shared_ptr<OWindow>				SApplication::Window;
 std::shared_ptr<ODirectX11>				SApplication::DirectX11;
+std::shared_ptr<OInput>					SApplication::Input;
 std::shared_ptr<GCamera>				SApplication::Camera;
 std::shared_ptr<OGUI>					SApplication::GUI;
 std::shared_ptr<OWorld>					SApplication::World;
 uint8									SApplication::bIsPlaying = 1;
+HINSTANCE								SApplication::HInstance;
 
 SApplication& SApplication::GetInstance()
 {
@@ -27,8 +29,10 @@ uint8 SApplication::CheckIsPlaying()
 	return bIsPlaying;
 }
 
-void SApplication::Initialize()
+void SApplication::Initialize(HINSTANCE InHInstance)
 {
+	HInstance = InHInstance;
+
 	// Create window.
 	{
 		Window = std::make_shared<OWindow>();
@@ -39,6 +43,12 @@ void SApplication::Initialize()
 	{
 		DirectX11 = std::make_shared<ODirectX11>(*Window);
 		Objects.push_back(DirectX11);
+	}
+
+	// Create input.
+	{
+		Input = std::make_shared<OInput>();
+		Objects.push_back(Input);
 	}
 
 	// Create viewport camera.

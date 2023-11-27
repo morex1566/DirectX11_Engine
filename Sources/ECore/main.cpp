@@ -1,7 +1,6 @@
 #include "PCH.h"
 #include "SApplication.h"
 #include "SConsole.h"
-#include "SInput.h"
 #include "SReflection.h"
 
 int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, int Cmdshow)
@@ -18,16 +17,10 @@ int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, 
 		Reflection.Initialize();
 	}
 
-	// Create Input.
-	SInput& Input = SInput::GetInstance();
-	{
-		Input.Initialize();
-	}
-
 	// Create engine application.
 	SApplication& Application = SApplication::GetInstance();
 	{
-		Application.Initialize();
+		Application.Initialize(HInstance);
 	}
 
 	// Application's main flow.
@@ -47,8 +40,6 @@ int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, 
 			Application.Tick();
 
 			Application.Draw();
-
-			Input.Clear();
 		}
 
 		Application.End();

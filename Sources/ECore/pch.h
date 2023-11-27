@@ -4,6 +4,8 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 #pragma warning(disable : 4267)
+#pragma warning(disable : 26495)
+#pragma warning(disable : 28251)
 
 #define WIN32_LEAN_AND_MEAN
 

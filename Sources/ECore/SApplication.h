@@ -2,6 +2,7 @@
 #include "GCamera.h"
 #include "ODirectX11.h"
 #include "OGUI.h"
+#include "OInput.h"
 #include "OWindow.h"
 #include "OWorld.h"
 
@@ -20,7 +21,7 @@ public:
 	 */
 	static void												Quit();
 	static uint8											CheckIsPlaying();
-	void													Initialize();
+	void													Initialize(HINSTANCE InHInstance);
 	void													Release();
 	/**
 	 * \brief Called only once before entering the main loop.
@@ -49,7 +50,10 @@ public:
 	 * \brief Get current viewport camera class.
 	 */
 	FORCEINLINE static const GCamera*						GetCamera() { return Camera.get(); }
-
+	/**
+	 * \brief Get current program handle instance.
+	 */
+	FORCEINLINE static HINSTANCE							GetHInstance() { return HInstance; }
 private:
 	SApplication()											= default;
 
@@ -66,6 +70,10 @@ private:
 	 */
 	static std::shared_ptr<ODirectX11>						DirectX11;
 	/**
+	 * \brief Input manager instance.
+	 */
+	static std::shared_ptr<OInput>							Input;
+	/**
 	 * \brief Viewport camera instance.
 	 */
 	static std::shared_ptr<GCamera>							Camera;
@@ -81,4 +89,8 @@ private:
 	 * \brief Current application's status.
 	 */
 	static uint8											bIsPlaying;
+	/**
+	 * \brief Current application's handle.
+	 */
+	static HINSTANCE										HInstance;
 };

@@ -2,8 +2,8 @@
 #include "CMesh.h"
 #include "CShader.h"
 #include "GTestObject.h"
+#include "OInput.h"
 #include "SConsole.h"
-#include "SInput.h"
 
 GTestObject::GTestObject()
 	: OGameObject()
