@@ -80,3 +80,58 @@ void CTransform::Move(XMFLOAT3 InPosition)
 						Position.y + InPosition.y,
 						Position.z + InPosition.z);
 }
+
+void CTransform::Rotate(XMFLOAT3 InRotation)
+{
+	Rotation = XMFLOAT3(Rotation.x + InRotation.x,
+						Rotation.y + InRotation.y,
+						Rotation.z + InRotation.z);
+}
+
+XMFLOAT3 CTransform::GetLeft() const
+{
+	// Get left xmfloat3 from lookat.
+	XMVECTOR LeftVctr;
+	XMFLOAT3 LeftFloat3;
+	{
+		XMVECTOR Vctr = XMLoadFloat3(&LookAt);
+		XMMATRIX Rotation = XMMatrixRotationY(ToRadian(90) * -1);
+
+		LeftVctr = XMVector3Transform(Vctr, Rotation);
+		XMStoreFloat3(&LeftFloat3, LeftVctr);
+	}
+
+	return LeftFloat3;
+}
+
+XMFLOAT3 CTransform::GetRight() const
+{
+	// Get right xmfloat3 from lookat.
+	XMVECTOR RightVctr;
+	XMFLOAT3 RightFloat3;
+	{
+		XMVECTOR RightVctr = XMLoadFloat3(&LookAt);
+		XMMATRIX Rotation = XMMatrixRotationY(ToRadian(90) * 1);
+
+		RightVctr = XMVector3Transform(RightVctr, Rotation);
+		XMStoreFloat3(&RightFloat3, RightVctr);
+	}
+
+	return RightFloat3;
+}
+
+XMFLOAT3 CTransform::GetBack() const
+{
+	// Get back xmfloat3 from lookat.
+	XMVECTOR BackVctr;
+	XMFLOAT3 BackFloat3;
+	{
+		XMVECTOR Vctr = XMLoadFloat3(&LookAt);
+		XMMATRIX Rotation = XMMatrixRotationY(ToRadian(180));
+
+		BackVctr = XMVector3Transform(Vctr, Rotation);
+		XMStoreFloat3(&BackFloat3, BackVctr);
+	}
+
+	return BackFloat3;
+}

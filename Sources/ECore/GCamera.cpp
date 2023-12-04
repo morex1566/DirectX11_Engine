@@ -76,10 +76,11 @@ void GCamera::Tick()
 			ScreenDepth);
 	}
 
-	// Move camera from keyboard input.
+	// Move and rotate camera from keyboard input.
 	if (OInput::GetMouseButtonDown(OInput::EMouseButton::Right))
 	{
 		Move();
+		Rotate();
 	}
 }
 
@@ -134,22 +135,60 @@ void GCamera::Move()
 	{
 		if (OInput::GetKeyDown(DIK_W))
 		{
-			Transform->Move(XMFLOAT3(0, 0, 2.0f * OTime::GetDeltaTime()));
+			XMFLOAT3 Forward = Transform->GetForward();
+			{
+				Forward.x = Forward.x * 2.0f * OTime::GetDeltaTime();
+				Forward.y = Forward.y * 2.0f * OTime::GetDeltaTime();
+				Forward.z = Forward.z * 2.0f * OTime::GetDeltaTime();
+			}
+
+
+			Transform->Move(Forward);
 		}
 
 		if (OInput::GetKeyDown(DIK_A))
 		{
-			Transform->Move(XMFLOAT3(-2.0f * OTime::GetDeltaTime(), 0, 0));
+			XMFLOAT3 Left = Transform->GetLeft();
+			{
+				Left.x = Left.x * 2.0f * OTime::GetDeltaTime();
+				Left.y = Left.y * 2.0f * OTime::GetDeltaTime();
+				Left.z = Left.z * 2.0f * OTime::GetDeltaTime();
+			}
+
+			Transform->Move(Left);
 		}
 
 		if (OInput::GetKeyDown(DIK_S))
 		{
-			Transform->Move(XMFLOAT3(0, 0, -2.0f * OTime::GetDeltaTime()));
+			XMFLOAT3 Back = Transform->GetBack();
+			{
+				Back.x = Back.x * 2.0f * OTime::GetDeltaTime();
+				Back.y = Back.y * 2.0f * OTime::GetDeltaTime();
+				Back.z = Back.z * 2.0f * OTime::GetDeltaTime();
+			}
+
+			Transform->Move(Back);
 		}
 
 		if (OInput::GetKeyDown(DIK_D))
 		{
-			Transform->Move(XMFLOAT3(2.0f * OTime::GetDeltaTime(), 0, 0));
+			XMFLOAT3 Right = Transform->GetRight();
+			{
+				Right.x = Right.x * 2.0f * OTime::GetDeltaTime();
+				Right.y = Right.y * 2.0f * OTime::GetDeltaTime();
+				Right.z = Right.z * 2.0f * OTime::GetDeltaTime();
+			}
+
+			Transform->Move(Right);
 		}
+	}
+}
+
+void GCamera::Rotate()
+{
+	CTransform*	 Transform = GetTransform();
+	{
+		Transform->Rotate(XMFLOAT3(0, OInput::GetMouseAxisX() * 0.1, 0));
+		Transform->Rotate(XMFLOAT3(OInput::GetMouseAxisY() * 0.1, 0, 0));
 	}
 }

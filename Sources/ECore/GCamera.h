@@ -41,11 +41,13 @@ public:
 
 private:
 	/**
-	 * \brief Called when window size is changed.
+	 * \brief Called when window size is changed.1
 	 */
 	void											Resize();
 
 	void											Move();
+
+	void											Rotate();
 
 	/*
 	 * Read only member variables...

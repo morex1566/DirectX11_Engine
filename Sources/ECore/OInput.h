@@ -44,6 +44,8 @@ public:
 	FORCEINLINE static bool						GetMouseButtonDown(EMouseButton InMouseButtonType) { return MouseState.rgbButtons[static_cast<int>(InMouseButtonType)] & 0x80 ? true : false; }
 	FORCEINLINE static int						GetMousePosX() { return MousePosX; }
 	FORCEINLINE static int						GetMousePosY() { return MousePosY; }
+	FORCEINLINE static int						GetMouseAxisX() { return MouseState.lX; }
+	FORCEINLINE static int						GetMouseAxisY() { return MouseState.lY; }
 
 private:
 	void										ReadKeyboard();

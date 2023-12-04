@@ -29,6 +29,7 @@ public:
 	virtual void										End() override;
 
 	void												Move(XMFLOAT3 InPosition);
+	void												Rotate(XMFLOAT3 InRotation);
 
 	FORCEINLINE XMFLOAT3								GetPosition() const { return Position; }
 	FORCEINLINE XMVECTOR								GetPositionVector() const { return XMLoadFloat3(&Position); }
@@ -39,6 +40,11 @@ public:
 	FORCEINLINE XMFLOAT3								GetLookAt() const { return LookAt; }
 	FORCEINLINE XMVECTOR								GetLookAtVector() const { return XMLoadFloat3(&LookAt); }
 	FORCEINLINE XMMATRIX								GetWorldMatrix() const { return WorldMatrix; }
+
+	XMFLOAT3											GetLeft() const;
+	XMFLOAT3											GetRight() const;
+	XMFLOAT3											GetForward() const { return LookAt; }
+	XMFLOAT3											GetBack() const;
 
 	FORCEINLINE void									SetPosition(XMFLOAT3 InPosition) { Position = InPosition; }
 	FORCEINLINE void									SetRotation(XMFLOAT3 InRotation) { Rotation = InRotation; }

@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "SApplication.h"
+#include "SConsole.h"
 #include "OWindow.h"
 #include "OInput.h"
 
