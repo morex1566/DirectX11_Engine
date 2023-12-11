@@ -59,6 +59,8 @@ private:
 	float											ScreenAspect;
 	float											ScreenNear;
 	float											ScreenDepth;
+	float											MoveSpeed;
+	float											RotationSpeed;
 	XMMATRIX										ViewMatrix;
 	XMMATRIX										ProjectionMatrix;
 	XMMATRIX										OrthoMatrix;

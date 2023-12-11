@@ -14,6 +14,8 @@ GCamera::GCamera(const OWindow& InWindow)
         ScreenAspect(static_cast<float>(InWindow.GetClientScreenWidth()) / static_cast<float>(InWindow.GetClientScreenHeight())),
 		ScreenNear(0.3f),
 		ScreenDepth(1000.0f),
+		MoveSpeed(1.0f),
+		RotationSpeed(0.1f),
 		ViewMatrix(),
         ProjectionMatrix(),
         OrthoMatrix()
@@ -76,6 +78,9 @@ void GCamera::Tick()
 			ScreenDepth);
 	}
 
+	// Movement acelleration.
+	MoveSpeed = OInput::GetKeyDown(DIK_LSHIFT) ? 4.0f : 2.0f;
+
 	// Move and rotate camera from keyboard input.
 	if (OInput::GetMouseButtonDown(OInput::EMouseButton::Right))
 	{
@@ -133,54 +138,41 @@ void GCamera::Move()
 {
 	CTransform* Transform = GetTransform();
 	{
-		if (OInput::GetKeyDown(DIK_W))
+		XMVECTOR DistanceVector = XMVectorSet(0, 0, 0, 0);
 		{
-			XMFLOAT3 Forward = Transform->GetForward();
+			if (OInput::GetKeyDown(DIK_W))
 			{
-				Forward.x = Forward.x * 2.0f * OTime::GetDeltaTime();
-				Forward.y = Forward.y * 2.0f * OTime::GetDeltaTime();
-				Forward.z = Forward.z * 2.0f * OTime::GetDeltaTime();
+				DistanceVector += Transform->GetForwardVector();
 			}
 
-
-			Transform->Move(Forward);
-		}
-
-		if (OInput::GetKeyDown(DIK_A))
-		{
-			XMFLOAT3 Left = Transform->GetLeft();
+			if (OInput::GetKeyDown(DIK_S))
 			{
-				Left.x = Left.x * 2.0f * OTime::GetDeltaTime();
-				Left.y = Left.y * 2.0f * OTime::GetDeltaTime();
-				Left.z = Left.z * 2.0f * OTime::GetDeltaTime();
+				DistanceVector += Transform->GetBackVector();
 			}
 
-			Transform->Move(Left);
-		}
-
-		if (OInput::GetKeyDown(DIK_S))
-		{
-			XMFLOAT3 Back = Transform->GetBack();
+			if (OInput::GetKeyDown(DIK_A))
 			{
-				Back.x = Back.x * 2.0f * OTime::GetDeltaTime();
-				Back.y = Back.y * 2.0f * OTime::GetDeltaTime();
-				Back.z = Back.z * 2.0f * OTime::GetDeltaTime();
+				DistanceVector += Transform->GetLeftVector();
 			}
 
-			Transform->Move(Back);
-		}
-
-		if (OInput::GetKeyDown(DIK_D))
-		{
-			XMFLOAT3 Right = Transform->GetRight();
+			if (OInput::GetKeyDown(DIK_D))
 			{
-				Right.x = Right.x * 2.0f * OTime::GetDeltaTime();
-				Right.y = Right.y * 2.0f * OTime::GetDeltaTime();
-				Right.z = Right.z * 2.0f * OTime::GetDeltaTime();
+				DistanceVector += Transform->GetRightVector();
 			}
 
-			Transform->Move(Right);
+			DistanceVector = XMVector3Normalize(DistanceVector);
 		}
+
+		XMFLOAT3 Distance;
+		{
+			XMStoreFloat3(&Distance, DistanceVector);
+
+			Distance.x = Distance.x * MoveSpeed * OTime::GetDeltaTime();
+			Distance.y = Distance.y * MoveSpeed * OTime::GetDeltaTime();
+			Distance.z = Distance.z * MoveSpeed * OTime::GetDeltaTime();
+		}
+
+		Transform->Move(Distance);
 	}
 }
 
@@ -188,7 +180,7 @@ void GCamera::Rotate()
 {
 	CTransform*	 Transform = GetTransform();
 	{
-		Transform->Rotate(XMFLOAT3(0, OInput::GetMouseAxisX() * 0.1, 0));
-		Transform->Rotate(XMFLOAT3(OInput::GetMouseAxisY() * 0.1, 0, 0));
+		Transform->Rotate(XMFLOAT3(0, RotationSpeed * OInput::GetMouseAxisX(), 0));
+		Transform->Rotate(XMFLOAT3(RotationSpeed * OInput::GetMouseAxisY(), 0, 0));
 	}
 }

@@ -27,8 +27,11 @@ public:
 	 * \brief Called only once immediately after the main loop is over.
 	 */
 	virtual void										End() override;
-
-	void												Move(XMFLOAT3 InPosition);
+	/**
+	 * \brief Move Instance from current position.
+	 * \param InDistance : Move displacement.
+	 */
+	void												Move(XMFLOAT3 InDistance);
 	void												Rotate(XMFLOAT3 InRotation);
 
 	FORCEINLINE XMFLOAT3								GetPosition() const { return Position; }
@@ -39,30 +42,30 @@ public:
 	FORCEINLINE XMVECTOR								GetUpVector() const { return XMLoadFloat3(&Up); }
 	FORCEINLINE XMFLOAT3								GetLookAt() const { return LookAt; }
 	FORCEINLINE XMVECTOR								GetLookAtVector() const { return XMLoadFloat3(&LookAt); }
+	FORCEINLINE XMFLOAT3								GetForward() const { return Forward; }
+	FORCEINLINE XMVECTOR								GetForwardVector() const { return XMLoadFloat3(&Forward); }
+	FORCEINLINE XMFLOAT3								GetBack() const { return Back; }
+	FORCEINLINE XMVECTOR								GetBackVector() const { return XMLoadFloat3(&Back); }
+	FORCEINLINE XMFLOAT3								GetLeft() const { return Left; }
+	FORCEINLINE XMVECTOR								GetLeftVector() const { return XMLoadFloat3(&Left); }
+	FORCEINLINE XMFLOAT3								GetRight() const { return Right; }
+	FORCEINLINE XMVECTOR								GetRightVector() const { return XMLoadFloat3(&Right); }
 	FORCEINLINE XMMATRIX								GetWorldMatrix() const { return WorldMatrix; }
-
-	XMFLOAT3											GetLeft() const;
-	XMFLOAT3											GetRight() const;
-	XMFLOAT3											GetForward() const { return LookAt; }
-	XMFLOAT3											GetBack() const;
 
 	FORCEINLINE void									SetPosition(XMFLOAT3 InPosition) { Position = InPosition; }
 	FORCEINLINE void									SetRotation(XMFLOAT3 InRotation) { Rotation = InRotation; }
 	FORCEINLINE void									SetScale(XMFLOAT3 InScale) { Scale = InScale; }
-	FORCEINLINE void									SetUp(XMFLOAT3 InUp) { Up = InUp;}
-	FORCEINLINE void									SetLookAt(XMFLOAT3 InLookAt) { LookAt = InLookAt; }
 
 private:
-	EPROPERTY()
 	XMFLOAT3											Position;
-	EPROPERTY()
 	XMFLOAT3											Rotation;
-	EPROPERTY()
 	XMFLOAT3											Scale;
-	EPROPERTY()
 	XMFLOAT3											Up;
-	EPROPERTY()
 	XMFLOAT3											LookAt;
+	XMFLOAT3											Forward;
+	XMFLOAT3											Back;
+	XMFLOAT3											Left;
+	XMFLOAT3											Right;
 	XMMATRIX											WorldMatrix;
 };
 
