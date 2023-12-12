@@ -122,9 +122,6 @@
     <ClCompile Include="EUtls.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="CLine.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="OInput.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -212,9 +209,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="EUtls.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CLine.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OInput.h">

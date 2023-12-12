@@ -2,18 +2,16 @@
 #include "CMesh.h"
 #include "CShader.h"
 #include "GTestObject.h"
-#include "OInput.h"
-#include "SConsole.h"
 
 GTestObject::GTestObject()
 	: OGameObject()
 {
 	CMesh* Mesh = TAddComponent<CMesh>();
 	{
-		Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)),
-			FVertex(XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)),
-			FVertex(XMFLOAT3(1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
-
+		Mesh->SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
+		Mesh->AddVertex(FVertex(XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
+		Mesh->AddVertex(FVertex(XMFLOAT3(1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1)));
 		Mesh->AddIndex(0);
 		Mesh->AddIndex(1);
 		Mesh->AddIndex(2);

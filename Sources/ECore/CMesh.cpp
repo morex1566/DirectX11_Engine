@@ -5,7 +5,7 @@
 #include "ODirectX11.h"
 
 CMesh::CMesh(const OGameObject* InOwner)
-	: OComponent(InOwner)
+	: OComponent(InOwner), PrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 {
 }
 
@@ -48,11 +48,9 @@ void CMesh::End()
 	OComponent::End();
 }
 
-void CMesh::AddVertex(const FVertex& InFirst, const FVertex& InSecond, const FVertex& InThird)
+void CMesh::AddVertex(const FVertex& InVertex)
 {
-	Vertices.emplace_back(InFirst);
-	Vertices.emplace_back(InSecond);
-	Vertices.emplace_back(InThird);
+	Vertices.emplace_back(InVertex);
 }
 
 void CMesh::AddIndex(UINT InIndex)
@@ -158,6 +156,6 @@ void CMesh::Render()
 		DeviceContext.IASetIndexBuffer(IndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 		// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
-		DeviceContext.IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		DeviceContext.IASetPrimitiveTopology(PrimitiveType);
 	}
 }

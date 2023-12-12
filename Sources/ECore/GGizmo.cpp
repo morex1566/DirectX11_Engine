@@ -1,16 +1,79 @@
 #include "PCH.h"
-#include "CLine.h"
 #include "CShader.h"
 #include "GGizmo.h"
+
+#include "CMesh.h"
 #include "ODirectX11.h"
 #include "SApplication.h"
 
-GGizmo::GGizmo(float InSpaceBtwGridByGri, XMFLOAT4 InGridColor)
+GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 InGridColor)
 	: OGameObject()
 {
-	SpaceBtwGridByGrid = InSpaceBtwGridByGri;
+	GridGap = InGridGap;
+	GridLength = InGridLength;
+	GridSize = InGridSize;
 	GridColor = InGridColor;
-	Line = TAddComponent<CLine>();
+
+	CMesh* Mesh = TAddComponent<CMesh>();
+	{
+		Mesh->SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		int Index = 0;
+
+		// Vertical Mesh.
+		{
+			Mesh->AddVertex(FVertex(XMFLOAT3(0, 0, GridLength), GridColor));
+			Mesh->AddVertex(FVertex(XMFLOAT3(0, 0, -GridLength), GridColor));
+			Mesh->AddIndex(Index++);
+			Mesh->AddIndex(Index++);
+
+			for (int i = 1; i <= InGridSize; i++)
+			{
+				// Right side.
+				{
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridGap * i, 0, GridLength), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridGap * i, 0, -GridLength), GridColor));
+					Mesh->AddIndex(Index++);
+					Mesh->AddIndex(Index++);
+				}
+
+				// Left side.
+				{
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridGap * i, 0, GridLength), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridGap * i, 0, -GridLength), GridColor));
+					Mesh->AddIndex(Index++);
+					Mesh->AddIndex(Index++);
+				}
+			}
+		}
+
+		// horizontal Mesh
+		{
+			Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, 0), GridColor));
+			Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, 0), GridColor));
+			Mesh->AddIndex(Index++);
+			Mesh->AddIndex(Index++);
+
+			for (int i = 1; i <= InGridSize; i++)
+			{
+				// Up side.
+				{
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, GridGap * i), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, GridGap * i), GridColor));
+					Mesh->AddIndex(Index++);
+					Mesh->AddIndex(Index++);
+				}
+
+
+				// Down side.
+				{
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, -GridGap * i), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, -GridGap * i), GridColor));
+					Mesh->AddIndex(Index++);
+					Mesh->AddIndex(Index++);
+				}
+			}
+		}
+	}
 
 	CShader* Shader = TAddComponent<CShader>();
 	{
@@ -24,85 +87,25 @@ GGizmo::~GGizmo()
 
 void GGizmo::Initialize()
 {
-	Object::Initialize();
+	OGameObject::Initialize();
 }
 
 void GGizmo::Release()
 {
-	Object::Release();
+	OGameObject::Release();
 }
 
 void GGizmo::Start()
 {
-	Object::Start();
-
-	//// Create grid.
-	//{
-	//	int Index = 0;
-
-	//	// Vertical line.
-	//	{
-	//		Line->AddVertex(FVertex(XMFLOAT3(0, 0, 10), GridColor),
-	//						FVertex(XMFLOAT3(0, 0, -10), GridColor));
-	//		Line->AddIndex(Index++);
-	//		Line->AddIndex(Index++);
-
-	//		for (int i = 1; i <= 10; i++)
-	//		{
-	//			// Right side.
-	//			{
-	//				Line->AddVertex(FVertex(XMFLOAT3(10 * i, 0, 10), GridColor),
-	//					FVertex(XMFLOAT3(10 * i, 0, -10), GridColor));
-	//				Line->AddIndex(Index++);
-	//				Line->AddIndex(Index++);
-	//			}
-
-	//			// Left side.
-	//			{
-	//				Line->AddVertex(FVertex(XMFLOAT3(-10 * i, 0, 10), GridColor),
-	//					FVertex(XMFLOAT3(-10 * i, 0, -10), GridColor));
-	//				Line->AddIndex(Index++);
-	//				Line->AddIndex(Index++);
-	//			}
-	//		}
-	//	}
-
-	//	// horizontal line
-	//	{
-	//		Line->AddVertex(FVertex(XMFLOAT3(10, 0, 0), GridColor),
-	//						FVertex(XMFLOAT3(-10, 0, 0), GridColor));
-	//		Line->AddIndex(Index++);
-	//		Line->AddIndex(Index++);
-
-	//		for (int i = 0; i < 10; i++)
-	//		{
-	//			// Up side.
-	//			{
-	//				Line->AddVertex(FVertex(XMFLOAT3(10, 10 * i, 0), GridColor),
-	//								FVertex(XMFLOAT3(-10, 10 * i, 0), GridColor));
-	//				Line->AddIndex(Index++);
-	//				Line->AddIndex(Index++);
-	//			}
-
-
-	//			// Down side.
-	//			{
-	//				Line->AddVertex(FVertex(XMFLOAT3(10, -10 * i, 0), GridColor),
-	//								FVertex(XMFLOAT3(-10, -10 * i, 0), GridColor));
-	//				Line->AddIndex(Index++);
-	//				Line->AddIndex(Index++);
-	//			}
-	//		}
-	//	}
-	//}
+	OGameObject::Start();
 }
 
 void GGizmo::Tick()
 {
-	Object::Tick();
+	OGameObject::Tick();
 }
 
 void GGizmo::End()
 {
-	Object::End();
+	OGameObject::End();
 }

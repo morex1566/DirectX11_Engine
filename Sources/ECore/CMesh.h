@@ -28,11 +28,11 @@ public:
 	 */
 	virtual void								End() override;
 	/**
-	 * \brief Add vertex which is used drawing triangle.
+	 * \brief Add vertex.
 	 */
-	void										AddVertex(const FVertex& InFirst, const FVertex& InSecond, const FVertex& InThird);
+	void										AddVertex(const FVertex& InVertex);
 	/**
-	 * \brief Add index which is used drawing triangle order.
+	 * \brief Add index.
 	 */
 	void										AddIndex(UINT InIndex);
 
@@ -40,6 +40,8 @@ public:
 
 	FORCEINLINE UINT							GetVertexCount() { return Vertices.size(); }
 	FORCEINLINE UINT							GetIndexCount() { return Indices.size(); }
+
+	FORCEINLINE void							SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY InType) { PrimitiveType = InType; }
 
 private:
 	bool										CreateVertexBuffer();
@@ -49,5 +51,6 @@ private:
 	ComPtr<ID3D11Buffer>						IndexBuffer;
 	std::vector<FVertex>						Vertices;
 	std::vector<UINT>							Indices;
+	D3D11_PRIMITIVE_TOPOLOGY					PrimitiveType;
 };
 

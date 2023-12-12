@@ -68,4 +68,3 @@ private:
 	XMFLOAT3											Right;
 	XMMATRIX											WorldMatrix;
 };
-

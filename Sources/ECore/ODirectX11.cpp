@@ -322,14 +322,14 @@ void ODirectX11::Initialize()
 
 		ZeroMemory(&RasterizerDesc2D, sizeof(RasterizerDesc2D));
 		{
-			RasterizerDesc2D.AntialiasedLineEnable = false;
+			RasterizerDesc2D.AntialiasedLineEnable = true;
 			RasterizerDesc2D.CullMode = D3D11_CULL_BACK;
 			RasterizerDesc2D.DepthBias = 0;
 			RasterizerDesc2D.DepthBiasClamp = 0.0f;
 			RasterizerDesc2D.DepthClipEnable = true;
 			RasterizerDesc2D.FillMode = D3D11_FILL_SOLID;
 			RasterizerDesc2D.FrontCounterClockwise = false;
-			RasterizerDesc2D.MultisampleEnable = false;
+			RasterizerDesc2D.MultisampleEnable = true;
 			RasterizerDesc2D.ScissorEnable = false;
 			RasterizerDesc2D.SlopeScaledDepthBias = 0.0f;
 		}
@@ -347,14 +347,14 @@ void ODirectX11::Initialize()
 
 		ZeroMemory(&RasterizerDesc3D, sizeof(RasterizerDesc3D));
 		{
-			RasterizerDesc3D.AntialiasedLineEnable = false;
+			RasterizerDesc3D.AntialiasedLineEnable = true;
 			RasterizerDesc3D.CullMode = D3D11_CULL_BACK;
 			RasterizerDesc3D.DepthBias = 0;
 			RasterizerDesc3D.DepthBiasClamp = 0.0f;
 			RasterizerDesc3D.DepthClipEnable = true;
 			RasterizerDesc3D.FillMode = D3D11_FILL_SOLID;
 			RasterizerDesc3D.FrontCounterClockwise = false;
-			RasterizerDesc3D.MultisampleEnable = false;
+			RasterizerDesc3D.MultisampleEnable = true;
 			RasterizerDesc3D.ScissorEnable = false;
 			RasterizerDesc3D.SlopeScaledDepthBias = 0.0f;
 		}

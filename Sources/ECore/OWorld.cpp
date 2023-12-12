@@ -3,8 +3,6 @@
 #include "GTestObject.h"
 #include "ODirectX11.h"
 #include "OWorld.h"
-#include "CMesh.h"
-#include "CTransform.h"
 
 OWorld::OWorld()
 	: Object()
