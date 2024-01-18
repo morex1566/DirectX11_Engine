@@ -1,29 +1,30 @@
 #pragma once
 #include "Windows.h"
 
-class Window : public IGameLoop
+class Window : public IEnable
 {
 public:
-	Window()									= default;
+	Window(HINSTANCE hInstance, std::wstring name = L"Minecraft", int windowWidth = 1600, int windowHeight = 900);
 	Window(const Window&)						= default;
 	Window& operator=(const Window&)			= default;
 	Window(Window&&) noexcept					= default;
 	Window& operator=(Window&&) noexcept		= default;
-	~Window() override 							= default;
+	~Window() override  						= default;
 
 public:
-	static LRESULT WINAPI EventHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam);
+	static LRESULT WINAPI MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam);
 
-	void Init() override;
-	void Update() override;
-	void Shutdown() override;
+	void Init();
+	void Start();
+	void Update();
+	void Shutdown();
 
 private:
-	HWND hWindow;
-	WNDCLASSEX windowClass;
-	int screenWidth;
-	int screenHeight;
+	HINSTANCE hInstance;
+	std::wstring name;
 	int windowWidth;
 	int windowHeight;
-};
 
+	HWND hWindow;
+	WNDCLASSEX windowClass;
+};

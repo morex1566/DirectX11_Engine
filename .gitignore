@@ -11,7 +11,7 @@
 Resources/*
 
 # Ignore precompiled header file
-Sources/Core/PCH.pch
+*.pch
 
 # Ignore all file in the Debug folder
 Bins/Debug/*

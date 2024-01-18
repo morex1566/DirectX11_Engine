@@ -150,7 +150,8 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IGameLoop.h" />
+    <ClInclude Include="Utls.h" />
+    <ClInclude Include="IEnable.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="PCH.h" />
     <ClInclude Include="System.h" />

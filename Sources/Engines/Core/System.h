@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 
-class System : public IGameLoop
+class System
 {
 public:
 	System(HINSTANCE hInstance);
@@ -9,14 +9,21 @@ public:
 	System& operator=(const System&)			= delete;
 	System(System&&) noexcept					= delete;
 	System& operator=(System&&) noexcept		= delete;
-	~System() override							= default;
+	~System()									= default;
 
-	void Init() override;
-	void Update() override;
-	void Shutdown() override;
+public:
+	static void WINAPI MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam);
+
+	void Init();
+	void Start();
+	void Update();
+	void Shutdown();
+	FORCEINLINE bool IsLooping() const { return isLooping; }
 
 private:
-	std::shared_ptr<Window>						window;
 	HINSTANCE									hInstance;
+	static bool									isLooping;
+
+	std::unique_ptr<Window>						window;
 };
 

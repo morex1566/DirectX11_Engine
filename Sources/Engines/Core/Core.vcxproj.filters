@@ -44,7 +44,10 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IGameLoop.h">
+    <ClInclude Include="IEnable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
