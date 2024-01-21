@@ -2,14 +2,29 @@
 #include "Console.h"
 #include "System.h"
 
-bool Console::isConsoleEnabled = true;
+bool		Console::isConsoleEnabled;
+
+Console::Console()
+{
+	isConsoleEnabled = Config::GetConfig()["Console"]["IsConsoleEnabled"];
+}
 
 void __stdcall Console::MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam)
 {
+	if (!isConsoleEnabled)
+	{
+		return;
+	}
+
 }
 
 void Console::Init()
 {
+	if (!isConsoleEnabled)
+	{
+		return;
+	}
+
 	FILE* Stream;
 	errno_t		Error;
 
@@ -30,11 +45,21 @@ void Console::Init()
 
 void Console::Shutdown()
 {
+	if (!isConsoleEnabled)
+	{
+		return;
+	}
+
 	DestroyWindow(hWindow);
 }
 
 void Console::Log(const std::wstring& Log)
 {
+	if (!isConsoleEnabled)
+	{
+		return;
+	}
+
 	// 흰색으로 설정
 	{
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -47,6 +72,11 @@ void Console::Log(const std::wstring& Log)
 
 void Console::LogSuccess(const std::wstring& Log)
 {
+	if (!isConsoleEnabled)
+	{
+		return;
+	}
+
 	// 흰색으로 설정
 	{
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -59,6 +89,11 @@ void Console::LogSuccess(const std::wstring& Log)
 
 void Console::LogError(const std::wstring& Log, const std::string& inFIleName, int inLine)
 {
+	if (!isConsoleEnabled)
+	{
+		return;
+	}
+
 	// 붉은색으로 설정
 	{
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

@@ -2,11 +2,16 @@
 #include "Window.h"
 #include "System.h"
 
-bool Window::isFullScreenEnabled = false;
+bool			Window::isFullScreenEnabled;
+unsigned int	Window::windowWidth;
+unsigned int	Window::windowHeight;
 
-Window::Window(HINSTANCE hInstance, std::wstring name, int windowWidth, int windowHeight)
-    : hInstance(hInstance), name(name), windowWidth(windowWidth), windowHeight(windowHeight)
+Window::Window(HINSTANCE hInstance, std::wstring name)
+    : hInstance(hInstance), name(name)
 {
+	isFullScreenEnabled = Config::GetConfig()["Window"]["IsFullScreenEnabled"];
+	windowWidth = Config::GetConfig()["Window"]["WindowStartWidth"];
+	windowHeight = Config::GetConfig()["Window"]["WindowStartHeight"];
 }
 
 LRESULT __stdcall Window::MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam)

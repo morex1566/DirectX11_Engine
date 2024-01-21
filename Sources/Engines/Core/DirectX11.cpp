@@ -6,12 +6,13 @@
 #pragma warning(disable : 6387) // ptr could be nullptr
 
 
-bool DirectX11::isVsyncEnabled = true;
+bool		DirectX11::isVsyncEnabled;
 
 
 DirectX11::DirectX11(HINSTANCE hInstance)
 	: hInstance(hInstance)
 {
+	isVsyncEnabled = Config::GetConfig()["DirectX11"]["IsVsyncEnabled"];
 }
 
 void __stdcall DirectX11::MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam)

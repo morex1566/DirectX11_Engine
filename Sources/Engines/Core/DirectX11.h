@@ -21,12 +21,12 @@ public:
 	void ClearRenderTargetView();
 	void ClearDepthStencilView();
 	void Draw();
-
 	FORCEINLINE ID3D11Device* GetDevice() const { return device; }
 	FORCEINLINE ID3D11DeviceContext* GetDeviceContext() const { return deviceContext; }
 	FORCEINLINE XMMATRIX GetProjection() const { return projectionMatrix; }
 	FORCEINLINE XMMATRIX GetWorld() const { return worldMatrix; }
 	FORCEINLINE XMMATRIX GetOrtho() const { return orthoMatrix; }
+
 
 private:
 	static bool						isVsyncEnabled;

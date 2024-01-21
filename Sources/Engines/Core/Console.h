@@ -5,7 +5,7 @@
 class Console
 {
 public:
-	Console()									= default;
+	Console();
 	Console(const Console&)						= delete;
 	Console& operator=(const Console&)			= delete;
 	Console(Console&&) noexcept					= delete;
@@ -26,7 +26,7 @@ public:
 
 
 private:
-	static bool isConsoleEnabled;
+	static bool		isConsoleEnabled;
 
 
 private:

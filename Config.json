@@ -1,0 +1,13 @@
+{
+  "DirectX11": {
+    "IsVsyncEnabled": true
+  },
+  "Window": {
+    "IsFullScreenEnabled": false,
+    "WindowStartHeight": 900,
+    "WindowStartWidth": 1600
+  },
+  "Console": {
+    "IsConsoleEnabled": true
+  }
+}

@@ -24,7 +24,7 @@ public:
 	void Start();
 	void Update();
 	void Shutdown();
-	FORCEINLINE bool IsLooping() const { return isLooping; }
+	FORCEINLINE bool GetIsLooping() const { return isLooping; }
 
 
 private:

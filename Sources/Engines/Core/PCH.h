@@ -17,6 +17,8 @@
 #include <d3d11.h>
 #include <directxmath.h>
 
+#include "Macros.h"
+#include "Config.h"
 #include "Utls.h"
 #include "IEnable.h"
 #include "Console.h"
