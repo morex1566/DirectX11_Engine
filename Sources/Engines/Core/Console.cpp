@@ -1,5 +1,4 @@
 #include "PCH.h"
-#include "Console.h"
 #include "System.h"
 
 bool		Console::isConsoleEnabled;

@@ -13,3 +13,7 @@ void Config::Init()
 	std::ifstream f(path);
 	config = Json::parse(f);
 }
+
+void Config::Shutdown()
+{
+}

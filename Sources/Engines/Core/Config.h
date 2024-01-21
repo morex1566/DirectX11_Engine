@@ -19,6 +19,7 @@ public:
 
 public:
 	void Init();
+	void Shutdown();
 	FORCEINLINE static Json& GetConfig() { return config; }
 
 

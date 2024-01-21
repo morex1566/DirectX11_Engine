@@ -1,6 +1,5 @@
 #pragma once
 #include "Window.h"
-#include "Console.h"
 #include "DirectX11.h"
 
 class System
@@ -33,7 +32,6 @@ private:
 
 private:
 	HINSTANCE									hInstance;
-	std::unique_ptr<Console>					console;
 	std::unique_ptr<Window>						window;
 	std::unique_ptr<DirectX11>					directX11;
 
