@@ -137,30 +137,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="DirectX11.cpp" />
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Sources\Engines\Core\PCH.h</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Utls.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="DirectX11.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="IName.h" />
+    <ClInclude Include="ITag.h" />
     <ClInclude Include="Macros.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="Utls.h" />
     <ClInclude Include="IEnable.h" />
-    <ClInclude Include="Input.h" />
     <ClInclude Include="PCH.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Window.h" />

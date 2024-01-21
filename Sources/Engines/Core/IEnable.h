@@ -3,13 +3,9 @@
 class IEnable
 {
 public:
-	IEnable()
-	{
-		IsEnable = true;
-	}
-
+	IEnable()		   = default;
 	virtual ~IEnable() = default;
 
 public:
-	bool IsEnable;
+	bool IsEnable = true;
 };

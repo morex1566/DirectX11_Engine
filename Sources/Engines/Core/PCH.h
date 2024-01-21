@@ -18,9 +18,12 @@
 #include <directxmath.h>
 
 #include "Macros.h"
-#include "Config.h"
+#include "Types.h"
 #include "Utls.h"
+#include "Config.h"
 #include "IEnable.h"
+#include "ITag.h"
+#include "IName.h"
 #include "Console.h"
 
 using namespace DirectX;
