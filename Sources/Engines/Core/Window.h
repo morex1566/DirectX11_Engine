@@ -11,13 +11,21 @@ public:
 	Window& operator=(Window&&) noexcept		= default;
 	~Window() override  						= default;
 
+
 public:
 	static LRESULT WINAPI MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam);
 
+
+public:
 	void Init();
 	void Start();
 	void Update();
 	void Shutdown();
+
+
+private:
+	static bool isFullScreenEnabled;
+
 
 private:
 	HINSTANCE hInstance;
@@ -27,4 +35,6 @@ private:
 
 	HWND hWindow;
 	WNDCLASSEX windowClass;
+
+
 };

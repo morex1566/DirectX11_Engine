@@ -2,6 +2,8 @@
 #include "Window.h"
 #include "System.h"
 
+bool Window::isFullScreenEnabled;
+
 Window::Window(HINSTANCE hInstance, std::wstring name, int windowWidth, int windowHeight)
     : hInstance(hInstance), name(name), windowWidth(windowWidth), windowHeight(windowHeight)
 {
@@ -21,8 +23,8 @@ void Window::Init()
 	{
 		SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
 
-		WindowStartPosX = GetGap(GetSystemMetrics(SM_CXSCREEN), windowWidth) / 2;
-		WindowStartPosY = GetGap(GetSystemMetrics(SM_CYSCREEN), windowHeight) / 2;
+		WindowStartPosX = Utls::GetGap(GetSystemMetrics(SM_CXSCREEN), windowWidth) / 2;
+		WindowStartPosY = Utls::GetGap(GetSystemMetrics(SM_CYSCREEN), windowHeight) / 2;
 	}
 
 	// 윈도우값 설정

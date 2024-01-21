@@ -18,11 +18,30 @@ void System::MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam)
 	}
 }
 
+void System::Quit()
+{
+	isLooping = false;
+}
+
 void System::Init()
 {
+	// 주의 : 콘솔은 가장 먼저 Init()
+	console = std::make_unique<Console>();
+	{
+		console->Init();
+		Console::Log(L"Init Console OK.");
+	}
+
 	window = std::make_unique<Window>(hInstance);
 	{
 		window->Init();
+		Console::Log(L"Init Window OK.");
+	}
+
+	directX11 = std::make_unique<DirectX11>(hInstance);
+	{
+		directX11->Init();
+		Console::Log(L"Init DirectX11 OK.");
 	}
 }
 
@@ -39,4 +58,7 @@ void System::Update()
 void System::Shutdown()
 {
 	window->Shutdown();
+	
+	// 주의 : 콘솔은 항상 마지막에 Shutdown()
+	console->Shutdown();
 }
