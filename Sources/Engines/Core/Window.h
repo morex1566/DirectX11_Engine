@@ -18,10 +18,14 @@ public:
 
 public:
 	void Init();
-	void Start();
-	void Update();
+	void ShowWindow();
+	void UpdateWindow();
 	void Shutdown();
 
+	FORCEINLINE int GetWindowWidth() const { return windowWidth; }
+	FORCEINLINE int GetWindowHeight() const { return windowHeight; }
+	FORCEINLINE bool GetFullScreenEnabled() const { return isFullScreenEnabled; }
+	FORCEINLINE HWND GetHWND() const { return hWindow; }
 
 private:
 	static bool isFullScreenEnabled;

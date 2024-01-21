@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "System.h"
 
-bool Window::isFullScreenEnabled;
+bool Window::isFullScreenEnabled = false;
 
 Window::Window(HINSTANCE hInstance, std::wstring name, int windowWidth, int windowHeight)
     : hInstance(hInstance), name(name), windowWidth(windowWidth), windowHeight(windowHeight)
@@ -21,7 +21,7 @@ void Window::Init()
 	// 윈도우 시작점 설정
 	int WindowStartPosX, WindowStartPosY;
 	{
-		SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
+		::SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
 
 		WindowStartPosX = Utls::GetGap(GetSystemMetrics(SM_CXSCREEN), windowWidth) / 2;
 		WindowStartPosY = Utls::GetGap(GetSystemMetrics(SM_CYSCREEN), windowHeight) / 2;
@@ -58,12 +58,12 @@ void Window::Init()
 	}
 }
 
-void Window::Start()
+void Window::ShowWindow()
 {
-	ShowWindow(hWindow, SW_SHOWDEFAULT);
+	::ShowWindow(hWindow, SW_SHOWDEFAULT);
 }
 
-void Window::Update()
+void Window::UpdateWindow()
 {
 	MSG msg;
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -72,11 +72,11 @@ void Window::Update()
 		DispatchMessage(&msg);
 	}
 
-	UpdateWindow(hWindow);
+	::UpdateWindow(hWindow);
 }
 
 void Window::Shutdown()
 {
-	DestroyWindow(hWindow);
-	UnregisterClassW(windowClass.lpszClassName, windowClass.hInstance);
+	::DestroyWindow(hWindow);
+	::UnregisterClassW(windowClass.lpszClassName, windowClass.hInstance);
 }

@@ -2,7 +2,7 @@
 #include "Console.h"
 #include "System.h"
 
-bool Console::isConsoleEnabled;
+bool Console::isConsoleEnabled = true;
 
 void __stdcall Console::MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam)
 {

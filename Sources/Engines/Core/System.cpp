@@ -40,23 +40,29 @@ void System::Init()
 
 	directX11 = std::make_unique<DirectX11>(hInstance);
 	{
-		directX11->Init();
+		directX11->Init(window->GetWindowWidth(), window->GetWindowHeight(),
+						window->GetHWND(), window->GetFullScreenEnabled());
 		Console::Log(L"Init DirectX11 OK.");
 	}
 }
 
 void System::Start()
 {
-	window->Start();
+	window->ShowWindow();
 }
 
 void System::Update()
 {
-	window->Update();
+	window->UpdateWindow();
+
+	directX11->ClearRenderTargetView();
+	directX11->ClearDepthStencilView();
+	directX11->Draw();
 }
 
 void System::Shutdown()
 {
+	directX11->Shutdown();
 	window->Shutdown();
 	
 	// 주의 : 콘솔은 항상 마지막에 Shutdown()

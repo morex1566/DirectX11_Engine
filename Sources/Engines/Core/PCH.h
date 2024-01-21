@@ -19,5 +19,6 @@
 
 #include "Utls.h"
 #include "IEnable.h"
+#include "Console.h"
 
 using namespace DirectX;
