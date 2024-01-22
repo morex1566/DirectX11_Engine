@@ -8,14 +8,34 @@ GameObject::GameObject()
 
 void GameObject::Start()
 {
+    for (Component* component : components)
+    {
+        if (component->IsEnable)
+        {
+            component->Start();
+        }
+    }
 }
 
 void GameObject::Update()
 {
+    for (Component* component : components)
+    {
+        if (component->IsEnable)
+        {
+            component->Update();
+        }
+    }
 }
 
 void GameObject::Shutdown()
 {
+    // 컴포넌트 내부를 지워줍니다.
+    for (Component* component : components)
+    {
+        component->Shutdown();
+    }
+
     // components 정리
     {
         for (Component* component : components) {

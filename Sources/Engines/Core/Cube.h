@@ -5,7 +5,7 @@
 class Cube : public GameObject
 {
 public:
-	Cube();
+	Cube(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	Cube(const Cube&)						= default;
 	Cube& operator=(const Cube&)			= default;
 	Cube(Cube&&) noexcept					= default;
@@ -14,8 +14,10 @@ public:
 
 
 public:
-	void Start() override;
-	void Update() override;
-	void Shutdown() override;
+	virtual void Start() override;
+	virtual void Update() override;
+	virtual void Shutdown() override;
+
+
 };
 

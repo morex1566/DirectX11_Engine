@@ -352,11 +352,6 @@ void DirectX11::Init(unsigned int windowWidth, unsigned int windowHeight,
 
 void DirectX11::Shutdown()
 {
-	if (swapChain)
-	{
-		swapChain->SetFullscreenState(false, NULL);
-	}
-
 	if (rasterState)
 	{
 		rasterState->Release();

@@ -7,8 +7,11 @@
 # Ignore all precompiled-header files.
 **/PCH.pch
 
-# Ignore Resources folder
-Resources/*
+# Ignore Binaries folder
+Binaries/*
+
+# Ignore Intermediates folder
+Intermediates/*
 
 # Ignore precompiled header file
 *.pch

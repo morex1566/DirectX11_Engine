@@ -22,7 +22,7 @@ public:
 	template <typename T> T* FindComponent();
 	
 
-private:
+protected:
 	std::vector<Component*> components;
 
 

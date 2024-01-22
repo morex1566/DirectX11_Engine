@@ -37,19 +37,43 @@ void System::Init()
 						window->GetHWND(), window->GetFullScreenEnabled());
 	}
 
-	Cube* cube = new Cube;
+	Cube* cube = new Cube(directX11->GetDevice(), directX11->GetDeviceContext());
 	gameObjects.push_back(cube);
 }
 
 void System::Start()
 {
+	// 윈도우를 화면에 띄웁니다.
 	window->ShowWindow();
+
+
+	// 객체들의 post-init 동작입니다.
+	for (GameObject* gameObject : gameObjects)
+	{
+		if (gameObject->IsEnable)
+		{
+			gameObject->Start();
+		}
+	}
 }
 
 void System::Update()
 {
+	// 윈도우의 이벤트들을 받아줍니다.
 	window->UpdateWindow();
 
+
+	// 객체들을 업데이트합니다.
+	for (GameObject* gameObject : gameObjects)
+	{
+		if (gameObject->IsEnable)
+		{
+			gameObject->Update();
+		}
+	}
+
+
+	// DirectX11을 통해서 화면을 그려줍니다.
 	directX11->ClearRenderTargetView();
 	directX11->ClearDepthStencilView();
 	directX11->Draw();
@@ -57,7 +81,13 @@ void System::Update()
 
 void System::Shutdown()
 {
-	// gameObjects 정리
+	// gameObject의 내부를 지워줍니다.
+	for (GameObject* gameObject : gameObjects)
+	{
+		gameObject->Shutdown();
+	}
+
+	// gameObjects 메모리 해제
 	{
 		for (GameObject* gameObject : gameObjects) {
 			delete gameObject;
