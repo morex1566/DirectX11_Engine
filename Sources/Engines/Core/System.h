@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "DirectX11.h"
+#include "GameObject.h"
 
 class System
 {
@@ -34,6 +35,8 @@ private:
 	HINSTANCE									hInstance;
 	std::unique_ptr<Window>						window;
 	std::unique_ptr<DirectX11>					directX11;
+	std::vector<GameObject*>					gameObjects;
+
 
 };
 

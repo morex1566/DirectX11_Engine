@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "System.h"
+#include "Cube.h"
 
 bool System::isLooping;
 
@@ -35,6 +36,9 @@ void System::Init()
 		directX11->Init(window->GetWindowWidth(), window->GetWindowHeight(),
 						window->GetHWND(), window->GetFullScreenEnabled());
 	}
+
+	Cube* cube = new Cube;
+	gameObjects.push_back(cube);
 }
 
 void System::Start()
@@ -53,6 +57,15 @@ void System::Update()
 
 void System::Shutdown()
 {
+	// gameObjects 정리
+	{
+		for (GameObject* gameObject : gameObjects) {
+			delete gameObject;
+		}
+
+		gameObjects.clear();
+	}
+	
 	directX11->Shutdown();
 	window->Shutdown();
 }

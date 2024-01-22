@@ -10,5 +10,11 @@ public:
 	Component& operator=(Component&&) noexcept		= default;
 	virtual ~Component() override  					= default;
 
+	bool operator==(const Component& other) const
+	{
+		return this == &other;
+	}
+
+
 };
 

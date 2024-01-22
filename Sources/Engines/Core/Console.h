@@ -1,6 +1,10 @@
 #pragma once
 
+#pragma comment(lib, "Dbghelp.lib")
+
 #include <iostream>
+#include <iomanip>
+#include <DbgHelp.h>
 
 class Console
 {
@@ -17,12 +21,18 @@ public:
 	static void WINAPI MsgHandler(HWND HWnd, UINT Msg, WPARAM WParam, LPARAM LParam);
 	static void	Log(const std::wstring& Log);
 	static void	LogSuccess(const std::wstring& Log);
+	static void LogWarning(const std::wstring& Log, const std::string& inFIleName, int inLine);
 	static void	LogError(const std::wstring& Log, const std::string& inFIleName, int inLine);
 
 
 public:
 	void Init();
 	void Shutdown();
+
+
+private:
+	static bool isInternalFunction(const std::string& functionName);
+	static void logCallstack();
 
 
 private:

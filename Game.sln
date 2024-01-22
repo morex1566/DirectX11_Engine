@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engines", "Engines", "{5B50
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{2E5E9940-AD4B-4CC2-A34D-A3FB74823487}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Minecraft", "Sources\Games\Minecraft\Minecraft.vcxproj", "{B88745D1-66A5-4A21-BD5E-3BD9187CD679}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Networks", "Networks", "{7F4ADF51-9FCF-4008-B9FC-CD3BEC78E122}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,21 +27,12 @@ Global
 		{73EB74F0-04B2-4942-AD52-FEDC85F1530B}.Release|x64.Build.0 = Release|x64
 		{73EB74F0-04B2-4942-AD52-FEDC85F1530B}.Release|x86.ActiveCfg = Release|Win32
 		{73EB74F0-04B2-4942-AD52-FEDC85F1530B}.Release|x86.Build.0 = Release|Win32
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Debug|x64.ActiveCfg = Debug|x64
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Debug|x64.Build.0 = Debug|x64
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Debug|x86.ActiveCfg = Debug|Win32
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Debug|x86.Build.0 = Debug|Win32
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Release|x64.ActiveCfg = Release|x64
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Release|x64.Build.0 = Release|x64
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Release|x86.ActiveCfg = Release|Win32
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{73EB74F0-04B2-4942-AD52-FEDC85F1530B} = {5B50DC7F-6D21-42A2-A894-729435892CCA}
-		{B88745D1-66A5-4A21-BD5E-3BD9187CD679} = {2E5E9940-AD4B-4CC2-A34D-A3FB74823487}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1078994E-7C75-4AB6-A978-3E0F4F7D379C}
