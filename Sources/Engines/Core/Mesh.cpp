@@ -8,14 +8,18 @@ Mesh::Mesh(ID3D11Device* device, ID3D11DeviceContext* deviceContext, D3D_PRIMITI
 
 void Mesh::Start()
 {
+    Component::Start();
 }
 
 void Mesh::Update()
 {
+    Component::Update();
 }
 
 void Mesh::Shutdown()
 {
+    Component::Shutdown();
+
     Release();
 }
 
@@ -26,7 +30,7 @@ void Mesh::Render()
 
 
     // Set vertex buffer stride and offset.
-    stride = sizeof(Vertex);
+    stride = sizeof(VertexType);
     offset = 0;
 
     // Set the vertex buffer to active in the input assembler so it can be rendered.
@@ -45,7 +49,7 @@ void Mesh::Load(const std::wstring& Filename)
 
     std::ifstream fin;
     char input;
-    int i;
+    unsigned int i;
 
 
     // Open the model file.
@@ -72,7 +76,7 @@ void Mesh::Load(const std::wstring& Filename)
     indexCount = vertexCount;
 
     // Create the model using the vertex count that was read in.
-    vertices = new Vertex[vertexCount];
+    vertices = new VertexType[vertexCount];
     indices = new unsigned long[indexCount];
 
     // Read up to the beginning of the data.
@@ -138,7 +142,7 @@ void Mesh::createBuffer()
 
         // Set up the description of the static vertex buffer.
         vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-        vertexBufferDesc.ByteWidth = sizeof(Vertex) * vertexCount;
+        vertexBufferDesc.ByteWidth = sizeof(VertexType) * vertexCount;
         vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
         vertexBufferDesc.CPUAccessFlags = 0;
         vertexBufferDesc.MiscFlags = 0;

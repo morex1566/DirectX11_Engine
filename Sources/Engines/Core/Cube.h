@@ -10,13 +10,13 @@ public:
 	Cube& operator=(const Cube&)			= default;
 	Cube(Cube&&) noexcept					= default;
 	Cube& operator=(Cube&&) noexcept		= default;
-	virtual ~Cube() override  				= default;
+	~Cube() override  						= default;
 
 
 public:
-	virtual void Start() override;
-	virtual void Update() override;
-	virtual void Shutdown() override;
+	void Start() override;
+	void Update() override;
+	void Shutdown() override;
 
 
 };

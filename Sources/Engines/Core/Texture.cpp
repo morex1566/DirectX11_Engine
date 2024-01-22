@@ -9,19 +9,25 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 
 void Texture::Start()
 {
+	Component::Start();
 }
 
 void Texture::Update()
 {
+	Component::Update();
 }
 
 void Texture::Shutdown()
 {
+	Component::Shutdown();
+
 	Release();
 }
 
 void Texture::Load(const std::wstring& Filename, TextureType type)
 {
+	Release();
+
 	HRESULT result;
 	DirectX::ScratchImage image;
 

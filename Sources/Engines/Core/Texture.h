@@ -30,7 +30,9 @@ public:
 
 
 private:
+	// CAUTION : device를 수정하지 마세요!!!
 	ID3D11Device*				device = nullptr;
+	// CAUTION : deviceContext를 수정하지 마세요!!!
 	ID3D11DeviceContext*		deviceContext = nullptr;
 
 	ID3D11ShaderResourceView*	resource = nullptr;

@@ -29,7 +29,6 @@ void DirectX11::Init(unsigned int windowWidth, unsigned int windowHeight,
 	IDXGIAdapter*		adapter;
 	IDXGIOutput*		adapterOutput;
 	DXGI_MODE_DESC*		displayModeList;
-	DXGI_ADAPTER_DESC	adapterDesc;
 	unsigned int		numModes, i, numerator, denominator;
 	{
 		// Create a DirectX graphics interface factory.

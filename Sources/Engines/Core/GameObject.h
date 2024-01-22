@@ -10,13 +10,13 @@ public:
 	GameObject& operator=(const GameObject&)			= default;
 	GameObject(GameObject&&) noexcept					= default;
 	GameObject& operator=(GameObject&&) noexcept		= default;
-	virtual ~GameObject() override  					= default;
+	~GameObject() override  							= default;
 
 
 public:
-	virtual void Start();
-	virtual void Update();
-	virtual void Shutdown();
+	virtual void Start() = 0;
+	virtual void Update() = 0;
+	virtual void Shutdown() = 0;
 	Component* AttachComponent(Component* attachedComponent);
 	bool DetachComponent(Component* detachedComponent);
 	template <typename T> T* FindComponent();

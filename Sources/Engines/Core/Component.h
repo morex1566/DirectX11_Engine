@@ -8,7 +8,7 @@ public:
 	Component& operator=(const Component&)			= default;
 	Component(Component&&) noexcept					= default;
 	Component& operator=(Component&&) noexcept		= default;
-	virtual ~Component() override  					= default;
+	~Component() override  							= default;
 
 	bool operator==(const Component& other) const
 	{

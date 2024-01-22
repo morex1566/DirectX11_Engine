@@ -12,13 +12,13 @@ public:
 	Mesh& operator=(const Mesh&)			= default;
 	Mesh(Mesh&&) noexcept					= default;
 	Mesh& operator=(Mesh&&) noexcept		= default;
-	virtual ~Mesh() override  				= default;
+	~Mesh() override  						= default;
 
 
 public:
-	virtual void Start() override;
-	virtual void Update() override;
-	virtual void Shutdown() override;
+	void Start() override;
+	void Update() override;
+	void Shutdown() override;
 	void Render();
 	void Load(const std::wstring& Filename);
 	void Release();
@@ -32,17 +32,17 @@ private:
 
 private:
 	// CAUTION : device를 수정하지 마세요!!!
-	ID3D11Device*				device;
+	ID3D11Device*				device = nullptr;
 	// CAUTION : deviceContext를 수정하지 마세요!!!
-	ID3D11DeviceContext*		deviceContext;
+	ID3D11DeviceContext*		deviceContext = nullptr;
 	D3D_PRIMITIVE_TOPOLOGY		primitiveType;
 
-	ID3D11Buffer*				vertexBuffer;
-	ID3D11Buffer*				indexBuffer;
+	ID3D11Buffer*				vertexBuffer = nullptr;
+	ID3D11Buffer*				indexBuffer = nullptr;
 	unsigned int				vertexCount;
 	unsigned int				indexCount;
-	Vertex*						vertices;
-	unsigned long*				indices;
+	VertexType*						vertices = nullptr;
+	unsigned long*				indices = nullptr;
 
 
 };

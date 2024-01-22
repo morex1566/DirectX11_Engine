@@ -53,6 +53,9 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCH.h">
@@ -104,6 +107,9 @@
       <Filter>Headers\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
