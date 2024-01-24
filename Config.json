@@ -1,13 +1,21 @@
 {
-  "DirectX11": {
-    "IsVsyncEnabled": true
-  },
-  "Window": {
-    "IsFullScreenEnabled": false,
-    "WindowStartHeight": 900,
-    "WindowStartWidth": 1600
-  },
-  "Console": {
-    "IsConsoleEnabled": true
-  }
+    "Engine": {
+        "Setting": {
+          "Window": {
+            "IsFullScreenEnabled": false,
+            "IsVsyncEnabled": true,
+            "RefreshRate": 165,
+            "RefreshRateOption": "Limit",
+            "WindowHeight": 900,
+            "WindowStartPosX": 246,
+            "WindowStartPosY": 141,
+            "WindowWidth": 1550
+          },
+          "Camera": {
+            "FOV": 0.7853981635,
+            "ClientScreenNear": 0.3,
+            "ClientScreenDepth": 1000.0
+          }
+        }
+    }
 }

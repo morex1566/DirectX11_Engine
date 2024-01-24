@@ -15,9 +15,6 @@
  * file docs/README.md.                                                     *
 \****************************************************************************/
 
-#pragma once
-#pragma warning(disable : 26819)
-
 #ifndef INCLUDE_NLOHMANN_JSON_HPP_
 #define INCLUDE_NLOHMANN_JSON_HPP_
 
@@ -5350,7 +5347,7 @@ namespace detail
 
 /*
  * Note all external_constructor<>::construct functions need to call
- * j.m_data.m_value.(j.m_data.m_type) to avoid a memory leak in case j contains an
+ * j.m_data.m_value.destroy(j.m_data.m_type) to avoid a memory leak in case j contains an
  * allocated value (e.g., a string). See bug issue
  * https://github.com/nlohmann/json/issues/2865 for more information.
  */
