@@ -5,6 +5,12 @@
 
 int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, int Cmdshow)
 {
+	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	if (FAILED(hr))
+	{
+		return 0;
+	}
+
 	// Create logger.
 	SConsole& Console = SConsole::GetInstance();
 	{

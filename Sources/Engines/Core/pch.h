@@ -40,3 +40,6 @@ using uint64					= uint64_t;
 #include "ETypes.h"
 #include "EMacros.h"
 #include "EUtls.h"
+#include "SApplication.h"
+#include "SConsole.h"
+#include "SReflection.h"

@@ -3,7 +3,6 @@
 
 class OGameObject;
 
-ECLASS()
 class OComponent : public Object
 {
 public:

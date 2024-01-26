@@ -1,7 +1,6 @@
 #pragma once
 #include "OComponent.h"
 
-ECLASS()
 class CMesh : public OComponent
 {
 public:

@@ -1,203 +1,244 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Components">
+      <UniqueIdentifier>{6d6e0839-63c4-4593-b09f-3d03af222daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Sources">
+      <UniqueIdentifier>{bd273aed-b0b1-4b70-9212-782676d3a942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Headers">
+      <UniqueIdentifier>{446d530f-63fa-4529-b7dd-ed2541e7c400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{f411fd8b-eafe-4a41-9d7f-ca1ab6796527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{5b8f6489-0e35-4c33-b129-43558bd36a6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons">
+      <UniqueIdentifier>{c1788b7d-53ef-4b91-822f-f6c6669e33ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Sources">
+      <UniqueIdentifier>{116bddeb-8d53-4ca1-8719-30021fed358a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Headers">
+      <UniqueIdentifier>{419b56f6-8c93-4b9d-b4f9-ab5422f1742f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{bced894b-5ea8-474a-991d-0c908503f4c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Headers">
+      <UniqueIdentifier>{87eefa28-9525-4f13-91cb-0c2c62f629c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Sources">
+      <UniqueIdentifier>{85101239-7abd-4b91-9022-7a3216df6b28}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Includes">
-      <UniqueIdentifier>{62471c27-9a06-47e9-a96b-d290d42b70e9}</UniqueIdentifier>
+      <UniqueIdentifier>{cbffb1a8-215f-4e25-95d1-9ca23704b3f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Includes\imgui">
-      <UniqueIdentifier>{0a6b3c16-2576-4654-99bc-c43f55a639ab}</UniqueIdentifier>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{580bf342-50d8-401e-8e2a-995144c4f649}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="GameObjects\Headers">
+      <UniqueIdentifier>{4f8bdb36-e4a5-4cf7-81e2-594b859f23de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources">
+    <Filter Include="GameObjects\Sources">
+      <UniqueIdentifier>{c46a6d82-e490-493f-b5d8-bc1a25b6e3d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utls">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Includes\json">
-      <UniqueIdentifier>{bbfd4c0a-7673-4f65-a54a-4b1c442058c4}</UniqueIdentifier>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{a62ba7c2-2990-4e26-8be4-ec366bf51717}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Mains">
-      <UniqueIdentifier>{3ae0a4fc-d3a7-49c4-b031-087643f61199}</UniqueIdentifier>
+    <Filter Include="Widgets\Headers">
+      <UniqueIdentifier>{86ccf840-aab8-4640-bfd5-9c86b9c1e705}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Precompiled Header">
-      <UniqueIdentifier>{7b321da6-df6c-4526-aac4-48fc034ad6c6}</UniqueIdentifier>
+    <Filter Include="Widgets\Sources">
+      <UniqueIdentifier>{675ddf52-2b04-4803-aca0-62f98a40d09d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SApplication.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OWindow.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ODirectX11.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="SConsole.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OWorld.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OGameObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GCamera.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GTestObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Mains</Filter>
-    </ClCompile>
-    <ClCompile Include="OWidget.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OComponent.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="CTransform.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="CMesh.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="CShader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OGUI.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="WTools.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="SReflection.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="PCH.cpp">
-      <Filter>Precompiled Header</Filter>
-    </ClCompile>
-    <ClCompile Include="GGizmo.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="EUtls.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OInput.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="OTime.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_demo.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_draw.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_impl_dx11.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_impl_win32.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_stdlib.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_tables.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Includes\imgui\imgui_widgets.cpp">
-      <Filter>Includes\imgui</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SApplication.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OWindow.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="ODirectX11.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SConsole.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OWorld.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OGameObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GCamera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="GTestObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OWidget.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OComponent.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CTransform.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CMesh.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CShader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OGUI.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="WTools.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SReflection.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="PCH.h">
-      <Filter>Precompiled Header</Filter>
-    </ClInclude>
-    <ClInclude Include="GGizmo.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="EUtls.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OInput.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="OTime.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Includes\json\json.hpp">
-      <Filter>Includes\json</Filter>
+      <Filter>Includes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Includes\json\json_fwd.hpp">
-      <Filter>Includes\json</Filter>
+      <Filter>Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="CMesh.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnlitShader.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CTransform.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PCH.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="SReflection.h">
+      <Filter>Singletons\Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="SConsole.h">
+      <Filter>Singletons\Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="SApplication.h">
+      <Filter>Singletons\Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OComponent.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ODirectX11.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OGameObject.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OGUI.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OInput.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OTime.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OWidget.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OWindow.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OWorld.h">
+      <Filter>Objects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GCamera.h">
+      <Filter>GameObjects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GGizmo.h">
+      <Filter>GameObjects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GTestObject.h">
+      <Filter>GameObjects\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ETypes.h">
-      <Filter>Headers</Filter>
+      <Filter>Utls</Filter>
+    </ClInclude>
+    <ClInclude Include="EUtls.h">
+      <Filter>Utls</Filter>
     </ClInclude>
     <ClInclude Include="EMacros.h">
-      <Filter>Headers</Filter>
+      <Filter>Utls</Filter>
     </ClInclude>
+    <ClInclude Include="WTools.h">
+      <Filter>Widgets\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CLitShader.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui_draw.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui_impl_dx11.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui_impl_win32.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui_stdlib.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui_tables.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui_widgets.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Includes\imgui\imgui.cpp">
+      <Filter>Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="CMesh.cpp">
+      <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnlitShader.cpp">
+      <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CTransform.cpp">
+      <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PCH.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="SApplication.cpp">
+      <Filter>Singletons\Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="SConsole.cpp">
+      <Filter>Singletons\Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="SReflection.cpp">
+      <Filter>Singletons\Headers</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OComponent.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ODirectX11.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OGameObject.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OGUI.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OInput.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OTime.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OWidget.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OWindow.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OWorld.cpp">
+      <Filter>Objects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GCamera.cpp">
+      <Filter>GameObjects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GTestObject.cpp">
+      <Filter>GameObjects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GGizmo.cpp">
+      <Filter>GameObjects\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WTools.cpp">
+      <Filter>Widgets\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CLitShader.cpp">
+      <Filter>Components\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

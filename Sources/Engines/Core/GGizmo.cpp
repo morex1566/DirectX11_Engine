@@ -1,5 +1,5 @@
 #include "PCH.h"
-#include "CShader.h"
+#include "CUnlitShader.h"
 #include "GGizmo.h"
 
 #include "CMesh.h"
@@ -21,8 +21,8 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 
 		// Vertical Mesh.
 		{
-			Mesh->AddVertex(FVertex(XMFLOAT3(0, 0, GridLength), GridColor));
-			Mesh->AddVertex(FVertex(XMFLOAT3(0, 0, -GridLength), GridColor));
+			Mesh->AddVertex(FVertex(XMFLOAT3(0, 0, GridLength), GridColor, XMFLOAT2(), XMFLOAT3()));
+			Mesh->AddVertex(FVertex(XMFLOAT3(0, 0, -GridLength), GridColor, XMFLOAT2(), XMFLOAT3()));
 			Mesh->AddIndex(Index++);
 			Mesh->AddIndex(Index++);
 
@@ -30,16 +30,16 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 			{
 				// Right side.
 				{
-					Mesh->AddVertex(FVertex(XMFLOAT3(GridGap * i, 0, GridLength), GridColor));
-					Mesh->AddVertex(FVertex(XMFLOAT3(GridGap * i, 0, -GridLength), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridGap * i, 0, GridLength), GridColor, XMFLOAT2(), XMFLOAT3()));
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridGap * i, 0, -GridLength), GridColor, XMFLOAT2(), XMFLOAT3()));
 					Mesh->AddIndex(Index++);
 					Mesh->AddIndex(Index++);
 				}
 
 				// Left side.
 				{
-					Mesh->AddVertex(FVertex(XMFLOAT3(-GridGap * i, 0, GridLength), GridColor));
-					Mesh->AddVertex(FVertex(XMFLOAT3(-GridGap * i, 0, -GridLength), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridGap * i, 0, GridLength), GridColor, XMFLOAT2(), XMFLOAT3()));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridGap * i, 0, -GridLength), GridColor, XMFLOAT2(), XMFLOAT3()));
 					Mesh->AddIndex(Index++);
 					Mesh->AddIndex(Index++);
 				}
@@ -48,8 +48,8 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 
 		// horizontal Mesh
 		{
-			Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, 0), GridColor));
-			Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, 0), GridColor));
+			Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, 0), GridColor, XMFLOAT2(), XMFLOAT3()));
+			Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, 0), GridColor, XMFLOAT2(), XMFLOAT3()));
 			Mesh->AddIndex(Index++);
 			Mesh->AddIndex(Index++);
 
@@ -57,8 +57,8 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 			{
 				// Up side.
 				{
-					Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, GridGap * i), GridColor));
-					Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, GridGap * i), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, GridGap * i), GridColor, XMFLOAT2(), XMFLOAT3()));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, GridGap * i), GridColor, XMFLOAT2(), XMFLOAT3()));
 					Mesh->AddIndex(Index++);
 					Mesh->AddIndex(Index++);
 				}
@@ -66,8 +66,8 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 
 				// Down side.
 				{
-					Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, -GridGap * i), GridColor));
-					Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, -GridGap * i), GridColor));
+					Mesh->AddVertex(FVertex(XMFLOAT3(GridLength, 0, -GridGap * i), GridColor, XMFLOAT2(), XMFLOAT3()));
+					Mesh->AddVertex(FVertex(XMFLOAT3(-GridLength, 0, -GridGap * i), GridColor, XMFLOAT2(), XMFLOAT3()));
 					Mesh->AddIndex(Index++);
 					Mesh->AddIndex(Index++);
 				}
@@ -75,9 +75,9 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 		}
 	}
 
-	CShader* Shader = TAddComponent<CShader>();
+	CUnlitShader* Shader = TAddComponent<CUnlitShader>();
 	{
-		Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
+		Shader->LoadShader(ToWString(GET_SHADER_FILE_PATH("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_PATH("UnlitPixelShader.hlsl")));
 	}
 }
 
