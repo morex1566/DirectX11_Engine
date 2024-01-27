@@ -145,6 +145,7 @@
     <ClInclude Include="CLitShader.h">
       <Filter>Components\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="CModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Includes\imgui\imgui_draw.cpp">
@@ -239,6 +240,9 @@
     </ClCompile>
     <ClCompile Include="CLitShader.cpp">
       <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CModel.cpp">
+      <Filter>Utls</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

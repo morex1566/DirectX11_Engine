@@ -1,8 +1,11 @@
 #include "PCH.h"
+#include "assimp/Importer.hpp"
+#include "assimp/cimport.h"
+#include "assimp/postprocess.h"
+#include "assimp/scene.h"
 #include "CMesh.h"
-#include "SApplication.h"
-#include "SConsole.h"
 #include "ODirectX11.h"
+
 
 CMesh::CMesh(const OGameObject* InOwner)
 	: OComponent(InOwner), PrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
@@ -157,5 +160,17 @@ void CMesh::Render()
 
 		// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 		DeviceContext.IASetPrimitiveTopology(PrimitiveType);
+	}
+}
+
+void CMesh::Load(const std::wstring& InFilePath)
+{
+	Assimp::Importer importer;
+
+	const aiScene* scene = importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
+	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	{
+		SConsole::LogError("ERROR::ASSIMP::");
+		return;
 	}
 }

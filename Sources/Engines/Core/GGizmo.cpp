@@ -77,7 +77,7 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 
 	CUnlitShader* Shader = TAddComponent<CUnlitShader>();
 	{
-		Shader->LoadShader(ToWString(GET_SHADER_FILE_PATH("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_PATH("UnlitPixelShader.hlsl")));
+		Shader->Load(ToWString(GET_SHADER_FILE_PATH("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_PATH("UnlitPixelShader.hlsl")));
 	}
 }
 

@@ -11,36 +11,24 @@ public:
 	CMesh& operator=(CMesh&&) noexcept			= default;
 	~CMesh() override;
 
+
+public:
 	virtual void								Initialize() override;
 	virtual void								Release() override;
-
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
 	virtual void								Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
 	virtual void								Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
 	virtual void								End() override;
-	/**
-	 * \brief Add vertex.
-	 */
+
+
+public:
 	void										AddVertex(const FVertex& InVertex);
-	/**
-	 * \brief Add index.
-	 */
 	void										AddIndex(UINT InIndex);
-
 	void										Render();
-
+	void										Load(const std::wstring& InFilePath);
 	FORCEINLINE UINT							GetVertexCount() { return Vertices.size(); }
 	FORCEINLINE UINT							GetIndexCount() { return Indices.size(); }
-
 	FORCEINLINE void							SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY InType) { PrimitiveType = InType; }
+
 
 private:
 	bool										CreateVertexBuffer();
@@ -51,5 +39,8 @@ private:
 	std::vector<FVertex>						Vertices;
 	std::vector<UINT>							Indices;
 	D3D11_PRIMITIVE_TOPOLOGY					PrimitiveType;
+
+
 };
+
 

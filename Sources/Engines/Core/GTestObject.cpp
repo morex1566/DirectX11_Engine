@@ -20,6 +20,7 @@ GTestObject::GTestObject()
 		Mesh->AddIndex(0);
 		Mesh->AddIndex(1);
 		Mesh->AddIndex(2);
+		//Mesh->Load(ToWString(GET_RESOURCE_FILE_PATH("cube.fbx")));
 	}
 
 	//CUnlitShader* Shader = TAddComponent<CUnlitShader>();
@@ -34,7 +35,7 @@ GTestObject::GTestObject()
 
 	CLitShader* shader = TAddComponent<CLitShader>();
 	{
-		shader->LoadShader(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
+		shader->Load(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
 						   ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));
 	}
 }

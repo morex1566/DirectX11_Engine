@@ -16,7 +16,7 @@ public:
 	virtual void									Start() override;
 	virtual void									Tick() override;
 	virtual void									End() override;
-	bool											LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
+	bool											Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 
 private:
 	void											SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection);

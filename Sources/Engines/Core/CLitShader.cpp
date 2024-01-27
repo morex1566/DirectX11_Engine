@@ -68,7 +68,7 @@ void CLitShader::End()
 	OComponent::End();
 }
 
-void CLitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
+void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
 {
 	HRESULT						Result;
 	ComPtr<ID3DBlob>			ErrorMsg;

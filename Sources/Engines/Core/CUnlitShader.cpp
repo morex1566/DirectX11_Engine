@@ -69,7 +69,7 @@ void CUnlitShader::End()
 	OComponent::End();
 }
 
-bool CUnlitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
+bool CUnlitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
 {
 	HRESULT						Result;
 	ComPtr<ID3DBlob>			ErrorMsg;
