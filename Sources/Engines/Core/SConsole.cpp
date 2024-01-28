@@ -8,7 +8,7 @@ SConsole& SConsole::GetInstance()
 	return Instance;
 }
 
-void SConsole::Initialize()
+void SConsole::Init()
 {
 	FILE*		Stream;
 	errno_t		Error;
@@ -28,7 +28,7 @@ void SConsole::Initialize()
 	}
 }
 
-void SConsole::Release()
+void SConsole::Shutdown()
 {
 	DestroyWindow(HWnd);
 }

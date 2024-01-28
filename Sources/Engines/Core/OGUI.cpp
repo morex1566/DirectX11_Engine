@@ -26,9 +26,9 @@ void OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLPa
 	ImGui_ImplWin32_WndProcHandler(InHWnd, InMsg, InWParam, InLParam);
 }
 
-void OGUI::Initialize()
+void OGUI::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	// Setup Dear ImGui context.
 	IMGUI_CHECKVERSION();
@@ -65,18 +65,18 @@ void OGUI::Initialize()
 	{
 		if (Widget->CheckIsEnabled())
 		{
-			Widget->Initialize();
+			Widget->Init();
 		}
 	}
 }
 
-void OGUI::Release()
+void OGUI::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
 	for (const auto& Widget : Widgets)
 	{
-		Widget->Release();
+		Widget->Shutdown();
 	}
 
 	ImGui_ImplDX11_Shutdown();

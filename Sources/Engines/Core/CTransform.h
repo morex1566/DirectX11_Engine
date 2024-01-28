@@ -12,8 +12,8 @@ public:
 	CTransform& operator=(CTransform&&) noexcept		= default;
 	virtual ~CTransform() override;
 
-	virtual void		 								Initialize() override;
-	virtual void										Release() override;
+	virtual void		 								Init() override;
+	virtual void										Shutdown() override;
 
 	/**
 	 * \brief Called only once before entering the main loop.

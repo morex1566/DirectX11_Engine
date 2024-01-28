@@ -4,6 +4,7 @@
 #include "CLitShader.h"
 #include "GTestObject.h"
 #include "CTexture.h"
+#include "CModel.h"
 
 GTestObject::GTestObject()
 	: OGameObject()
@@ -23,10 +24,10 @@ GTestObject::GTestObject()
 		//Mesh->Load(ToWString(GET_RESOURCE_FILE_PATH("cube.fbx")));
 	}
 
-	//CUnlitShader* Shader = TAddComponent<CUnlitShader>();
-	//{
-	//	Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
-	//}
+	////CUnlitShader* Shader = TAddComponent<CUnlitShader>();
+	////{
+	////	Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
+	////}
 
 	CTexture* texture = TAddComponent<CTexture>();
 	{
@@ -38,20 +39,21 @@ GTestObject::GTestObject()
 		shader->Load(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
 						   ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));
 	}
+
 }
 
 GTestObject::~GTestObject()
 {
 }
 
-void GTestObject::Initialize()
+void GTestObject::Init()
 {
-	OGameObject::Initialize();
+	OGameObject::Init();
 }
 
-void GTestObject::Release()
+void GTestObject::Shutdown()
 {
-	OGameObject::Release();
+	OGameObject::Shutdown();
 }
 
 void GTestObject::Start()

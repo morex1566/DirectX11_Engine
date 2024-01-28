@@ -12,14 +12,14 @@ OComponent::~OComponent()
 {
 }
 
-void OComponent::Initialize()
+void OComponent::Init()
 {
-	Object::Initialize();
+	Object::Init();
 }
 
-void OComponent::Release()
+void OComponent::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 }
 
 void OComponent::Start()

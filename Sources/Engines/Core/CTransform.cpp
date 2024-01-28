@@ -17,14 +17,14 @@ CTransform::~CTransform()
 {
 }
 
-void CTransform::Initialize()
+void CTransform::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CTransform::Release()
+void CTransform::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 }
 
 void CTransform::Start()

@@ -6,9 +6,3 @@
 
 #define ECLASS() /*REFLECTION_ECLASS*/
 #define EPROPERTY() /*REFLECTION_EPROPERTY*/
-
-#define GENERATED_ECLASS(TYPE_NAME)			     \
-void foo(TYPE_NAME par, <TYPE_NAME>)             \
-{                                                \
-                                                 \
-}											     \

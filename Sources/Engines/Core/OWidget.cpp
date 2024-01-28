@@ -12,14 +12,14 @@ OWidget::~OWidget()
 {
 }
 
-void OWidget::Initialize()
+void OWidget::Init()
 {
-	Object::Initialize();
+	Object::Init();
 }
 
-void OWidget::Release()
+void OWidget::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 }
 
 void OWidget::Start()

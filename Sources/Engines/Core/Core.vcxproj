@@ -156,6 +156,8 @@
     <ClInclude Include="GCamera.h" />
     <ClInclude Include="GGizmo.h" />
     <ClInclude Include="GTestObject.h" />
+    <ClInclude Include="IEnable.h" />
+    <ClInclude Include="IName.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OComponent.h" />
     <ClInclude Include="ODirectX11.h" />

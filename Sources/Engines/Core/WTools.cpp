@@ -11,14 +11,14 @@ WTools::~WTools()
 {
 }
 
-void WTools::Initialize()
+void WTools::Init()
 {
-	OWidget::Initialize();
+	OWidget::Init();
 }
 
-void WTools::Release()
+void WTools::Shutdown()
 {
-	OWidget::Release();
+	OWidget::Shutdown();
 }
 
 void WTools::Start()

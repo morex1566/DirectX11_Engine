@@ -13,9 +13,9 @@ OWorld::~OWorld()
 {
 }
 
-void OWorld::Initialize()
+void OWorld::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	GTestObject& TestGameObject1 = TCreateGameObject<GTestObject>();
 
@@ -23,17 +23,17 @@ void OWorld::Initialize()
 
 	for (const auto& GameObject : GameObjects)
 	{
-		GameObject->Initialize();
+		GameObject->Init();
 	}
 }
 
-void OWorld::Release()
+void OWorld::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
 	for (const auto& GameObject : GameObjects)
 	{
-		GameObject->Release();
+		GameObject->Shutdown();
 	}
 }
 

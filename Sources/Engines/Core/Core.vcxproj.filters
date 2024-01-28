@@ -59,6 +59,9 @@
     <Filter Include="Widgets\Sources">
       <UniqueIdentifier>{675ddf52-2b04-4803-aca0-62f98a40d09d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{a7a10f99-2d12-4ed1-b474-65a17037c3f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Includes\json\json.hpp">
@@ -145,7 +148,15 @@
     <ClInclude Include="CLitShader.h">
       <Filter>Components\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="CModel.h" />
+    <ClInclude Include="CModel.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IName.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Includes\imgui\imgui_draw.cpp">
@@ -242,7 +253,7 @@
       <Filter>Components\Sources</Filter>
     </ClCompile>
     <ClCompile Include="CModel.cpp">
-      <Filter>Utls</Filter>
+      <Filter>Components\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

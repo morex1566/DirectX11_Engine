@@ -20,8 +20,8 @@ public:
 
 
 public:
-	void			Initialize() override;
-	void			Release() override;
+	void			Init() override;
+	void			Shutdown() override;
 	void			Start() override;
 	void			Tick() override;
 	void			End() override;
@@ -35,7 +35,7 @@ public:
 	}
 	FORCEINLINE void SetResource(ID3D11ShaderResourceView* InResource) 
 	{ 
-		Release();
+		Shutdown();
 		Resource = InResource;  
 	}
 

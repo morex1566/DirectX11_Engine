@@ -16,14 +16,14 @@ CMesh::~CMesh()
 {
 }
 
-void CMesh::Initialize()
+void CMesh::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CMesh::Release()
+void CMesh::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 }
 
 void CMesh::Start()

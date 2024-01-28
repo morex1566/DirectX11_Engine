@@ -11,8 +11,8 @@ public:
 
 	static SConsole&							GetInstance();
 
-	void										Initialize();
-	void										Release();
+	void										Init();
+	void										Shutdown();
 
 	static void									Log(const std::wstring& Log);
 	static void									Log(const std::string& Log);

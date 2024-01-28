@@ -85,14 +85,14 @@ GGizmo::~GGizmo()
 {
 }
 
-void GGizmo::Initialize()
+void GGizmo::Init()
 {
-	OGameObject::Initialize();
+	OGameObject::Init();
 }
 
-void GGizmo::Release()
+void GGizmo::Shutdown()
 {
-	OGameObject::Release();
+	OGameObject::Shutdown();
 }
 
 void GGizmo::Start()

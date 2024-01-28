@@ -18,8 +18,8 @@ public:
 
 	static void CALLBACK									MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
-	void													Initialize() override;
-	void													Release() override;
+	void													Init() override;
+	void													Shutdown() override;
 	/**
 	 * \brief Called only once before entering the main loop.
 	 */

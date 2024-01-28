@@ -15,14 +15,14 @@ CLitShader::~CLitShader()
 {
 }
 
-void CLitShader::Initialize()
+void CLitShader::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CLitShader::Release()
+void CLitShader::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 }
 
 void CLitShader::Start()

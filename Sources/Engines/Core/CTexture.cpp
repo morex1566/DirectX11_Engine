@@ -11,17 +11,17 @@ CTexture::CTexture(const OGameObject* InOwner)
 
 CTexture::~CTexture()
 {
-	Release();
+	Shutdown();
 }
 
-void CTexture::Initialize()
+void CTexture::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CTexture::Release()
+void CTexture::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 
 	if (Resource)
 	{
@@ -47,7 +47,7 @@ void CTexture::End()
 
 void CTexture::Load(const std::wstring& InFilePath, ETexture InType)
 {
-	Release();
+	Shutdown();
 
 	HRESULT result;
 	DirectX::ScratchImage image;

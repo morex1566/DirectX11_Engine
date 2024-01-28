@@ -6,27 +6,6 @@ Object::Object(): bIsEnabled(1)
 {
 }
 
-void Object::Initialize()
-{
-}
-
-void Object::Release()
-{
-}
-
-void Object::Start()
-{
-}
-
-void Object::Tick()
-{
-
-}
-
-void Object::End()
-{
-}
-
 uint8 Object::CheckIsEnabled() const
 {
 	return bIsEnabled;

@@ -15,8 +15,8 @@ public:
 	GTestObject& operator=(GTestObject&&) noexcept			= default;
 	~GTestObject() override;
 
-	void			    								    Initialize() override;
-	void													Release() override;
+	void			    								    Init() override;
+	void													Shutdown() override;
 
 	/**
 	 * \brief Called only once before entering the main loop.

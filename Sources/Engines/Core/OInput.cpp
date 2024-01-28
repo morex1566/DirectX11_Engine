@@ -18,9 +18,9 @@ OInput::OInput()
 	MousePosY = 0;
 }
 
-void OInput::Initialize()
+void OInput::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	HRESULT			Result;
 	HWND			HWnd;
@@ -85,9 +85,9 @@ void OInput::Initialize()
 	}
 }
 
-void OInput::Release()
+void OInput::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
 	KeyboardInputDevice->Unacquire();
 	MouseInputDevice->Unacquire();

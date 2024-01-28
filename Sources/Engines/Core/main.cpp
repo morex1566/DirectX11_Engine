@@ -14,19 +14,19 @@ int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, 
 	// Create logger.
 	SConsole& Console = SConsole::GetInstance();
 	{
-		Console.Initialize();
+		Console.Init();
 	}
 
 	// Create Reflection.
 	SReflection& Reflection = SReflection::GetInstance();
 	{
-		Reflection.Initialize();
+		Reflection.Init();
 	}
 
 	// Create engine application.
 	SApplication& Application = SApplication::GetInstance();
 	{
-		Application.Initialize(HInstance);
+		Application.Init(HInstance);
 	}
 
 	// Application's main flow.
@@ -52,8 +52,8 @@ int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, 
 
 	// Release instance.
 	{
-		Application.Release();
-		Console.Release();
+		Application.Shutdown();
+		Console.Shutdown();
 	}
 
 	return 0;

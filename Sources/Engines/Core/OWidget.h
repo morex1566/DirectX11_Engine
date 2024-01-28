@@ -17,8 +17,8 @@ public:
 	OWidget& operator=(OWidget&&) noexcept					= default;
 	~OWidget() override;
 
-	void													Initialize() override;
-	void													Release() override;
+	void													Init() override;
+	void													Shutdown() override;
 	/**
 	 * \brief Called only once before entering the main loop.
 	 */

@@ -15,12 +15,12 @@ CModel::CModel(const OGameObject* InOwner)
 
 CModel::~CModel()
 {
-	Release();
+	Shutdown();
 }
 
-void CModel::Initialize() {}
+void CModel::Init() {}
 
-void CModel::Release()
+void CModel::Shutdown()
 {
 	ReleaseMesh();
 	ReleaseTexture();

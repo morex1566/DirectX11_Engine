@@ -17,8 +17,8 @@ public:
 
 
 public:
-	virtual void		Initialize() override;
-	virtual void		Release() override;
+	virtual void		Init() override;
+	virtual void		Shutdown() override;
 	virtual void		Start() override;
 	virtual void		Tick() override;
 	virtual void		End() override;

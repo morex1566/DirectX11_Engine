@@ -19,14 +19,14 @@ CUnlitShader::~CUnlitShader()
 {
 }
 
-void CUnlitShader::Initialize()
+void CUnlitShader::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CUnlitShader::Release()
+void CUnlitShader::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 }
 
 void CUnlitShader::Start()

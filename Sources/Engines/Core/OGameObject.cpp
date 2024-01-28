@@ -13,15 +13,15 @@ OGameObject::~OGameObject()
 {
 }
 
-void OGameObject::Initialize()
+void OGameObject::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	for (const auto& Component : Components)
 	{
 		if (Component->CheckIsEnabled())
 		{
-			Component->Initialize();
+			Component->Init();
 		}
 	}
 
@@ -29,23 +29,23 @@ void OGameObject::Initialize()
 	{
 		if (Child->CheckIsEnabled())
 		{
-			Child->Initialize();
+			Child->Init();
 		}
 	}
 }
 
-void OGameObject::Release()
+void OGameObject::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
 	for (const auto& Component : Components)
 	{
-		Component->Release();
+		Component->Shutdown();
 	}
 
 	for (const auto& Child : Children)
 	{
-		Child->Release();
+		Child->Shutdown();
 	}
 }
 
