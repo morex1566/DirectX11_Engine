@@ -7,13 +7,9 @@
 #include "SApplication.h"
 
 GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 InGridColor)
-	: OGameObject()
+	: OGameObject(),
+	GridGap(InGridGap), GridLength(InGridLength), GridSize(InGridSize), GridColor(InGridColor)
 {
-	GridGap = InGridGap;
-	GridLength = InGridLength;
-	GridSize = InGridSize;
-	GridColor = InGridColor;
-
 	CMesh* Mesh = TAddComponent<CMesh>();
 	{
 		Mesh->SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
@@ -83,6 +79,7 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 
 GGizmo::~GGizmo()
 {
+	Shutdown();
 }
 
 void GGizmo::Init()

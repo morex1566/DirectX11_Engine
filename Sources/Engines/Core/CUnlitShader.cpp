@@ -43,10 +43,10 @@ void CUnlitShader::Tick()
 
 	auto DirectX11 = SApplication::GetDirectX11();
 	{
-		DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetViewport(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetDepthStencilState(ODirectX11::ERenderMode::R_3D);
+		DirectX11->SetRasterizerState(ODirectX11::ERenderMode::R_3D);
+		DirectX11->SetRenderTargets(ODirectX11::ERenderMode::R_3D);
+		DirectX11->SetViewport(ODirectX11::ERenderMode::R_3D);
 	}
 
 	// Set shader essential params.

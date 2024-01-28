@@ -421,13 +421,13 @@ void ODirectX11::Tick()
 		bIsScreenSizeChanged = 0;
 	}
 
-	ClearRenderTargetView(ERenderModeType::Model, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
-	ClearDepthStencilView(ERenderModeType::Model);
-	ClearRenderTargetView(ERenderModeType::Interface, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
-	ClearDepthStencilView(ERenderModeType::Interface);
+	ClearRenderTargetView(ERenderMode::R_3D, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
+	ClearDepthStencilView(ERenderMode::R_3D);
+	ClearRenderTargetView(ERenderMode::R_2D, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
+	ClearDepthStencilView(ERenderMode::R_2D);
 }
 
-void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor) const
+void ODirectX11::ClearRenderTargetView(ERenderMode InType, XMFLOAT4 InClearColor) const
 {
 	float ClearColor[4];
 
@@ -436,23 +436,23 @@ void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearC
 	ClearColor[2] = InClearColor.z;
 	ClearColor[3] = InClearColor.w;
 
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
 		DeviceContext->ClearRenderTargetView(RenderTargetView2D, ClearColor);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
 		DeviceContext->ClearRenderTargetView(RenderTargetView3D, ClearColor);
 	}
 }
 
-void ODirectX11::ClearDepthStencilView(ERenderModeType Type) const
+void ODirectX11::ClearDepthStencilView(ERenderMode Type) const
 {
-	if (Type == ERenderModeType::Interface)
+	if (Type == ERenderMode::R_2D)
 	{
 		DeviceContext->ClearDepthStencilView(DepthStencilView2D, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-	else if (Type == ERenderModeType::Model)
+	else if (Type == ERenderMode::R_3D)
 	{
 		DeviceContext->ClearDepthStencilView(DepthStencilView3D, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
@@ -470,49 +470,49 @@ void ODirectX11::Draw()
 	}
 }
 
-void ODirectX11::SetRenderTargets(ERenderModeType InType) const
+void ODirectX11::SetRenderTargets(ERenderMode InType) const
 {
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
 		DeviceContext->OMSetRenderTargets(1, &RenderTargetView2D, DepthStencilView2D);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
 		DeviceContext->OMSetRenderTargets(1, &RenderTargetView3D, DepthStencilView3D);
 	}
 }
 
-void ODirectX11::SetDepthStencilState(ERenderModeType InType) const
+void ODirectX11::SetDepthStencilState(ERenderMode InType) const
 {
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
 		DeviceContext->OMSetDepthStencilState(DepthStencilState2D, 1);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
 		DeviceContext->OMSetDepthStencilState(DepthStencilState3D, 1);
 	}
 }
 
-void ODirectX11::SetRasterizerState(ERenderModeType InType) const
+void ODirectX11::SetRasterizerState(ERenderMode InType) const
 { 
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
 		DeviceContext->RSSetState(RasterizerState2D);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
 		DeviceContext->RSSetState(RasterizerState3D);
 	}
 }
 
-void ODirectX11::SetViewport(ERenderModeType InType) const
+void ODirectX11::SetViewport(ERenderMode InType) const
 {
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
 		DeviceContext->RSSetViewports(1, &Viewport2D);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
 		DeviceContext->RSSetViewports(1, &Viewport3D);
 	}

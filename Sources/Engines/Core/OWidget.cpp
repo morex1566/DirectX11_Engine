@@ -10,31 +10,5 @@ OWidget::OWidget()
 
 OWidget::~OWidget()
 {
-}
-
-void OWidget::Init()
-{
-	Object::Init();
-}
-
-void OWidget::Shutdown()
-{
-	Object::Shutdown();
-}
-
-void OWidget::Start()
-{
-	Object::Start();
-}
-
-void OWidget::Tick()
-{
-	Object::Tick();
-
-	Render();
-} 
-
-void OWidget::End()
-{
-	Object::End();
+	Shutdown();
 }

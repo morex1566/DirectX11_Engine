@@ -44,6 +44,7 @@ GTestObject::GTestObject()
 
 GTestObject::~GTestObject()
 {
+	Shutdown();
 }
 
 void GTestObject::Init()
@@ -70,3 +71,4 @@ void GTestObject::End()
 {
 	OGameObject::End();
 }
+

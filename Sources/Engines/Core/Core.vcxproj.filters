@@ -139,7 +139,7 @@
     <ClInclude Include="EMacros.h">
       <Filter>Utls</Filter>
     </ClInclude>
-    <ClInclude Include="WTools.h">
+    <ClInclude Include="WConsole.h">
       <Filter>Widgets\Headers</Filter>
     </ClInclude>
     <ClInclude Include="CTexture.h">
@@ -155,6 +155,9 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="IName.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ITag.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
@@ -243,7 +246,7 @@
     <ClCompile Include="GGizmo.cpp">
       <Filter>GameObjects\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="WTools.cpp">
+    <ClCompile Include="WConsole.cpp">
       <Filter>Widgets\Sources</Filter>
     </ClCompile>
     <ClCompile Include="CTexture.cpp">

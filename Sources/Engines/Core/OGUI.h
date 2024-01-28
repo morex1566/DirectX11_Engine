@@ -16,34 +16,32 @@ public:
 	OGUI& operator=(OGUI&&) noexcept						= default;
 	~OGUI() override;
 
-	static void CALLBACK									MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
-	void													Init() override;
-	void													Shutdown() override;
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	void													Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	void													Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
-	void													End() override;
+public:
+	static void CALLBACK	MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
 
+
+public:
+	void					Init() override;
+	void					Shutdown() override;
+	void					Start() override;
+	void					Tick() override;
+	void					End() override;
+
+
+public:
 	template <typename T, typename ...Args>
-	T*														TAddWidget(Args&&... InConstructorArgs);
+	T*						TAddWidget(Args&&... InConstructorArgs);
 	template <typename T>
-	void													TDeleteComponent();
+	void					TDeleteComponent();
+
 
 private:
-	const OWindow*											Window; // Readonly
-	const OWorld*											World; // Readonly
-	const ODirectX11*										DirectX11; // Readonly
+	const OWindow*							Window; // Readonly
+	const OWorld*							World; // Readonly
+	const ODirectX11*						DirectX11; // Readonly
+	std::vector<std::shared_ptr<OWidget>>	Widgets;
 
-	std::vector<std::shared_ptr<OWidget>>					Widgets;
 };
 
 template <typename T, typename ... Args>

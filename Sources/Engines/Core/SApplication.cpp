@@ -93,10 +93,7 @@ void SApplication::Start()
 {
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnabled())
-		{
-			object->Start();
-		}
+		object->Start();
 	}
 }
 
@@ -104,10 +101,7 @@ void SApplication::Tick()
 {
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnabled())
-		{
-			object->Tick();
-		}
+		object->Tick();
 	}
 }
 
@@ -115,10 +109,7 @@ void SApplication::End()
 {
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnabled())
-		{
-			object->End();
-		}
+		object->End();
 	}
 }
 

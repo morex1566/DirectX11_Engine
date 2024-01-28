@@ -11,33 +11,24 @@ OGameObject::OGameObject()
 
 OGameObject::~OGameObject()
 {
+ 	Shutdown();
 }
 
 void OGameObject::Init()
 {
-	Object::Init();
-
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnabled())
-		{
-			Component->Init();
-		}
+		Component->Init();
 	}
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnabled())
-		{
-			Child->Init();
-		}
+		Child->Init();
 	}
 }
 
 void OGameObject::Shutdown()
 {
-	Object::Shutdown();
-
 	for (const auto& Component : Components)
 	{
 		Component->Shutdown();
@@ -51,11 +42,9 @@ void OGameObject::Shutdown()
 
 void OGameObject::Start()
 {
-	Object::Start();
-
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnabled())
+		if (Component->IsEnable)
 		{
 			Component->Start();
 		}
@@ -63,7 +52,7 @@ void OGameObject::Start()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnabled())
+		if (Child->IsEnable)
 		{
 			Child->Start();
 		}
@@ -72,11 +61,9 @@ void OGameObject::Start()
 
 void OGameObject::Tick()
 {
-	Object::Tick();
-
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnabled())
+		if (Component->IsEnable)
 		{
 			Component->Tick();
 		}
@@ -84,7 +71,7 @@ void OGameObject::Tick()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnabled())
+		if (Child->IsEnable)
 		{
 			Child->Tick();
 		}
@@ -93,11 +80,9 @@ void OGameObject::Tick()
 
 void OGameObject::End()
 {
-	Object::End();
-
 	for (const auto& Component : Components)
 	{
-		if (Component->CheckIsEnabled())
+		if (Component->IsEnable)
 		{
 			Component->End();
 		}
@@ -105,7 +90,7 @@ void OGameObject::End()
 
 	for (const auto& Child : Children)
 	{
-		if (Child->CheckIsEnabled())
+		if (Child->IsEnable)
 		{
 			Child->End();
 		}

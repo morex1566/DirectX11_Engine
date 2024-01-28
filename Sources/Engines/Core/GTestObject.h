@@ -15,20 +15,14 @@ public:
 	GTestObject& operator=(GTestObject&&) noexcept			= default;
 	~GTestObject() override;
 
-	void			    								    Init() override;
-	void													Shutdown() override;
 
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	void													Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	void													Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
-	void													End() override;
+public:
+	void		Init() override;
+	void		Shutdown() override;
+	void		Start() override;
+	void		Tick() override;
+	void		End() override;
+
+
 };
 

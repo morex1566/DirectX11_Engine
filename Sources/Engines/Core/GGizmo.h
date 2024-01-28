@@ -14,29 +14,26 @@ public:
 	GGizmo& operator=(GGizmo&&) noexcept		= default;
 	~GGizmo() override;
 
-	void										Init() override;
-	void										Shutdown() override;
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	void										Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	void										Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
-	void										End() override;
 
-	FORCEINLINE void							SetSpaceBtwGridByGrid(float InValue) { GridGap = InValue; }
-	FORCEINLINE void							SetGridColor(XMFLOAT4 InColor) { GridColor = InColor; }
+public:
+	void		Init() override;
+	void		Shutdown() override;
+	void		Start() override;
+	void		Tick() override;
+	void		End() override;
+
+
+public:
+	FORCEINLINE void	SetSpaceBtwGridByGrid(float InValue) { GridGap = InValue; }
+	FORCEINLINE void	SetGridColor(XMFLOAT4 InColor) { GridColor = InColor; }
+
 
 private:
-	float										GridGap;
-	float										GridLength;
-	uint64										GridSize;
-	XMFLOAT4									GridColor;
+	float				GridGap;
+	float				GridLength;
+	uint64				GridSize;
+	XMFLOAT4			GridColor;
+
 
 };
 

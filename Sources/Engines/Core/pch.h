@@ -37,9 +37,17 @@ using uint32					= uint32_t;
 using int64						= int64_t;
 using uint64					= uint64_t;
 
+// 인터페이스
+#include "IEnable.h"
+#include "IName.h"
+#include "ITag.h"
+
+// 유틸리티
 #include "ETypes.h"
 #include "EMacros.h"
 #include "EUtls.h"
-#include "SApplication.h"
+
+// 싱글톤
 #include "SConsole.h"
 #include "SReflection.h"
+#include "SApplication.h"

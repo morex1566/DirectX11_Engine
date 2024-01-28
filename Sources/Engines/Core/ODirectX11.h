@@ -6,10 +6,10 @@ class OWindow;
 class ODirectX11 : public Object
 {
 public:
-	enum class ERenderModeType
+	enum class ERenderMode
 	{
-		Interface,
-		Model
+		R_2D,
+		R_3D
 	};
 
 
@@ -30,16 +30,18 @@ public:
 	void							Init() override;
 	void							Shutdown() override;
 	void							Tick() override;
+	void							Start() override {}
+	void							End() override {}
 
 
 public:
-	void							ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor = { 0, 0, 0, 1 }) const;
-	void							ClearDepthStencilView(ERenderModeType Type) const;
+	void							ClearRenderTargetView(ERenderMode InType, XMFLOAT4 InClearColor = { 0, 0, 0, 1 }) const;
+	void							ClearDepthStencilView(ERenderMode Type) const;
 	void							Draw();
-	void							SetRenderTargets(ERenderModeType InType) const;
-	void							SetDepthStencilState(ERenderModeType InType) const;
-	void							SetRasterizerState(ERenderModeType InType) const;
-	void							SetViewport(ERenderModeType InType) const;
+	void							SetRenderTargets(ERenderMode InType) const;
+	void							SetDepthStencilState(ERenderMode InType) const;
+	void							SetRasterizerState(ERenderMode InType) const;
+	void							SetViewport(ERenderMode InType) const;
 	ID3D11Device&					GetDevice() const { return *Device; }
 	ID3D11DeviceContext&			GetDeviceContext() const { return *DeviceContext; }
 
@@ -113,4 +115,6 @@ private:
 	D3D11_DEPTH_STENCIL_DESC		DepthStencilStateDesc3D;
 	D3D11_DEPTH_STENCIL_VIEW_DESC	DepthStencilViewDesc3D;
 	D3D11_RASTERIZER_DESC			RasterizerDesc3D;
+
+
 };

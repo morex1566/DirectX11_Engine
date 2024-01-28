@@ -7,7 +7,7 @@
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_win32.h"
 
-class OWidget : public Object
+class OWidget : public Object, public IName, public IEnable, public ITag
 {
 public:
 	OWidget();
@@ -17,21 +17,17 @@ public:
 	OWidget& operator=(OWidget&&) noexcept					= default;
 	~OWidget() override;
 
-	void													Init() override;
-	void													Shutdown() override;
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	void													Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	void													Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
-	void													End() override;
 
-private:
-	virtual void											Render() = 0;
+public:
+	void		Init() override {}
+	void		Shutdown() override {}
+	void		Start() override {}
+	void		Tick() override {}
+	void		End() override {}
+
+
+public:
+	virtual void	Render() = 0;
+
+
 };

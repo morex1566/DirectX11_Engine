@@ -65,7 +65,7 @@ T& OWorld::TCreateGameObject(Args&&... Arguments)
 		// When is found, raise the index.
 		for (const auto& GameObject : GameObjects)
 		{
-			if (GameObject->GetName() == ToWString(GetTypeToString<T>() + std::to_string(Index)))
+			if (GameObject->Name == ToWString(GetTypeToString<T>() + std::to_string(Index)))
 			{
 				Found = true;
 				Index++;
@@ -76,7 +76,7 @@ T& OWorld::TCreateGameObject(Args&&... Arguments)
 		// Not found, set current index to name.
 		if (!Found)
 		{
-			std::static_pointer_cast<Object>(TGameObject)->SetName(ToWString(GetTypeToString<T>() + std::to_string(Index)));
+			std::static_pointer_cast<T>(TGameObject)->Name = ToWString(GetTypeToString<T>() + std::to_string(Index));
 			IsDone = true;
 		}
 	}

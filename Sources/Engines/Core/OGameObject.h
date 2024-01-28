@@ -4,7 +4,7 @@
 
 class CTransform;
 
-class OGameObject : public Object
+class OGameObject : public Object, public IName, public IEnable, public ITag
 {
 public:
 	OGameObject();
@@ -14,38 +14,33 @@ public:
 	OGameObject& operator=(OGameObject&&) noexcept			= default;
 	virtual ~OGameObject() override;
 
-	virtual void											Init() override;
-	virtual void											Shutdown() override;
 
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	virtual void											Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	virtual void											Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
-	virtual void											End() override;
+public:
+	virtual void								Init() override;
+	virtual void								Shutdown() override;
+	virtual void								Start() override;
+	virtual void								Tick() override;
+	virtual void								End() override;
 
+
+public:
 	template <typename T, typename ...Args>
-	T*														TAddComponent(Args&&... InConstructorArgs);
+	T*											TAddComponent(Args&&... InConstructorArgs);
 	template <typename T>
-	void													TDeleteComponent();
+	void										TDeleteComponent();
 	template <typename T>
-	T*														TFindComponent() const;
+	T*											TFindComponent() const;
 	template <typename T>
-	std::vector<T*>											TFindComponents() const;
+	std::vector<T*>								TFindComponents() const;
+	FORCEINLINE CTransform*						GetTransform() const { return Transform; }
 
-	FORCEINLINE CTransform*									GetTransform() const { return Transform; }
 
 protected:
-	CTransform*												Transform;
-	const OGameObject*										Parent;
-	std::vector<std::shared_ptr<OComponent>>				Components;
-	std::vector<std::shared_ptr<OGameObject>>				Children;
+	CTransform*									Transform;
+	const OGameObject*							Parent;
+	std::vector<std::shared_ptr<OComponent>>	Components;
+	std::vector<std::shared_ptr<OGameObject>>	Children;
+
 
 };
 

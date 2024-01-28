@@ -158,6 +158,7 @@
     <ClInclude Include="GTestObject.h" />
     <ClInclude Include="IEnable.h" />
     <ClInclude Include="IName.h" />
+    <ClInclude Include="ITag.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OComponent.h" />
     <ClInclude Include="ODirectX11.h" />
@@ -172,7 +173,7 @@
     <ClInclude Include="SApplication.h" />
     <ClInclude Include="SConsole.h" />
     <ClInclude Include="SReflection.h" />
-    <ClInclude Include="WTools.h" />
+    <ClInclude Include="WConsole.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Includes\imgui\imgui.cpp">
@@ -222,7 +223,7 @@
     <ClCompile Include="SApplication.cpp" />
     <ClCompile Include="SConsole.cpp" />
     <ClCompile Include="SReflection.cpp" />
-    <ClCompile Include="WTools.cpp" />
+    <ClCompile Include="WConsole.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
