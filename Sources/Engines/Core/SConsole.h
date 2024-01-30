@@ -1,6 +1,10 @@
 #pragma once
 #pragma comment(lib, "Dbghelp.lib")
 
+#include <stdexcept>
+#include <iomanip>
+#include <DbgHelp.h>
+
 class SConsole
 {
 public:

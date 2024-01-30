@@ -1,14 +1,8 @@
 #pragma warning (disable : 6385)
-#pragma comment(lib, "Dbghelp.lib")
 
 #include "PCH.h"
 #include "SApplication.h"
 #include "SConsole.h"
-
-#include <Windows.h>
-#include <stdexcept>
-#include <iomanip>
-#include <DbgHelp.h>
 
 uint8		SConsole::bIsConsoleEnabled;
 

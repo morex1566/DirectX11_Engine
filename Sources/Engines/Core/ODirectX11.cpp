@@ -72,6 +72,9 @@ void ODirectX11::Init()
 	UINT								NumModes;
 
 
+	SConsole::LogError(L"CreateDXGIFactory() is failed.", __FILE__, __LINE__);
+
+
 	// Create a DirectX graphics interface factory.
 	Result = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(Factory.GetAddressOf()));
 	if (FAILED(Result))

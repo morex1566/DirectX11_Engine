@@ -3,8 +3,15 @@
 #include "SConsole.h"
 #include "SReflection.h"
 
+
 int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, int Cmdshow)
 {
+	BOOL r = SymInitialize(GetCurrentProcess(), nullptr, TRUE);
+	if (!r)
+	{
+		return 0;
+	}
+
 	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	if (FAILED(hr))
 	{
