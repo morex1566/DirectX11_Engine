@@ -59,6 +59,17 @@ inline T* OWorld::TGetGameObject()
 	auto GameObjectsIt = GameObjects.find(type);
 	if (GameObjectsIt != GameObjects.end())
 	{
+		// 캐스팅
+		if (T* CastedGameObject = dynamic_cast<T*>(GameObjects[type][0]))
+		{
+			return CastedGameObject;
+		}
+		else
+		{
+			SConsole::LogWarning(ToWString(type) + L" casting failed.", __FILE__, __LINE__);
+			return nullptr;
+		}
+
 		return GameObjects[type][0];
 	}
 
@@ -74,7 +85,22 @@ inline std::vector<T*>& OWorld::TGetGameObjects()
 	auto GameObjectsIt = GameObjects.find(type);
 	if (GameObjectsIt != GameObjects.end())
 	{
-		return GameObjects[type];
+		// 캐스팅
+		std::vector<T*> CastedGameObjects;
+		for (OGameObject* GameObject : GameObjects[type])
+		{
+			if (T* CastedGameObject = dynamic_cast<T*>(GameObject))
+			{
+				CastedGameObjects.push_back(CastedGameObject);
+			}
+			else
+			{
+				SConsole::LogWarning(ToWString(type) + L" casting failed.", __FILE__, __LINE__);
+				return std::vector<T*>();
+			}
+		}
+
+		return CastedGameObjects;
 	}
 
 	SConsole::LogWarning(ToWString(type) + L" is not exist in world.", __FILE__, __LINE__);

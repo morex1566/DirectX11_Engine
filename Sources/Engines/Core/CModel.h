@@ -1,6 +1,11 @@
 #pragma once
 #include "OComponent.h"
 
+#include "assimp/Importer.hpp"
+#include "assimp/cimport.h"
+#include "assimp/postprocess.h"
+#include "assimp/scene.h"
+
 class CMesh;
 class CTexture;
 class CLitShader;
@@ -36,7 +41,14 @@ public:
 
 
 private:
+	void ProcessNode(const aiNode* InNode, const aiScene* InScene);
+	CMesh* ProcessMesh(const aiMesh* InMesh, const aiNode* InNode);
+
+
+private:
 	std::vector<CMesh*>			Meshes;
+	//std::vector<CTexture*>    Textures;
+	//std::vector<CLitShader*>	Shaders;
 	CTexture*					Texture;
 	CLitShader*					Shader;
 
