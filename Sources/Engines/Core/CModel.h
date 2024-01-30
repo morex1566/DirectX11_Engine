@@ -35,9 +35,6 @@ public:
 	void LoadModel(const std::wstring& InFilePath);
 	void LoadTexture(const std::wstring& InFilePath);
 	void LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
-	void ReleaseMesh();
-	void ReleaseTexture();
-	void ReleaseShader();
 
 
 private:

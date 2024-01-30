@@ -39,7 +39,7 @@ GTestObject::GTestObject()
 	//	TAttachComponent<CLitShader>(Shader);
 	//}
 
-	CModel* Model = new CModel;
+	CModel* Model = new CModel(this);
 	{
 		Model->LoadModel(ToWString(GET_RESOURCE_FILE_PATH("Cube.fbx")));
 		Model->LoadTexture(ToWString(GET_RESOURCE_FILE_PATH("stone.tga")));

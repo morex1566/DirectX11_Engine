@@ -16,12 +16,7 @@ CModel::~CModel()
 
 void CModel::Init() {}
 
-void CModel::Shutdown()
-{
-	ReleaseMesh();
-	ReleaseTexture();
-	ReleaseShader();
-}
+void CModel::Shutdown() {}
 
 void CModel::Start() {}
 
@@ -55,8 +50,6 @@ void CModel::End() {}
 
 void CModel::LoadModel(const std::wstring& InFilePath)
 {
-	ReleaseMesh();
-
 	Assimp::Importer Importer;
 
 	const aiScene* Scene = Importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
@@ -73,48 +66,18 @@ void CModel::LoadModel(const std::wstring& InFilePath)
 
 void CModel::LoadTexture(const std::wstring& InFilePath)
 {
-	ReleaseTexture();
-
 	Texture = new CTexture(Owner);
 	Texture->Load(InFilePath, ETexture::TGA);
+
+	Owner->TAttachComponent<CTexture>(Texture);
 }
 
 void CModel::LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
 {
-	ReleaseShader();
-
 	Shader = new CLitShader(Owner);
 	Shader->Load(InVSFilePath, InPSFilePath);
-}
 
-void CModel::ReleaseMesh()
-{
-	for (auto& Mesh : Meshes)
-	{
-		Mesh->Shutdown();
-		delete Mesh;
-		Mesh = nullptr;
-	}
-
-	Meshes.clear();
-}
-
-void CModel::ReleaseTexture()
-{
-	if (Texture)
-	{
-		delete Texture;
-		Texture = nullptr;
-	}
-}
-
-void CModel::ReleaseShader()
-{
-	if (Shader)
-	{
-		delete Shader;
-		Shader = nullptr;
-	}
+	Owner->TAttachComponent<CLitShader>(Shader);
 }
 
 void CModel::ProcessNode(const aiNode* InNode, const aiScene* InScene)
@@ -138,7 +101,7 @@ CMesh* CModel::ProcessMesh(const aiMesh* InMesh, const aiNode* InNode)
 
 
 	// 정점 추출
-	CMesh* Mesh = new CMesh;
+	CMesh* Mesh = new CMesh(Owner);
 	for (UINT i = 0; i < InMesh->mNumVertices; i++)
 	{
 		// 위치
@@ -182,6 +145,8 @@ CMesh* CModel::ProcessMesh(const aiMesh* InMesh, const aiNode* InNode)
 	{
 		SConsole::LogError(L"Vertice is not loaded.", __FILE__, __LINE__);
 	}
+
+	Owner->TAttachComponent<CMesh>(Mesh);
 
 	return Mesh;
 }
