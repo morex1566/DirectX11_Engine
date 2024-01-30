@@ -3,24 +3,55 @@
 #include "ODirectX11.h"
 #include "OWindow.h"
 
-uint8							ODirectX11::bIsScreenSizeChanged = 0;
-uint8							ODirectX11::bIsVsyncEnabled = 0;
+uint8		ODirectX11::bIsScreenSizeChanged = 0;
+uint8		ODirectX11::bIsVsyncEnabled = 0;
 
-ODirectX11::ODirectX11(const OWindow& Window): Window(&Window), SwapChainDesc(), FeatureLevel(), Viewport2D(),
-                                               DepthStencilBufferDesc2D(),
-                                               DepthStencilStateDesc2D(),
-                                               DepthStencilViewDesc2D(),
-                                               RasterizerDesc2D(), Viewport3D(),
-                                               DepthStencilBufferDesc3D(),
-                                               DepthStencilStateDesc3D(),
-                                               DepthStencilViewDesc3D(),
-                                               RasterizerDesc3D(), AdapterDesc(), DisplayMaxFPS(0),
-	Object()
+ODirectX11::ODirectX11(const OWindow& InWindow)
+	: Object(), Window(InWindow)
 {
+	// DirectX11 디바이스 객체
+	{
+		SwapChain = nullptr;
+		Device = nullptr;
+		DeviceContext = nullptr;
+		SwapChainDesc = {};
+		FeatureLevel = D3D_FEATURE_LEVEL_11_0;
+		AdapterDesc = {};
+		DisplayMaxFPS = 0;
+	}
+
+	// 2D 랜더링용
+	{
+		RenderTargetView2D = nullptr;
+		DepthStencilBuffer2D = nullptr;
+		DepthStencilState2D = nullptr;
+		DepthStencilView2D = nullptr;
+		RasterizerState2D = nullptr;
+		Viewport2D = {};
+		DepthStencilBufferDesc2D = {};
+		DepthStencilStateDesc2D = {};
+		DepthStencilViewDesc2D = {};
+		RasterizerDesc2D = {};
+	}
+
+	// 3D 랜더링용 
+	{
+		RenderTargetView3D = nullptr;
+		DepthStencilBuffer3D = nullptr;
+		DepthStencilState3D = nullptr;
+		DepthStencilView3D = nullptr;
+		RasterizerState3D = nullptr;
+		Viewport3D = {};
+		DepthStencilBufferDesc3D = {};
+		DepthStencilStateDesc3D = {};
+		DepthStencilViewDesc3D = {};
+		RasterizerDesc3D = {};
+	}
 }
 
 ODirectX11::~ODirectX11()
 {
+	Shutdown();
 }
 
 void ODirectX11::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
@@ -31,7 +62,7 @@ void ODirectX11::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM
 	}
 }
 
-void ODirectX11::Initialize()
+void ODirectX11::Init()
 {
 	HRESULT								Result;
 	ComPtr<IDXGIFactory>				Factory;
@@ -45,24 +76,21 @@ void ODirectX11::Initialize()
 	Result = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(Factory.GetAddressOf()));
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDXGIFactory() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"CreateDXGIFactory() is failed.", __FILE__, __LINE__);
 	}
 
 	// Use the factory to create an adapter for the primary graphics interface (video card).
 	Result = Factory->EnumAdapters(0, Adapter.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"EnumAdapters() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"EnumAdapters() is failed.", __FILE__, __LINE__);
 	}
 
 	// Enumerate the primary adapter output (monitor).
 	Result = Adapter->EnumOutputs(0, AdapterOutput.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"EnumOutputs() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"EnumOutputs() is failed.", __FILE__, __LINE__);
 	}
 
 	// Get the number of modes that fit the DXGI_FORMAT_R8G8B8A8_UNORM display format for the adapter output (monitor).
@@ -70,8 +98,7 @@ void ODirectX11::Initialize()
 	Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, nullptr);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"GetDisplayModeList() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"GetDisplayModeList() is failed.", __FILE__, __LINE__);
 	}
 
 	// Create a list to hold all the possible display modes for this monitor/video card combination.
@@ -81,8 +108,7 @@ void ODirectX11::Initialize()
 		Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, DisplayModeList.get());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"GetDisplayModeList() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"GetDisplayModeList() is failed.", __FILE__, __LINE__);
 		}
 
 		// Now go through all the display modes and find the one that matches the screen width and height.
@@ -91,9 +117,9 @@ void ODirectX11::Initialize()
 		uint32 Denominator = 0;
 		for (uint32 i = 0; i < NumModes; i++)
 		{
-			if (DisplayModeList[i].Width == Window->GetWindowScreenWidth())
+			if (DisplayModeList[i].Width == Window.GetWindowScreenWidth())
 			{
-				if (DisplayModeList[i].Height == Window->GetWindowScreenHeight())
+				if (DisplayModeList[i].Height == Window.GetWindowScreenHeight())
 				{
 					Numerator = DisplayModeList[i].RefreshRate.Numerator;
 					Denominator = DisplayModeList[i].RefreshRate.Denominator;
@@ -116,8 +142,7 @@ void ODirectX11::Initialize()
 	Result = Adapter->GetDesc(&AdapterDesc);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"GetDesc() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"GetDesc() is failed.", __FILE__, __LINE__);
 	}
 
 	// Set the feature level to DirectX 11.
@@ -131,8 +156,8 @@ void ODirectX11::Initialize()
 		ZeroMemory(&SwapChainDesc, sizeof(SwapChainDesc));
 		{
 			SwapChainDesc.BufferCount = 2;
-			SwapChainDesc.BufferDesc.Width = Window->GetClientScreenWidth();
-			SwapChainDesc.BufferDesc.Height = Window->GetClientScreenHeight();
+			SwapChainDesc.BufferDesc.Width = Window.GetClientScreenWidth();
+			SwapChainDesc.BufferDesc.Height = Window.GetClientScreenHeight();
 			SwapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 			if (bIsVsyncEnabled)
@@ -147,7 +172,7 @@ void ODirectX11::Initialize()
 			}
 
 			SwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-			SwapChainDesc.OutputWindow = Window->GetHWnd();
+			SwapChainDesc.OutputWindow = Window.GetHWnd();
 			SwapChainDesc.SampleDesc.Count = 1;
 			SwapChainDesc.SampleDesc.Quality = 0;
 			SwapChainDesc.Windowed = true;
@@ -157,10 +182,7 @@ void ODirectX11::Initialize()
 			SwapChainDesc.Flags = 0;
 		}
 
-		if (CreateDeviceAndSwapChain(SwapChain.GetAddressOf(),Device.GetAddressOf(),DeviceContext.GetAddressOf(), SwapChainDesc) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDeviceAndSwapChain(&SwapChain, &Device, &DeviceContext, SwapChainDesc);
 	}
 
 
@@ -170,8 +192,8 @@ void ODirectX11::Initialize()
 
 		ZeroMemory(&DepthStencilBufferDesc2D, sizeof(DepthStencilBufferDesc2D));
 		{
-			DepthStencilBufferDesc2D.Width = Window->GetClientScreenWidth();
-			DepthStencilBufferDesc2D.Height = Window->GetClientScreenHeight();
+			DepthStencilBufferDesc2D.Width = Window.GetClientScreenWidth();
+			DepthStencilBufferDesc2D.Height = Window.GetClientScreenHeight();
 			DepthStencilBufferDesc2D.MipLevels = 1;
 			DepthStencilBufferDesc2D.ArraySize = 1;
 			DepthStencilBufferDesc2D.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -183,10 +205,7 @@ void ODirectX11::Initialize()
 			DepthStencilBufferDesc2D.MiscFlags = 0;
 		}
 
-		if (CreateDepthStencilBuffer(DepthStencilBuffer2D.GetAddressOf(), DepthStencilBufferDesc2D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDepthStencilBuffer(&DepthStencilBuffer2D, DepthStencilBufferDesc2D);
 	}
 
 
@@ -196,8 +215,8 @@ void ODirectX11::Initialize()
 
 		ZeroMemory(&DepthStencilBufferDesc3D, sizeof(DepthStencilBufferDesc3D));
 		{
-			DepthStencilBufferDesc3D.Width = Window->GetClientScreenWidth();
-			DepthStencilBufferDesc3D.Height = Window->GetClientScreenHeight();
+			DepthStencilBufferDesc3D.Width = Window.GetClientScreenWidth();
+			DepthStencilBufferDesc3D.Height = Window.GetClientScreenHeight();
 			DepthStencilBufferDesc3D.MipLevels = 1;
 			DepthStencilBufferDesc3D.ArraySize = 1;
 			DepthStencilBufferDesc3D.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -209,10 +228,7 @@ void ODirectX11::Initialize()
 			DepthStencilBufferDesc3D.MiscFlags = 0;
 		}
 
-		if (CreateDepthStencilBuffer(DepthStencilBuffer3D.GetAddressOf(), DepthStencilBufferDesc3D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDepthStencilBuffer(&DepthStencilBuffer3D, DepthStencilBufferDesc3D);
 	}
 
 
@@ -241,10 +257,7 @@ void ODirectX11::Initialize()
 			DepthStencilStateDesc2D.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 		}
 
-		if (CreateDepthStencilState(DepthStencilState2D.GetAddressOf(), DepthStencilStateDesc2D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDepthStencilState(&DepthStencilState2D, DepthStencilStateDesc2D);
 	}
 
 
@@ -273,10 +286,7 @@ void ODirectX11::Initialize()
 			DepthStencilStateDesc3D.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 		}
 
-		if (CreateDepthStencilState(DepthStencilState3D.GetAddressOf(), DepthStencilStateDesc3D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDepthStencilState(&DepthStencilState3D, DepthStencilStateDesc3D);
 	}
 
 
@@ -291,10 +301,7 @@ void ODirectX11::Initialize()
 			DepthStencilViewDesc2D.Texture2D.MipSlice = 0;
 		}
 
-		if (CreateDepthStencilView(DepthStencilBuffer2D.Get(), DepthStencilView2D.GetAddressOf(), DepthStencilViewDesc2D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDepthStencilView(DepthStencilBuffer2D, &DepthStencilView2D, DepthStencilViewDesc2D);
 	}
 
 
@@ -309,10 +316,7 @@ void ODirectX11::Initialize()
 			DepthStencilViewDesc3D.Texture2D.MipSlice = 0;
 		}
 
-		if (CreateDepthStencilView(DepthStencilBuffer3D.Get(), DepthStencilView3D.GetAddressOf(), DepthStencilViewDesc3D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateDepthStencilView(DepthStencilBuffer3D, &DepthStencilView3D, DepthStencilViewDesc3D);
 	}
 
 
@@ -334,10 +338,7 @@ void ODirectX11::Initialize()
 			RasterizerDesc2D.SlopeScaledDepthBias = 0.0f;
 		}
 
-		if (CreateRasterizerState(RasterizerState2D.GetAddressOf(), RasterizerDesc2D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateRasterizerState(&RasterizerState2D, RasterizerDesc2D);
 	}
 
 
@@ -359,10 +360,7 @@ void ODirectX11::Initialize()
 			RasterizerDesc3D.SlopeScaledDepthBias = 0.0f;
 		}
 
-		if (CreateRasterizerState(RasterizerState3D.GetAddressOf(), RasterizerDesc3D) != EHandleResultType::Success)
-		{
-			throw std::exception();
-		}
+		CreateRasterizerState(&RasterizerState3D, RasterizerDesc3D);
 	}
 
 
@@ -370,8 +368,8 @@ void ODirectX11::Initialize()
 	{
 		ZeroMemory(&Viewport2D, sizeof(Viewport2D));
 		{
-			Viewport2D.Width = static_cast<float>(Window->GetClientScreenWidth());
-			Viewport2D.Height = static_cast<float>(Window->GetClientScreenHeight());
+			Viewport2D.Width = static_cast<float>(Window.GetClientScreenWidth());
+			Viewport2D.Height = static_cast<float>(Window.GetClientScreenHeight());
 			Viewport2D.MinDepth = 0.0f;
 			Viewport2D.MaxDepth = 1.0f;
 			Viewport2D.TopLeftX = 0.0f;
@@ -384,8 +382,8 @@ void ODirectX11::Initialize()
 	{
 		ZeroMemory(&Viewport3D, sizeof(Viewport3D));
 		{
-			Viewport3D.Width = static_cast<float>(Window->GetClientScreenWidth());
-			Viewport3D.Height = static_cast<float>(Window->GetClientScreenHeight());
+			Viewport3D.Width = static_cast<float>(Window.GetClientScreenWidth());
+			Viewport3D.Height = static_cast<float>(Window.GetClientScreenHeight());
 			Viewport3D.MinDepth = 0.0f;
 			Viewport3D.MaxDepth = 1.0f;
 			Viewport3D.TopLeftX = 0.0f;
@@ -394,8 +392,19 @@ void ODirectX11::Initialize()
 	}
 }
 
-void ODirectX11::Release()
+void ODirectX11::Shutdown()
 {
+	ReleaseDeviceAndSwapChain();
+	ReleaseRenderTargetView2D();
+	ReleaseDepthStencilBuffer2D();
+	ReleaseDepthStencilState2D();
+	ReleaseDepthStencilView2D();
+	ReleaseRasterizerState2D();
+	ReleaseRenderTargetView3D();
+	ReleaseDepthStencilBuffer3D();
+	ReleaseDepthStencilState3D();
+	ReleaseDepthStencilView3D();
+	ReleaseRasterizerState3D();
 }
 
 void ODirectX11::Tick()
@@ -406,13 +415,13 @@ void ODirectX11::Tick()
 		bIsScreenSizeChanged = 0;
 	}
 
-	ClearRenderTargetView(ERenderModeType::Model, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
-	ClearDepthStencilView(ERenderModeType::Model);
-	ClearRenderTargetView(ERenderModeType::Interface, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
-	ClearDepthStencilView(ERenderModeType::Interface);
+	ClearRenderTargetView(ERenderMode::R_3D, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
+	ClearDepthStencilView(ERenderMode::R_3D);
+	ClearRenderTargetView(ERenderMode::R_2D, XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f));
+	ClearDepthStencilView(ERenderMode::R_2D);
 }
 
-void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearColor) const
+void ODirectX11::ClearRenderTargetView(ERenderMode InType, XMFLOAT4 InClearColor) const
 {
 	float ClearColor[4];
 
@@ -421,25 +430,25 @@ void ODirectX11::ClearRenderTargetView(ERenderModeType InType, XMFLOAT4 InClearC
 	ClearColor[2] = InClearColor.z;
 	ClearColor[3] = InClearColor.w;
 
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
-		DeviceContext->ClearRenderTargetView(RenderTargetView2D.Get(), ClearColor);
+		DeviceContext->ClearRenderTargetView(RenderTargetView2D, ClearColor);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
-		DeviceContext->ClearRenderTargetView(RenderTargetView3D.Get(), ClearColor);
+		DeviceContext->ClearRenderTargetView(RenderTargetView3D, ClearColor);
 	}
 }
 
-void ODirectX11::ClearDepthStencilView(ERenderModeType Type) const
+void ODirectX11::ClearDepthStencilView(ERenderMode Type) const
 {
-	if (Type == ERenderModeType::Interface)
+	if (Type == ERenderMode::R_2D)
 	{
-		DeviceContext->ClearDepthStencilView(DepthStencilView2D.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+		DeviceContext->ClearDepthStencilView(DepthStencilView2D, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-	else if (Type == ERenderModeType::Model)
+	else if (Type == ERenderMode::R_3D)
 	{
-		DeviceContext->ClearDepthStencilView(DepthStencilView3D.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+		DeviceContext->ClearDepthStencilView(DepthStencilView3D, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 }
 
@@ -455,65 +464,55 @@ void ODirectX11::Draw()
 	}
 }
 
-void ODirectX11::SetRenderTargets(ERenderModeType InType) const
+void ODirectX11::SetRenderTargets(ERenderMode InType) const
 {
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
-		DeviceContext->OMSetRenderTargets(1, RenderTargetView2D.GetAddressOf(), DepthStencilView2D.Get());
+		DeviceContext->OMSetRenderTargets(1, &RenderTargetView2D, DepthStencilView2D);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
-		DeviceContext->OMSetRenderTargets(1, RenderTargetView3D.GetAddressOf(), DepthStencilView3D.Get());
+		DeviceContext->OMSetRenderTargets(1, &RenderTargetView3D, DepthStencilView3D);
 	}
 }
 
-void ODirectX11::SetDepthStencilState(ERenderModeType InType) const
+void ODirectX11::SetDepthStencilState(ERenderMode InType) const
 {
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
-		DeviceContext->OMSetDepthStencilState(DepthStencilState2D.Get(), 1);
+		DeviceContext->OMSetDepthStencilState(DepthStencilState2D, 1);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
-		DeviceContext->OMSetDepthStencilState(DepthStencilState3D.Get(), 1);
+		DeviceContext->OMSetDepthStencilState(DepthStencilState3D, 1);
 	}
 }
 
-void ODirectX11::SetRasterizerState(ERenderModeType InType) const
+void ODirectX11::SetRasterizerState(ERenderMode InType) const
 { 
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
-		DeviceContext->RSSetState(RasterizerState2D.Get());
+		DeviceContext->RSSetState(RasterizerState2D);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
-		DeviceContext->RSSetState(RasterizerState3D.Get());
+		DeviceContext->RSSetState(RasterizerState3D);
 	}
 }
 
-void ODirectX11::SetViewport(ERenderModeType InType) const
+void ODirectX11::SetViewport(ERenderMode InType) const
 {
-	if (InType == ERenderModeType::Interface)
+	if (InType == ERenderMode::R_2D)
 	{
 		DeviceContext->RSSetViewports(1, &Viewport2D);
 	}
-	else if (InType == ERenderModeType::Model)
+	else if (InType == ERenderMode::R_3D)
 	{
 		DeviceContext->RSSetViewports(1, &Viewport3D);
 	}
 }
 
-ID3D11Device& ODirectX11::GetDevice() const
-{
-	return *Device.Get();
-}
-
-ID3D11DeviceContext& ODirectX11::GetDeviceContext() const
-{
-	return *DeviceContext.Get();
-}
-
-Object::EHandleResultType ODirectX11::CreateDeviceAndSwapChain(IDXGISwapChain** OutSwapChain, ID3D11Device** OutDevice,
+void ODirectX11::CreateDeviceAndSwapChain(IDXGISwapChain** OutSwapChain, ID3D11Device** OutDevice,
 	ID3D11DeviceContext** OutDeviceContext, const DXGI_SWAP_CHAIN_DESC& InSwapChainDesc)
 {
 	HRESULT Result;
@@ -523,14 +522,11 @@ Object::EHandleResultType ODirectX11::CreateDeviceAndSwapChain(IDXGISwapChain** 
 		D3D11_SDK_VERSION, &InSwapChainDesc, OutSwapChain, OutDevice, nullptr, OutDeviceContext);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3D11CreateDeviceAndSwapChain() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"D3D11CreateDeviceAndSwapChain() is failed.", __FILE__, __LINE__);
 	}
-
-	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType ODirectX11::CreateRenderTargetView(ID3D11RenderTargetView** OutRenderTargetView)
+void ODirectX11::CreateRenderTargetView(ID3D11RenderTargetView** OutRenderTargetView)
 {
 	HRESULT						Result;
 	ComPtr<ID3D11Texture2D>		BackBuffer;
@@ -539,22 +535,18 @@ Object::EHandleResultType ODirectX11::CreateRenderTargetView(ID3D11RenderTargetV
 	Result = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(BackBuffer.GetAddressOf()));
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"GetBackBuffer() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"GetBackBuffer() is failed.", __FILE__, __LINE__);
 	}
 
 	// Create render target view from back buffer.
 	Result = Device->CreateRenderTargetView(BackBuffer.Get(), nullptr, OutRenderTargetView);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateRenderTargetView() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"CreateRenderTargetView() is failed.", __FILE__, __LINE__);
 	}
-
-	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType ODirectX11::CreateDepthStencilBuffer(ID3D11Texture2D** OutDepthStencilBuffer, const D3D11_TEXTURE2D_DESC& InDepthStencilBufferDesc)
+void ODirectX11::CreateDepthStencilBuffer(ID3D11Texture2D** OutDepthStencilBuffer, const D3D11_TEXTURE2D_DESC& InDepthStencilBufferDesc)
 {
 	HRESULT						Result;
 
@@ -562,14 +554,13 @@ Object::EHandleResultType ODirectX11::CreateDepthStencilBuffer(ID3D11Texture2D**
 	Result = Device->CreateTexture2D(&InDepthStencilBufferDesc, nullptr, OutDepthStencilBuffer);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDepthStencilBuffer() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"CreateDepthStencilBuffer() is failed.", __FILE__, __LINE__);
 	}
 
-	return EHandleResultType::Success;
+	return;
 }
 
-Object::EHandleResultType ODirectX11::CreateDepthStencilState(ID3D11DepthStencilState** OutDepthStecilState, const D3D11_DEPTH_STENCIL_DESC& InDepthStencilStateDesc)
+void ODirectX11::CreateDepthStencilState(ID3D11DepthStencilState** OutDepthStecilState, const D3D11_DEPTH_STENCIL_DESC& InDepthStencilStateDesc)
 {
 	HRESULT						Result;
 
@@ -577,14 +568,11 @@ Object::EHandleResultType ODirectX11::CreateDepthStencilState(ID3D11DepthStencil
 	Result = Device->CreateDepthStencilState(&InDepthStencilStateDesc, OutDepthStecilState);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDepthStencilState() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"CreateDepthStencilState() is failed.", __FILE__, __LINE__);
 	}
-
-	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType ODirectX11::CreateDepthStencilView(ID3D11Texture2D* InDepthStencilBuffer, ID3D11DepthStencilView** OutDepthStencilView, const D3D11_DEPTH_STENCIL_VIEW_DESC& InDepthStencilViewDesc)
+void ODirectX11::CreateDepthStencilView(ID3D11Texture2D* InDepthStencilBuffer, ID3D11DepthStencilView** OutDepthStencilView, const D3D11_DEPTH_STENCIL_VIEW_DESC& InDepthStencilViewDesc)
 {
 	HRESULT						Result;
 
@@ -592,14 +580,11 @@ Object::EHandleResultType ODirectX11::CreateDepthStencilView(ID3D11Texture2D* In
 	Result = Device->CreateDepthStencilView(InDepthStencilBuffer, &InDepthStencilViewDesc, OutDepthStencilView);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDepthStencilView() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"CreateDepthStencilView() is failed.", __FILE__, __LINE__);
 	}
-
-	return EHandleResultType::Success;
 }
 
-Object::EHandleResultType ODirectX11::CreateRasterizerState(ID3D11RasterizerState** OutRasterizerState, const D3D11_RASTERIZER_DESC& InRasterStateDesc)
+void ODirectX11::CreateRasterizerState(ID3D11RasterizerState** OutRasterizerState, const D3D11_RASTERIZER_DESC& InRasterStateDesc)
 {
 	HRESULT						Result;
 
@@ -607,11 +592,8 @@ Object::EHandleResultType ODirectX11::CreateRasterizerState(ID3D11RasterizerStat
 	Result = Device->CreateRasterizerState(&InRasterStateDesc, OutRasterizerState);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateRasterizerState() is failed.");
-		return EHandleResultType::Failed;
+		SConsole::LogError(L"CreateRasterizerState() is failed.", __FILE__, __LINE__);
 	}
-
-	return EHandleResultType::Success;
 }
 
 void ODirectX11::ReleaseDeviceAndSwapChain()
@@ -619,16 +601,19 @@ void ODirectX11::ReleaseDeviceAndSwapChain()
 	if (SwapChain)
 	{
 		SwapChain->Release();
+		SwapChain = nullptr;
 	}
 
 	if (Device)
 	{
 		Device->Release();
+		Device = nullptr;
 	}
 
 	if (DeviceContext)
 	{
 		DeviceContext->Release();
+		DeviceContext = nullptr;
 	}
 }
 
@@ -637,6 +622,7 @@ void ODirectX11::ReleaseRenderTargetView2D()
 	if (RenderTargetView2D)
 	{
 		RenderTargetView2D->Release();
+		RenderTargetView2D = nullptr;
 	}
 }
 
@@ -645,6 +631,7 @@ void ODirectX11::ReleaseDepthStencilBuffer2D()
 	if (DepthStencilBuffer2D)
 	{
 		DepthStencilBuffer2D->Release();
+		DepthStencilBuffer2D = nullptr;
 	}
 }
 
@@ -653,6 +640,7 @@ void ODirectX11::ReleaseDepthStencilState2D()
 	if (DepthStencilState2D)
 	{
 		DepthStencilState2D->Release();
+		DepthStencilState2D = nullptr;
 	}
 }
 
@@ -661,6 +649,7 @@ void ODirectX11::ReleaseDepthStencilView2D()
 	if (DepthStencilView2D)
 	{
 		DepthStencilView2D->Release();
+		DepthStencilView2D = nullptr;
 	}
 }
 
@@ -669,6 +658,7 @@ void ODirectX11::ReleaseRasterizerState2D()
 	if (RasterizerState2D)
 	{
 		RasterizerState2D->Release();
+		RasterizerState2D = nullptr;
 	}
 }
 
@@ -677,6 +667,7 @@ void ODirectX11::ReleaseRenderTargetView3D()
 	if (RenderTargetView3D)
 	{
 		RenderTargetView3D->Release();
+		RenderTargetView3D = nullptr;
 	}
 }
 
@@ -685,6 +676,7 @@ void ODirectX11::ReleaseDepthStencilBuffer3D()
 	if (DepthStencilBuffer3D)
 	{
 		DepthStencilBuffer3D->Release();
+		DepthStencilBuffer3D = nullptr;
 	}
 }
 
@@ -693,6 +685,7 @@ void ODirectX11::ReleaseDepthStencilState3D()
 	if (DepthStencilState3D)
 	{
 		DepthStencilState3D->Release();
+		DepthStencilState3D = nullptr;
 	}
 }
 
@@ -701,6 +694,7 @@ void ODirectX11::ReleaseDepthStencilView3D()
 	if (DepthStencilView3D)
 	{
 		DepthStencilView3D->Release();
+		DepthStencilView3D = nullptr;
 	}
 }
 
@@ -709,6 +703,7 @@ void ODirectX11::ReleaseRasterizerState3D()
 	if (RasterizerState3D)
 	{
 		RasterizerState3D->Release();
+		RasterizerState3D = nullptr;
 	}
 }
 
@@ -725,8 +720,8 @@ void ODirectX11::Resize()
 	}
 
 	// Update desc.
-	uint32 ClientScreenWidth = Window->GetClientScreenWidth();
-	uint32 ClientScreenHeight = Window->GetClientScreenHeight();;
+	uint32 ClientScreenWidth = Window.GetClientScreenWidth();
+	uint32 ClientScreenHeight = Window.GetClientScreenHeight();;
 	{
 		DepthStencilBufferDesc2D.Width = ClientScreenWidth;
 		DepthStencilBufferDesc2D.Height = ClientScreenHeight;
@@ -743,16 +738,15 @@ void ODirectX11::Resize()
 
 	// Re-Create buffers and views.
 	{
-		SwapChain->ResizeBuffers(0, Window->GetClientScreenWidth(), Window->GetClientScreenHeight(), DXGI_FORMAT_UNKNOWN, 0);
+		SwapChain->ResizeBuffers(0, Window.GetClientScreenWidth(), Window.GetClientScreenHeight(), DXGI_FORMAT_UNKNOWN, 0);
 
-		CreateRenderTargetView(RenderTargetView2D.GetAddressOf());
-		CreateRenderTargetView(RenderTargetView3D.GetAddressOf());
+		CreateRenderTargetView(&RenderTargetView2D);
+		CreateRenderTargetView(&RenderTargetView3D);
 
-		CreateDepthStencilBuffer(DepthStencilBuffer2D.GetAddressOf(), DepthStencilBufferDesc2D);
-		CreateDepthStencilBuffer(DepthStencilBuffer3D.GetAddressOf(), DepthStencilBufferDesc3D);
+		CreateDepthStencilBuffer(&DepthStencilBuffer2D, DepthStencilBufferDesc2D);
+		CreateDepthStencilBuffer(&DepthStencilBuffer3D, DepthStencilBufferDesc3D);
 
-		CreateDepthStencilView(DepthStencilBuffer2D.Get(), DepthStencilView2D.GetAddressOf(), DepthStencilViewDesc2D);
-		CreateDepthStencilView(DepthStencilBuffer3D.Get(), DepthStencilView3D.GetAddressOf(), DepthStencilViewDesc3D);
+		CreateDepthStencilView(DepthStencilBuffer2D, &DepthStencilView2D, DepthStencilViewDesc2D);
+		CreateDepthStencilView(DepthStencilBuffer3D, &DepthStencilView3D, DepthStencilViewDesc3D);
 	}
-	
 }

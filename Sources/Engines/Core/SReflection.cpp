@@ -11,7 +11,7 @@ SReflection& SReflection::GetInstance()
 	return Instance;
 }
 
-void SReflection::Initialize()
+void SReflection::Init()
 {
 
 }

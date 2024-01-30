@@ -12,17 +12,17 @@ OTime::~OTime()
 {
 }
 
-void OTime::Initialize()
+void OTime::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	DeltaTime = 0.0f;
 	PrevTime = std::chrono::high_resolution_clock::now();
 }
 
-void OTime::Release()
+void OTime::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 }
 
 void OTime::Start()

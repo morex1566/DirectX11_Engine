@@ -1,4 +1,9 @@
 #pragma once
+#pragma comment(lib, "Dbghelp.lib")
+
+#include <stdexcept>
+#include <iomanip>
+#include <DbgHelp.h>
 
 class SConsole
 {
@@ -9,22 +14,29 @@ public:
 	SConsole& operator=(SConsole&&) noexcept	= delete;
 	~SConsole()									= default;
 
-	static SConsole&							GetInstance();
 
-	void										Initialize();
-	void										Release();
+public:
+	static SConsole&	GetInstance();
 
-	static void									Log(const std::wstring& Log);
-	static void									Log(const std::string& Log);
-	static void									LogWarning(const std::wstring& Log);
-	static void									LogWarning(const std::string& Log);
-	static void									LogError(const std::wstring& Log);
-	static void									LogError(const std::string& Log);
 
-	const HWND&									GetHWnd() const;
+public:
+	void				Init();
+	void				Shutdown();
+	static void			Log(const std::wstring& Log);
+	static void			LogWarning(const std::wstring& Log, const std::string& inFIleName, int inLine);
+	static void			LogError(const std::wstring& Log, const std::string& inFIleName, int inLine);
+	const HWND&			GetHWnd() const;
+
 
 private:
-	SConsole()									= default;
+	SConsole()			= default;
+	static bool			IsInternalFunction(const std::string& functionName);
+	static void			LogCallStack();
 
-	HWND										HWnd;
+
+private:
+	static uint8		bIsConsoleEnabled;
+
+private:
+	HWND				HWnd;
 };

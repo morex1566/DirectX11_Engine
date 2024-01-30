@@ -4,24 +4,34 @@
 class CUnlitShader : public OComponent
 {
 public:
-	CUnlitShader(const OGameObject* InOwner);
-	CUnlitShader(const CUnlitShader&)							= default;
-	CUnlitShader& operator=(const CUnlitShader&)				= default;
-	CUnlitShader(CUnlitShader&&) noexcept						= default;
-	CUnlitShader& operator=(CUnlitShader&&) noexcept			= default;
+	CUnlitShader(OGameObject* InOwner);
+
+	CUnlitShader()									 = default;
+	CUnlitShader(const CUnlitShader&)				 = default;
+	CUnlitShader& operator=(const CUnlitShader&)	 = default;
+	CUnlitShader(CUnlitShader&&) noexcept			 = default;
+	CUnlitShader& operator=(CUnlitShader&&) noexcept = default;
 	virtual ~CUnlitShader() override;
 
-	virtual void 								    Initialize() override;
-	virtual void									Release() override;
+
+public:
+	virtual void 								    Init() override;
+	virtual void									Shutdown() override;
 	virtual void									Start() override;
 	virtual void									Tick() override;
 	virtual void									End() override;
-	bool											LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
+
+
+public:
+	bool											Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
+
 
 private:
 	void											SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection);
 	void											Render(UINT InIndexCount, UINT InStartIndexToProcessing, INT InBaseVertexLocation);
 
+
+private:
 	ComPtr<ID3D11VertexShader>						VertexShader;
 	ComPtr<ID3D11PixelShader>						PixelShader;
 	ComPtr<ID3D11InputLayout>						Layout;
@@ -29,5 +39,6 @@ private:
 
 	std::wstring									VSFilePath;
 	std::wstring									PSFilePath;
+
 };
 

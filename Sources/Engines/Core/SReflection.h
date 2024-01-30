@@ -19,7 +19,7 @@ public:
 	template <typename T>
 	static void												RegisterClassType();
 
-	void													Initialize();
+	void													Init();
 
 private:
 	SReflection()											= default;

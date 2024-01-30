@@ -1,113 +1,184 @@
 #include "PCH.h"
-#include "CTransform.h"
-#include "ODirectX11.h"
 #include "OGameObject.h"
+#include "CModel.h"
+
 
 OGameObject::OGameObject()
 	: Object()
 {
-	Transform = TAddComponent<CTransform>();
+	Transform = new CTransform;
+	TAttachComponent<CTransform>(Transform);
 }
 
 OGameObject::~OGameObject()
 {
 }
 
-void OGameObject::Initialize()
+void OGameObject::Init()
 {
-	Object::Initialize();
-
-	for (const auto& Component : Components)
+	// Components
 	{
-		if (Component->CheckIsEnabled())
+		for (auto& Hash : Components)
 		{
-			Component->Initialize();
+			for (OComponent* Component : Hash.second)
+			{
+				Component->Init();
+			}
 		}
 	}
 
-	for (const auto& Child : Children)
+	// Children
 	{
-		if (Child->CheckIsEnabled())
+		for (auto& Hash : Children)
 		{
-			Child->Initialize();
+			for (OGameObject* Child : Hash.second)
+			{
+				Child->Init();
+			}
 		}
 	}
 }
 
-void OGameObject::Release()
+void OGameObject::Shutdown()
 {
-	Object::Release();
-
-	for (const auto& Component : Components)
+	// Components
 	{
-		Component->Release();
+		for (auto& Hash : Components)
+		{
+			for (OComponent* Component : Hash.second)
+			{
+				Component->Shutdown();
+				delete Component;
+			}
+
+			Hash.second.clear();
+		}
+
+		Components.clear();
 	}
 
-	for (const auto& Child : Children)
+	// Children
 	{
-		Child->Release();
+		for (auto& Hash : Children)
+		{
+			for (OGameObject* Child : Hash.second)
+			{
+				Child->Shutdown();
+				delete Child;
+			}
+
+			Hash.second.clear();
+		}
+
+		Children.clear();
 	}
 }
 
 void OGameObject::Start()
 {
-	Object::Start();
-
-	for (const auto& Component : Components)
+	// Components
 	{
-		if (Component->CheckIsEnabled())
+		for (auto& Hash : Components)
 		{
-			Component->Start();
+			for (OComponent* Component : Hash.second)
+			{
+				if (Component->IsEnable)
+				{
+					Component->Start();
+				}
+			}
 		}
 	}
 
-	for (const auto& Child : Children)
+	// Children
 	{
-		if (Child->CheckIsEnabled())
+		for (auto& Hash : Children)
 		{
-			Child->Start();
+			for (OGameObject* Child : Hash.second)
+			{
+				if (Child->IsEnable)
+				{
+					Child->Start();
+				}
+			}
 		}
 	}
 }
 
 void OGameObject::Tick()
 {
-	Object::Tick();
-
-	for (const auto& Component : Components)
+	// Components
 	{
-		if (Component->CheckIsEnabled())
+		for (auto& Hash : Components)
 		{
-			Component->Tick();
+			for (OComponent* Component : Hash.second)
+			{
+				if (Component->IsEnable)
+				{
+					Component->Tick();
+				}
+			}
 		}
 	}
 
-	for (const auto& Child : Children)
+	// Children
 	{
-		if (Child->CheckIsEnabled())
+		for (auto& Hash : Children)
 		{
-			Child->Tick();
+			for (OGameObject* Child : Hash.second)
+			{
+				if (Child->IsEnable)
+				{
+					Child->Tick();
+				}
+			}
 		}
 	}
 }
 
 void OGameObject::End()
 {
-	Object::End();
-
-	for (const auto& Component : Components)
+	// Components
 	{
-		if (Component->CheckIsEnabled())
+		for (auto& Hash : Components)
 		{
-			Component->End();
+			for (OComponent* Component : Hash.second)
+			{
+				if (Component->IsEnable)
+				{
+					Component->End();
+				}
+			}
 		}
 	}
 
-	for (const auto& Child : Children)
+	// Children
 	{
-		if (Child->CheckIsEnabled())
+		for (auto& Hash : Children)
 		{
-			Child->End();
+			for (OGameObject* Child : Hash.second)
+			{
+				if (Child->IsEnable)
+				{
+					Child->End();
+				}
+			}
 		}
 	}
+}
+
+void OGameObject::SetWorld(OWorld* InWorld)
+{
+	// TODO : 이전 월드의 GameObject목록에서 제거
+
+	// 월드 변경
+	World = InWorld;
+}
+
+void OGameObject::SetParent(OGameObject* InParent)
+{
+	// TODO : 이전 부모의 Children목록에서 제거
+
+	// 부모 재설정
+	Parent = InParent;
 }

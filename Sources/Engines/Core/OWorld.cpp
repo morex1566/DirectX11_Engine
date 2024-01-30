@@ -11,29 +11,53 @@ OWorld::OWorld()
 
 OWorld::~OWorld()
 {
+	
 }
 
-void OWorld::Initialize()
+void OWorld::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
-	GTestObject& TestGameObject1 = TCreateGameObject<GTestObject>();
 
-	GGizmo& Gizmo = TCreateGameObject<GGizmo>();
+	GTestObject* TestGameObject = new GTestObject;
+	TAttachGameObject<GTestObject>(TestGameObject);
 
-	for (const auto& GameObject : GameObjects)
+	GGizmo* Gizmo = new GGizmo;
+	TAttachGameObject<GGizmo>(Gizmo);
+
+	// TDetachGameObject(TestGameObject);
+	// TDetachGameObject(Gizmo);
+
+	// GameObjectHashMap
 	{
-		GameObject->Initialize();
+		for (auto& Hash : GameObjects)
+		{
+			for (OGameObject* GameObject : Hash.second)
+			{
+				GameObject->Init();
+			}
+		}
 	}
 }
 
-void OWorld::Release()
+void OWorld::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
-	for (const auto& GameObject : GameObjects)
+	// GameObjectHashMap
 	{
-		GameObject->Release();
+		for (auto& Hash : GameObjects)
+		{
+			for (OGameObject* GameObject : Hash.second)
+			{
+				GameObject->Shutdown();
+				delete GameObject;
+			}
+
+			Hash.second.clear();
+		}
+
+		GameObjects.clear();
 	}
 }
 
@@ -41,9 +65,18 @@ void OWorld::Start()
 {
 	Object::Start();
 
-	for (const auto& GameObject : GameObjects)
+	// GameObjectHashMap
 	{
-		GameObject->Start();
+		for (auto& Hash : GameObjects)
+		{
+			for (OGameObject* GameObject : Hash.second)
+			{
+				if (GameObject->IsEnable)
+				{
+					GameObject->Start();
+				}
+			}
+		}
 	}
 }
 
@@ -51,9 +84,18 @@ void OWorld::Tick()
 {
 	Object::Tick();
 
-	for (const auto& GameObject : GameObjects)
+	// GameObjectHashMap
 	{
-		GameObject->Tick();
+		for (auto& Hash : GameObjects)
+		{
+			for (OGameObject* GameObject : Hash.second)
+			{
+				if (GameObject->IsEnable)
+				{
+					GameObject->Tick();
+				}
+			}
+		}
 	}
 }
 
@@ -61,8 +103,17 @@ void OWorld::End()
 {
 	Object::End();
 
-	for (const auto& GameObject : GameObjects)
+	// GameObjectHashMap
 	{
-		GameObject->End();
+		for (auto& Hash : GameObjects)
+		{
+			for (OGameObject* GameObject : Hash.second)
+			{
+				if (GameObject->IsEnable)
+				{
+					GameObject->End();
+				}
+			}
+		}
 	}
 }

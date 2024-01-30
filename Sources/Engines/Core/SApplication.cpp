@@ -28,7 +28,7 @@ uint8 SApplication::CheckIsPlaying()
 	return bIsPlaying;
 }
 
-void SApplication::Initialize(HINSTANCE InHInstance)
+void SApplication::Init(HINSTANCE InHInstance)
 {
 	HInstance = InHInstance;
 
@@ -77,15 +77,15 @@ void SApplication::Initialize(HINSTANCE InHInstance)
 	// Initialize all of object.
 	for (const auto& Object : Objects)
 	{
-		Object->Initialize();
+		Object->Init();
 	}
 }
 
-void SApplication::Release()
+void SApplication::Shutdown()
 {
 	for (const auto& object : Objects)
 	{
-		object->Release();
+		object->Shutdown();
 	}
 }
 
@@ -93,10 +93,7 @@ void SApplication::Start()
 {
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnabled())
-		{
-			object->Start();
-		}
+		object->Start();
 	}
 }
 
@@ -104,10 +101,7 @@ void SApplication::Tick()
 {
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnabled())
-		{
-			object->Tick();
-		}
+		object->Tick();
 	}
 }
 
@@ -115,10 +109,7 @@ void SApplication::End()
 {
 	for (const auto& object : Objects)
 	{
-		if (object->CheckIsEnabled())
-		{
-			object->End();
-		}
+		object->End();
 	}
 }
 

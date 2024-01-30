@@ -65,9 +65,9 @@ LRESULT WINAPI OWindow::WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, L
 	return ::DefWindowProcW(HWnd, Msg, WParam, LParam);
 }
 
-void OWindow::Initialize()
+void OWindow::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	// Set Window Setting
 	int WindowScreenWidth, WindowScreenHeight;
@@ -113,8 +113,8 @@ void OWindow::Initialize()
 
 		if (HWnd == nullptr)
 		{
-			SConsole::LogError(L"CreateWindowW() is failed.");
-			Object::Initialize();
+			SConsole::LogError(L"CreateWindowW() is failed.", __FILE__, __LINE__);
+			Object::Init();
 		}
 	}
 
@@ -122,9 +122,9 @@ void OWindow::Initialize()
 	Resize();
 }
 
-void OWindow::Release()
+void OWindow::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
 	::DestroyWindow(HWnd);
 	::UnregisterClassW(WCEX.lpszClassName, WCEX.hInstance);

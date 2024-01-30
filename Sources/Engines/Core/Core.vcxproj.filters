@@ -59,6 +59,9 @@
     <Filter Include="Widgets\Sources">
       <UniqueIdentifier>{675ddf52-2b04-4803-aca0-62f98a40d09d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{a7a10f99-2d12-4ed1-b474-65a17037c3f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Includes\json\json.hpp">
@@ -78,15 +81,6 @@
     </ClInclude>
     <ClInclude Include="PCH.h">
       <Filter>PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="SReflection.h">
-      <Filter>Singletons\Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="SConsole.h">
-      <Filter>Singletons\Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="SApplication.h">
-      <Filter>Singletons\Sources</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Objects\Headers</Filter>
@@ -136,7 +130,7 @@
     <ClInclude Include="EMacros.h">
       <Filter>Utls</Filter>
     </ClInclude>
-    <ClInclude Include="WTools.h">
+    <ClInclude Include="WConsole.h">
       <Filter>Widgets\Headers</Filter>
     </ClInclude>
     <ClInclude Include="CTexture.h">
@@ -144,6 +138,27 @@
     </ClInclude>
     <ClInclude Include="CLitShader.h">
       <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CModel.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IName.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ITag.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="SApplication.h">
+      <Filter>Singletons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SConsole.h">
+      <Filter>Singletons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SReflection.h">
+      <Filter>Singletons\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,15 +197,6 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="SApplication.cpp">
-      <Filter>Singletons\Headers</Filter>
-    </ClCompile>
-    <ClCompile Include="SConsole.cpp">
-      <Filter>Singletons\Headers</Filter>
-    </ClCompile>
-    <ClCompile Include="SReflection.cpp">
-      <Filter>Singletons\Headers</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Objects\Sources</Filter>
@@ -231,7 +237,7 @@
     <ClCompile Include="GGizmo.cpp">
       <Filter>GameObjects\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="WTools.cpp">
+    <ClCompile Include="WConsole.cpp">
       <Filter>Widgets\Sources</Filter>
     </ClCompile>
     <ClCompile Include="CTexture.cpp">
@@ -239,6 +245,18 @@
     </ClCompile>
     <ClCompile Include="CLitShader.cpp">
       <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CModel.cpp">
+      <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SApplication.cpp">
+      <Filter>Singletons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SConsole.cpp">
+      <Filter>Singletons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SReflection.cpp">
+      <Filter>Singletons\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

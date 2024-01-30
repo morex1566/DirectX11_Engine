@@ -22,8 +22,8 @@ public:
 	 */
 	static void												Quit();
 	static uint8											CheckIsPlaying();
-	void													Initialize(HINSTANCE InHInstance);
-	void													Release();
+	void													Init(HINSTANCE InHInstance);
+	void													Shutdown();
 	/**
 	 * \brief Called only once before entering the main loop.
 	 */

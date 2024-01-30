@@ -2,7 +2,7 @@
 #include "OComponent.h"
 #include "OGameObject.h"
 
-OComponent::OComponent(const OGameObject* InOwner)
+OComponent::OComponent(OGameObject* InOwner)
 	: Object()
 {
 	Owner = InOwner;
@@ -12,27 +12,9 @@ OComponent::~OComponent()
 {
 }
 
-void OComponent::Initialize()
+void OComponent::SetOwner(OGameObject* InOwner)
 {
-	Object::Initialize();
-}
+	// TODO : 이전 오너의 Component목록에서 제거
 
-void OComponent::Release()
-{
-	Object::Release();
-}
-
-void OComponent::Start()
-{
-	Object::Start();
-}
-
-void OComponent::Tick()
-{
-	Object::Tick();
-}
-
-void OComponent::End()
-{
-	Object::End();
+	Owner = InOwner;
 }

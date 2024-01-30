@@ -1,26 +1,35 @@
 #include "PCH.h"
+#include "assimp/Importer.hpp"
+#include "assimp/cimport.h"
+#include "assimp/postprocess.h"
+#include "assimp/scene.h"
 #include "CMesh.h"
-#include "SApplication.h"
-#include "SConsole.h"
 #include "ODirectX11.h"
 
-CMesh::CMesh(const OGameObject* InOwner)
+
+CMesh::CMesh(OGameObject* InOwner)
 	: OComponent(InOwner), PrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 {
 }
 
+CMesh::CMesh()
+{
+	PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+}
+
 CMesh::~CMesh()
 {
+	Shutdown();
 }
 
-void CMesh::Initialize()
+void CMesh::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CMesh::Release()
+void CMesh::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 }
 
 void CMesh::Start()
@@ -91,8 +100,7 @@ bool CMesh::CreateVertexBuffer()
 		Result = Device.CreateBuffer(&VertexBufferDesc, &VertexData, VertexBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"VertexCreateBuffer() is failed.");
-			return false;
+			SConsole::LogError(L"VertexCreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -132,8 +140,7 @@ bool CMesh::CreateIndexBuffer()
 		Result = Device.CreateBuffer(&IndexBufferDesc, &IndexData, IndexBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateBuffer() is failed.");
-			return false;
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -157,5 +164,16 @@ void CMesh::Render()
 
 		// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 		DeviceContext.IASetPrimitiveTopology(PrimitiveType);
+	}
+}
+
+void CMesh::Load(const std::wstring& InFilePath)
+{
+	Assimp::Importer importer;
+
+	const aiScene* scene = importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
+	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	{
+		SConsole::LogError(L"ERROR::ASSIMP::", __FILE__, __LINE__);
 	}
 }

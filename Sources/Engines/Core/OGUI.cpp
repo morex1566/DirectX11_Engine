@@ -3,7 +3,7 @@
 #include "OGUI.h"
 #include "OWindow.h"
 #include "OWorld.h"
-#include "WTools.h"
+#include "WConsole.h"
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd_, UINT msg_, WPARAM wParam_, LPARAM lParam_);
@@ -26,9 +26,9 @@ void OGUI::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLPa
 	ImGui_ImplWin32_WndProcHandler(InHWnd, InMsg, InWParam, InLParam);
 }
 
-void OGUI::Initialize()
+void OGUI::Init()
 {
-	Object::Initialize();
+	Object::Init();
 
 	// Setup Dear ImGui context.
 	IMGUI_CHECKVERSION();
@@ -58,25 +58,30 @@ void OGUI::Initialize()
 
 	// Add default gui.
 	{
-		TAddWidget<WTools>(*World);
+		TAddWidget<WConsole>();
 	}
+
+	//for (const auto& Widget : Widgets)
+	//{
+	//	if (Widget->IsEnable)
+	//	{
+	//		Widget->Render();
+	//	}
+	//}
 
 	for (const auto& Widget : Widgets)
 	{
-		if (Widget->CheckIsEnabled())
-		{
-			Widget->Initialize();
-		}
+		Widget->Init();
 	}
 }
 
-void OGUI::Release()
+void OGUI::Shutdown()
 {
-	Object::Release();
+	Object::Shutdown();
 
 	for (const auto& Widget : Widgets)
 	{
-		Widget->Release();
+		Widget->Shutdown();
 	}
 
 	ImGui_ImplDX11_Shutdown();
@@ -90,7 +95,7 @@ void OGUI::Start()
 
 	for (const auto& Widget : Widgets)
 	{
-		if (Widget->CheckIsEnabled())
+		if (Widget->IsEnable)
 		{
 			Widget->Start();
 		}
@@ -101,10 +106,10 @@ void OGUI::Tick()
 {
 	Object::Tick();
 
-	DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Interface);
-	DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Interface);
-	DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Interface);
-	DirectX11->SetViewport(ODirectX11::ERenderModeType::Interface);
+	DirectX11->SetDepthStencilState(ODirectX11::ERenderMode::R_2D);
+	DirectX11->SetRasterizerState(ODirectX11::ERenderMode::R_2D);
+	DirectX11->SetRenderTargets(ODirectX11::ERenderMode::R_2D);
+	DirectX11->SetViewport(ODirectX11::ERenderMode::R_2D);
 
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
@@ -113,9 +118,9 @@ void OGUI::Tick()
 
 	for (const auto& Widget : Widgets)
 	{
-		if (Widget->CheckIsEnabled())
+		if (Widget->IsEnable)
 		{
-			Widget->Tick();
+			Widget->Render();
 		}
 	}
 
@@ -137,7 +142,7 @@ void OGUI::End()
 
 	for (const auto& Widget : Widgets)
 	{
-		if (Widget->CheckIsEnabled())
+		if (Widget->IsEnable)
 		{
 			Widget->End();
 		}

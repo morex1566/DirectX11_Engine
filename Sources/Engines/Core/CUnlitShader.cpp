@@ -10,23 +10,24 @@
 
 #include "d3dcompiler.h"
 
-CUnlitShader::CUnlitShader(const OGameObject* InOwner)
+CUnlitShader::CUnlitShader(OGameObject* InOwner)
 	: OComponent(InOwner)
 {
 }
 
 CUnlitShader::~CUnlitShader()
 {
+	Shutdown();
 }
 
-void CUnlitShader::Initialize()
+void CUnlitShader::Init()
 {
-	OComponent::Initialize();
+	OComponent::Init();
 }
 
-void CUnlitShader::Release()
+void CUnlitShader::Shutdown()
 {
-	OComponent::Release();
+	OComponent::Shutdown();
 }
 
 void CUnlitShader::Start()
@@ -43,10 +44,10 @@ void CUnlitShader::Tick()
 
 	auto DirectX11 = SApplication::GetDirectX11();
 	{
-		DirectX11->SetDepthStencilState(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetRasterizerState(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetRenderTargets(ODirectX11::ERenderModeType::Model);
-		DirectX11->SetViewport(ODirectX11::ERenderModeType::Model);
+		DirectX11->SetDepthStencilState(ODirectX11::ERenderMode::R_3D);
+		DirectX11->SetRasterizerState(ODirectX11::ERenderMode::R_3D);
+		DirectX11->SetRenderTargets(ODirectX11::ERenderMode::R_3D);
+		DirectX11->SetViewport(ODirectX11::ERenderMode::R_3D);
 	}
 
 	// Set shader essential params.
@@ -57,7 +58,7 @@ void CUnlitShader::Tick()
 	}
 
 	// Set index order.
-	for (const auto& Mesh : Owner->TFindComponents<CMesh>())
+	for (auto& Mesh : Owner->TGetComponents<CMesh>())
 	{
 		Mesh->Render();
 		this->Render(Mesh->GetIndexCount(), 0, 0);
@@ -69,7 +70,7 @@ void CUnlitShader::End()
 	OComponent::End();
 }
 
-bool CUnlitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
+bool CUnlitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath)
 {
 	HRESULT						Result;
 	ComPtr<ID3DBlob>			ErrorMsg;
@@ -111,8 +112,7 @@ bool CUnlitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstri
 		VertexShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3DCompileFromFile() is failed.");
-		return false;
+		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
 	}
 
 	// Compile pixel shader.
@@ -120,8 +120,7 @@ bool CUnlitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstri
 		PixelShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3DCompileFromFile() is failed.");
-		return false;
+		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
 	}
 
 	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
@@ -130,16 +129,14 @@ bool CUnlitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstri
 		Result = Device.CreateVertexShader(VertexShaderBuffer->GetBufferPointer(), VertexShaderBuffer->GetBufferSize(), nullptr, VertexShader.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateVertexShader() is failed.");
-			return false;
+			SConsole::LogError(L"CreateVertexShader() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the pixel shader from the buffer.
 		Result = Device.CreatePixelShader(PixelShaderBuffer->GetBufferPointer(), PixelShaderBuffer->GetBufferSize(), nullptr, PixelShader.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreatePixelShader() is failed.");
-			return false;
+			SConsole::LogError(L"CreatePixelShader() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create layout.
@@ -147,16 +144,14 @@ bool CUnlitShader::LoadShader(const std::wstring& InVSFilePath, const std::wstri
 			VertexShaderBuffer->GetBufferSize(), Layout.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateInputLayout() is failed.");
-			return false;
+			SConsole::LogError(L"CreateInputLayout() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 		Result = Device.CreateBuffer(&MatrixBufferDesc, nullptr, MatrixBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateBuffer() is failed.");
-			return false;
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -176,8 +171,7 @@ void CUnlitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& 
 		Result = DeviceContext.Map(MatrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"Map() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"Map() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set cbuffer's parameters.

@@ -27,6 +27,7 @@ GCamera::GCamera(const OWindow& InWindow)
 
 GCamera::~GCamera()
 {
+	Shutdown();
 }
 
 void GCamera::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
@@ -37,14 +38,14 @@ void GCamera::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM In
 	}
 }
 
-void GCamera::Initialize()
+void GCamera::Init()
 {
-	OGameObject::Initialize();
+	OGameObject::Init();
 }
 
-void GCamera::Release()
+void GCamera::Shutdown()
 {
-	OGameObject::Release();
+	OGameObject::Shutdown();
 }
 
 void GCamera::Start()

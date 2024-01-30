@@ -11,7 +11,9 @@ enum class ETexture
 class CTexture : public OComponent
 {
 public:
-	CTexture(const OGameObject* InOwner);
+	CTexture(OGameObject* InOwner);
+
+	CTexture()										= default;
 	CTexture(const CTexture&)						= default;
 	CTexture& operator=(const CTexture&)			= default;
 	CTexture(CTexture&&) noexcept					= default;
@@ -20,8 +22,8 @@ public:
 
 
 public:
-	void			Initialize() override;
-	void			Release() override;
+	void			Init() override;
+	void			Shutdown() override;
 	void			Start() override;
 	void			Tick() override;
 	void			End() override;
@@ -35,7 +37,7 @@ public:
 	}
 	FORCEINLINE void SetResource(ID3D11ShaderResourceView* InResource) 
 	{ 
-		Release();
+		Shutdown();
 		Resource = InResource;  
 	}
 
