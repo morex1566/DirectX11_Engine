@@ -10,7 +10,7 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 	: OGameObject(),
 	GridGap(InGridGap), GridLength(InGridLength), GridSize(InGridSize), GridColor(InGridColor)
 {
-	CMesh* Mesh = TAddComponent<CMesh>();
+	CMesh* Mesh = TAddComponent_Deprecated<CMesh>();
 	{
 		Mesh->SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 		int Index = 0;
@@ -71,7 +71,7 @@ GGizmo::GGizmo(float InGridGap, float InGridLength, uint64 InGridSize, XMFLOAT4 
 		}
 	}
 
-	CUnlitShader* Shader = TAddComponent<CUnlitShader>();
+	CUnlitShader* Shader = TAddComponent_Deprecated<CUnlitShader>();
 	{
 		Shader->Load(ToWString(GET_SHADER_FILE_PATH("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_PATH("UnlitPixelShader.hlsl")));
 	}

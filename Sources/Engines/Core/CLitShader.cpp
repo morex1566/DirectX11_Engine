@@ -6,13 +6,14 @@
 #include "CMesh.h"
 #include "CTexture.h"
 
-CLitShader::CLitShader(const OGameObject* InOwner)
+CLitShader::CLitShader(OGameObject* InOwner)
 	: OComponent(InOwner)
 {
 }
 
 CLitShader::~CLitShader()
 {
+	Shutdown();
 }
 
 void CLitShader::Init()
@@ -47,7 +48,7 @@ void CLitShader::Tick()
 
 	// Set shader essential params.
 	Camera = SApplication::GetCamera();
-	CTexture* texture = Owner->TFindComponent<CTexture>();
+	CTexture* texture = Owner->TFindComponent_Deprecated<CTexture>();
 
 	Transform = Owner->GetTransform();
 	{
@@ -56,7 +57,7 @@ void CLitShader::Tick()
 	}
 
 	// Set index order.
-	for (const auto& Mesh : Owner->TFindComponents<CMesh>())
+	for (const auto& Mesh : Owner->TFindComponents_Deprecated<CMesh>())
 	{
 		Mesh->Render();
 		this->Render(Mesh->GetIndexCount(), 0, 0);

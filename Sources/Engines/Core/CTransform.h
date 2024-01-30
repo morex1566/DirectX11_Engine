@@ -5,32 +5,25 @@ ECLASS()
 class CTransform : public OComponent
 {
 public:
-	CTransform(const OGameObject* InOwner);
+	CTransform(OGameObject* InOwner);
+
+	CTransform()										= default;
 	CTransform(const CTransform&)						= default;
 	CTransform& operator=(const CTransform&)			= default;
 	CTransform(CTransform&&) noexcept					= default;
 	CTransform& operator=(CTransform&&) noexcept		= default;
 	virtual ~CTransform() override;
 
+
+public:
 	virtual void		 								Init() override;
 	virtual void										Shutdown() override;
-
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
 	virtual void										Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
 	virtual void										Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
 	virtual void										End() override;
-	/**
-	 * \brief Move Instance from current position.
-	 * \param InDistance : Move displacement.
-	 */
+
+
+public:
 	void												Move(XMFLOAT3 InDistance);
 	void												Rotate(XMFLOAT3 InRotation);
 
@@ -56,6 +49,7 @@ public:
 	FORCEINLINE void									SetRotation(XMFLOAT3 InRotation) { Rotation = InRotation; }
 	FORCEINLINE void									SetScale(XMFLOAT3 InScale) { Scale = InScale; }
 
+
 private:
 	XMFLOAT3											Position;
 	XMFLOAT3											Rotation;
@@ -67,4 +61,6 @@ private:
 	XMFLOAT3											Left;
 	XMFLOAT3											Right;
 	XMMATRIX											WorldMatrix;
+
+
 };

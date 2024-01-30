@@ -4,7 +4,9 @@
 class CLitShader : public OComponent
 {
 public:
-	CLitShader(const OGameObject* InOwner);
+	CLitShader(OGameObject* InOwner);
+
+	CLitShader()											= default;
 	CLitShader(const CLitShader&)							= default;
 	CLitShader& operator=(const CLitShader&)				= default;
 	CLitShader(CLitShader&&) noexcept						= default;
@@ -17,13 +19,18 @@ public:
 	virtual void					Tick() override;
 	virtual void					End() override;
 
+
+public:
 	void							Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
+
 
 private:
 	void							SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection, 
 														ID3D11ShaderResourceView* texture);
 	void							Render(UINT InIndexCount, UINT InStartIndexToProcessing, INT InBaseVertexLocation);
 
+
+private:
 	ComPtr<ID3D11VertexShader>		VertexShader;
 	ComPtr<ID3D11PixelShader>		PixelShader;
 	ComPtr<ID3D11InputLayout>		Layout;

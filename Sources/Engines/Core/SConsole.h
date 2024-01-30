@@ -23,11 +23,8 @@ public:
 	void				Init();
 	void				Shutdown();
 	static void			Log(const std::wstring& Log);
-	static void			Log(const std::string& Log);
 	static void			LogWarning(const std::wstring& Log, const std::string& inFIleName, int inLine);
-	static void			LogWarning(const std::string& Log, const std::string& inFIleName, int inLine);
 	static void			LogError(const std::wstring& Log, const std::string& inFIleName, int inLine);
-	static void			LogError(const std::string& Log, const std::string& inFIleName, int inLine);
 	const HWND&			GetHWnd() const;
 
 

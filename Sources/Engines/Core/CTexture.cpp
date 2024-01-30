@@ -4,7 +4,7 @@
 #include "SApplication.h"
 #include "SConsole.h"
 
-CTexture::CTexture(const OGameObject* InOwner)
+CTexture::CTexture(OGameObject* InOwner)
 	: OComponent(InOwner)
 {
 }

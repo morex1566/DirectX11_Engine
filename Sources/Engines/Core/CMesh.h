@@ -4,7 +4,9 @@
 class CMesh : public OComponent
 {
 public:
-	CMesh(const OGameObject* InOwner);
+	CMesh(OGameObject* InOwner);
+
+	CMesh()										= default;
 	CMesh(const CMesh&)							= default;
 	CMesh& operator=(const CMesh&)				= default;
 	CMesh(CMesh&&) noexcept						= default;

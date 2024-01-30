@@ -49,17 +49,6 @@ void SConsole::Log(const std::wstring& Log)
 	std::wcout << Log << std::endl;
 }
 
-void SConsole::Log(const std::string& Log)
-{
-	// 흰색으로 설정
-	{
-		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(hConsole, 7);
-	}
-
-	std::cout << Log << std::endl;
-}
-
 void SConsole::LogWarning(const std::wstring& Log, const std::string& inFIleName, int inLine)
 {
 	// 주황색으로 설정
@@ -69,27 +58,11 @@ void SConsole::LogWarning(const std::wstring& Log, const std::string& inFIleName
 	}
 
 	std::wcout << L"[" << GetCurrentTimeAsWString() << L"]" << 
-				L"[LogWarning] " << 
+				L"[LogWarning]" << 
 				L"[" << ToWString(inFIleName) << L"]" <<
 				L"[" << ToWString(std::to_string(inLine)) << L"] " <<
 				Log << 
 				std::endl;
-}
-
-void SConsole::LogWarning(const std::string& Log, const std::string& inFIleName, int inLine)
-{
-	// 주황색으로 설정
-	{
-		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(hConsole, 6);
-	}
-
-	std::cout << L"[" << GetCurrentTimeAsString() << L"]" <<
-				 L"[LogWarning] " <<
-				 L"[" << (inFIleName) << L"]" <<
-				 L"[" << (std::to_string(inLine)) << L"] " <<
-				 Log << 
-				 std::endl;
 }
 
 void SConsole::LogError(const std::wstring& Log, const std::string& inFIleName, int inLine)
@@ -101,7 +74,7 @@ void SConsole::LogError(const std::wstring& Log, const std::string& inFIleName, 
 	}
 
 	std::wcout << L"[" << GetCurrentTimeAsWString() << L"]" << 
-				  L"[LogError] " << 
+				  L"[LogError]" << 
 				  L"[" << ToWString(inFIleName) << L"]" <<
 				  L"[" << ToWString(std::to_string(inLine)) << L"] " <<
 				  Log << 
@@ -110,27 +83,6 @@ void SConsole::LogError(const std::wstring& Log, const std::string& inFIleName, 
 	LogCallStack();
 
 	throw std::runtime_error(ToString(Log));
-}
-
-
-void SConsole::LogError(const std::string& Log, const std::string& inFIleName, int inLine)
-{
-	// 붉은색으로 설정
-	{
-		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(hConsole, 12);
-	}
-
-	std::cout << L"[" << GetCurrentTimeAsString() << L"]" <<
-				 L"[LogError] " <<
-				 L"[" << (inFIleName) << L"]" <<
-				 L"[" << (std::to_string(inLine)) << L"] " <<
-				 Log << 
-				 std::endl;
-
-	LogCallStack();
-
-	throw std::runtime_error(Log);
 }
 
 const HWND& SConsole::GetHWnd() const

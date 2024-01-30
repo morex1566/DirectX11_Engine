@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "CTransform.h"
 
-CTransform::CTransform(const OGameObject* InOwner)
+CTransform::CTransform(OGameObject* InOwner)
 	: OComponent(InOwner)
 {
 	Position = XMFLOAT3(0, 0, 0);
@@ -15,6 +15,7 @@ CTransform::CTransform(const OGameObject* InOwner)
 
 CTransform::~CTransform()
 {
+	Shutdown();
 }
 
 void CTransform::Init()

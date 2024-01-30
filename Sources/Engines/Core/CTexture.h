@@ -11,7 +11,9 @@ enum class ETexture
 class CTexture : public OComponent
 {
 public:
-	CTexture(const OGameObject* InOwner);
+	CTexture(OGameObject* InOwner);
+
+	CTexture()										= default;
 	CTexture(const CTexture&)						= default;
 	CTexture& operator=(const CTexture&)			= default;
 	CTexture(CTexture&&) noexcept					= default;

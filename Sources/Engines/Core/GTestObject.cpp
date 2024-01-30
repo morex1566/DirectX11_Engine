@@ -9,7 +9,7 @@
 GTestObject::GTestObject()
 	: OGameObject()
 {
-	CMesh* Mesh = TAddComponent<CMesh>();
+	CMesh* Mesh = TAddComponent_Deprecated<CMesh>();
 	{
 		Mesh->SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1),
@@ -29,12 +29,12 @@ GTestObject::GTestObject()
 	////	Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
 	////}
 
-	CTexture* texture = TAddComponent<CTexture>();
+	CTexture* texture = TAddComponent_Deprecated<CTexture>();
 	{
 		texture->Load(ToWString(GET_RESOURCE_FILE_PATH("stone.tga")), ETexture::TGA);
 	}
 
-	CLitShader* shader = TAddComponent<CLitShader>();
+	CLitShader* shader = TAddComponent_Deprecated<CLitShader>();
 	{
 		shader->Load(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
 						   ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));

@@ -8,7 +8,9 @@ class CLitShader;
 class CModel : public OComponent
 {
 public:
-	CModel(const OGameObject* InOwner);
+	CModel(OGameObject* InOwner);
+
+	CModel()										= default;
 	CModel(const CModel&)							= default;
 	CModel& operator=(const CModel&)				= default;
 	CModel(CModel&&) noexcept						= default;
@@ -22,6 +24,7 @@ public:
 	virtual void		Start() override;
 	virtual void		Tick() override;
 	virtual void		End() override;
+
 
 public:
 	void LoadModel(const std::wstring& InFilePath);

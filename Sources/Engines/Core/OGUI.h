@@ -33,7 +33,7 @@ public:
 	template <typename T, typename ...Args>
 	T*						TAddWidget(Args&&... InConstructorArgs);
 	template <typename T>
-	void					TDeleteComponent();
+	void					TDeleteComponent_Deprecated();
 
 
 private:
@@ -53,7 +53,7 @@ T* OGUI::TAddWidget(Args&&... InConstructorArgs)
 }
 
 template <typename T>
-void OGUI::TDeleteComponent()
+void OGUI::TDeleteComponent_Deprecated()
 {
 	auto it = Widgets.begin();
 	while (it != Widgets.end())

@@ -8,7 +8,7 @@
 #include "CTexture.h"
 #include "CLitShader.h"
 
-CModel::CModel(const OGameObject* InOwner)
+CModel::CModel(OGameObject* InOwner)
 	: OComponent(InOwner)
 {
 }
@@ -42,7 +42,7 @@ void CModel::LoadModel(const std::wstring& InFilePath)
 	const aiScene* scene = importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		SConsole::LogError("ERROR::ASSIMP::", __FILE__, __LINE__);
+		SConsole::LogError(L"ERROR::ASSIMP::", __FILE__, __LINE__);
 	}
 }
 

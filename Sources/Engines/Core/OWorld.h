@@ -35,23 +35,17 @@ public:
 
 public:
 	template <class T, class = IsGameObject<T>>
-	T*					TGetGameObject();
+	T*								TGetGameObject();
 	template <class T, class = IsGameObject<T>>
-	std::vector<T*>&	TGetGameObjects();
+	std::vector<T*>&				TGetGameObjects();
 	template <class T, class = IsGameObject<T>>
-	void				TAttachGameObject(T* InTarget);
+	void							TAttachGameObject(T* InTarget);
 	template <class T, class = IsGameObject<T>>
-	void				TDetachGameObject(T* InTarget);
-	
+	void							TDetachGameObject(T* InTarget);	
+	FORCEINLINE GameObjectHashMap&	GetGameObjects() { return GameObjects; }
 
-	template <typename T, typename... Args>
-	T&														TCreateGameObject(Args&&... Arguments);
-	const std::vector<std::shared_ptr<OGameObject>>&		GetGameObjects_Deprecated() const { return GameObjects_Deprecated; }
-	
-	FORCEINLINE GameObjectHashMap* GetGameObjects() { return &GameObjects; }
 
 private:
-	std::vector<std::shared_ptr<OGameObject>>	GameObjects_Deprecated;
 	GameObjectHashMap GameObjects;
 
 
@@ -68,7 +62,7 @@ inline T* OWorld::TGetGameObject()
 		return GameObjects[type][0];
 	}
 
-	SConsole::LogWarning(type + " is not exist in world.", __FILE__, __LINE__);
+	SConsole::LogWarning(ToWString(type) + L" is not exist in world.", __FILE__, __LINE__);
 	return nullptr;
 }
 
@@ -83,7 +77,7 @@ inline std::vector<T*>& OWorld::TGetGameObjects()
 		return GameObjects[type];
 	}
 
-	SConsole::LogWarning(type + " is not exist in world.", __FILE__, __LINE__);
+	SConsole::LogWarning(ToWString(type) + L" is not exist in world.", __FILE__, __LINE__);
 	return std::vector<T*>();
 }
 
@@ -93,7 +87,7 @@ inline void OWorld::TAttachGameObject(T* InTarget)
 	// nullptr이면 함수에러
 	if (!InTarget)
 	{
-		SConsole::LogError("TAttachGameObject(), param, 'InTarget' is nullptr.", __FILE__, __LINE__);
+		SConsole::LogError(L"TAttachGameObject(), param, 'InTarget' is nullptr.", __FILE__, __LINE__);
 		return;
 	}
 
@@ -121,7 +115,7 @@ inline void OWorld::TDetachGameObject(T* InTarget)
 	// nullptr이면 함수에러
 	if (!InTarget)
 	{
-		SConsole::LogError("TAttachGameObject(), param, 'InTarget' is nullptr.", __FILE__, __LINE__);
+		SConsole::LogError(L"TAttachGameObject(), param, 'InTarget' is nullptr.", __FILE__, __LINE__);
 		return;
 	}
 
@@ -142,7 +136,6 @@ inline void OWorld::TDetachGameObject(T* InTarget)
 		// 동일한 객체의 주소값이 있다면 삭제
 		if (GameObjectsOfTypeIt != GameObjectsOfType.end())
 		{
-			
 			(*GameObjectsOfTypeIt)->Shutdown();
 			delete (*GameObjectsOfTypeIt);
 			GameObjectsOfType.erase(GameObjectsOfTypeIt);
@@ -154,41 +147,4 @@ inline void OWorld::TDetachGameObject(T* InTarget)
 			}
 		}	
 	}
-}
-
-template <typename T, typename... Args>
-T& OWorld::TCreateGameObject(Args&&... Arguments)
-{
-	// Create and attach.
-	std::shared_ptr<T> TGameObject = std::make_shared<T>(std::move(Arguments)...);
-	GameObjects_Deprecated.push_back(TGameObject);
-
-	// name as default.
-	bool IsDone = false;
-	int Index = 0;
-	while (!IsDone)
-	{
-		bool Found = false;
-
-		// Find same name.
-		// When is found, raise the index.
-		for (const auto& GameObject : GameObjects_Deprecated)
-		{
-			if (GameObject->Name == ToWString(GetTypeToString<T>() + std::to_string(Index)))
-			{
-				Found = true;
-				Index++;
-				break;
-			}
-		}
-
-		// Not found, set current index to name.
-		if (!Found)
-		{
-			std::static_pointer_cast<T>(TGameObject)->Name = ToWString(GetTypeToString<T>() + std::to_string(Index));
-			IsDone = true;
-		}
-	}
-
-	return *TGameObject;
 }

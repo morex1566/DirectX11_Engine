@@ -10,13 +10,14 @@
 
 #include "d3dcompiler.h"
 
-CUnlitShader::CUnlitShader(const OGameObject* InOwner)
+CUnlitShader::CUnlitShader(OGameObject* InOwner)
 	: OComponent(InOwner)
 {
 }
 
 CUnlitShader::~CUnlitShader()
 {
+	Shutdown();
 }
 
 void CUnlitShader::Init()
@@ -57,7 +58,7 @@ void CUnlitShader::Tick()
 	}
 
 	// Set index order.
-	for (const auto& Mesh : Owner->TFindComponents<CMesh>())
+	for (const auto& Mesh : Owner->TFindComponents_Deprecated<CMesh>())
 	{
 		Mesh->Render();
 		this->Render(Mesh->GetIndexCount(), 0, 0);
