@@ -33,7 +33,7 @@ void OInput::Init()
 	Result = DirectInput8Create(HInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, reinterpret_cast<void**>(DirectInput.GetAddressOf()), nullptr);
 	if (FAILED(Result))
 	{
-		throw std::exception("DirectInput8Create() is failed.");
+		SConsole::LogError("DirectInput8Create() is failed.", __FILE__, __LINE__);
 	}
 
 	// Initialize IDirectInputDevice8(keyboard).
@@ -42,21 +42,21 @@ void OInput::Init()
 		Result = DirectInput->CreateDevice(GUID_SysKeyboard, KeyboardInputDevice.GetAddressOf(), nullptr);
 		if (FAILED(Result))
 		{
-			throw std::exception("DirectInput->CreateDevice() is failed.");
+			SConsole::LogError("DirectInput->CreateDevice() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set pre-defined format.
 		Result = KeyboardInputDevice->SetDataFormat(&c_dfDIKeyboard);
 		if (FAILED(Result))
 		{
-			throw std::exception("KeyboardInputDevice->SetDataFormat() is failed.");
+			SConsole::LogError("KeyboardInputDevice->SetDataFormat() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set the coop level.
 		Result = KeyboardInputDevice->SetCooperativeLevel(HWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 		if (FAILED(Result))
 		{
-			throw std::exception("KeyboardInputDevice->SetCooperativeLevel() is failed.");
+			SConsole::LogError("KeyboardInputDevice->SetCooperativeLevel() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -66,21 +66,21 @@ void OInput::Init()
 		Result = DirectInput->CreateDevice(GUID_SysMouse, MouseInputDevice.GetAddressOf(), nullptr);
 		if (FAILED(Result))
 		{
-			throw std::exception("DirectInput->CreateDevice() is failed.");
+			SConsole::LogError("DirectInput->CreateDevice() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set pre-defined format.
 		Result = MouseInputDevice->SetDataFormat(&c_dfDIMouse);
 		if (FAILED(Result))
 		{
-			throw std::exception("MouseInputDevice->SetDataFormat() is failed.");
+			SConsole::LogError("MouseInputDevice->SetDataFormat() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set the coop level.
 		Result = MouseInputDevice->SetCooperativeLevel(HWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 		if (FAILED(Result))
 		{
-			throw std::exception("MouseInputDevice->SetCooperativeLevel() is failed.");
+			SConsole::LogError("MouseInputDevice->SetCooperativeLevel() is failed.", __FILE__, __LINE__);
 		}
 	}
 }
@@ -103,14 +103,14 @@ void OInput::Start()
 	Result = KeyboardInputDevice->Acquire();
 	if (FAILED(Result))
 	{
-		throw std::exception("KeyboardInputDevice->Acquire() is failed.");
+		SConsole::LogError("KeyboardInputDevice->Acquire() is failed.", __FILE__, __LINE__);
 	}
 
 	// Get access to mouse.
 	Result = MouseInputDevice->Acquire();
 	if (FAILED(Result))
 	{
-		throw std::exception("MouseInputDevice->Acquire() is failed.");
+		SConsole::LogError("MouseInputDevice->Acquire() is failed.", __FILE__, __LINE__);
 	}
 }
 

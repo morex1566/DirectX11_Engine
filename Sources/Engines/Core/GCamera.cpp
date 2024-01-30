@@ -27,6 +27,7 @@ GCamera::GCamera(const OWindow& InWindow)
 
 GCamera::~GCamera()
 {
+	Shutdown();
 }
 
 void GCamera::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)

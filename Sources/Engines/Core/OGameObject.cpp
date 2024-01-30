@@ -11,7 +11,6 @@ OGameObject::OGameObject()
 
 OGameObject::~OGameObject()
 {
- 	Shutdown();
 }
 
 void OGameObject::Init()
