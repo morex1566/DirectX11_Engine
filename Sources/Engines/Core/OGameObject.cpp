@@ -6,11 +6,8 @@
 OGameObject::OGameObject()
 	: Object()
 {
-	Transform = TAddComponent_Deprecated<CTransform>();
-	
-	CModel* Model = new CModel;
-	TAttachComponent<CModel>(Model);
-	TDetachComponent<CModel>(Model);
+	Transform = new CTransform;
+	TAttachComponent<CTransform>(Transform);
 }
 
 OGameObject::~OGameObject()
@@ -19,83 +16,153 @@ OGameObject::~OGameObject()
 
 void OGameObject::Init()
 {
-	for (const auto& Component : Components_Deprecated)
+	// Components
 	{
-		Component->Init();
+		for (auto& Hash : Components)
+		{
+			for (OComponent* Component : Hash.second)
+			{
+				Component->Init();
+			}
+		}
 	}
 
-	for (const auto& Child : Children_Deprecated)
+	// Children
 	{
-		Child->Init();
+		for (auto& Hash : Children)
+		{
+			for (OGameObject* Child : Hash.second)
+			{
+				Child->Init();
+			}
+		}
 	}
 }
 
 void OGameObject::Shutdown()
 {
-	for (const auto& Component : Components_Deprecated)
+	// Components
 	{
-		Component->Shutdown();
+		for (auto& Hash : Components)
+		{
+			for (OComponent* Component : Hash.second)
+			{
+				Component->Shutdown();
+				delete Component;
+			}
+
+			Hash.second.clear();
+		}
+
+		Components.clear();
 	}
 
-	for (const auto& Child : Children_Deprecated)
+	// Children
 	{
-		Child->Shutdown();
+		for (auto& Hash : Children)
+		{
+			for (OGameObject* Child : Hash.second)
+			{
+				Child->Shutdown();
+				delete Child;
+			}
+
+			Hash.second.clear();
+		}
+
+		Children.clear();
 	}
 }
 
 void OGameObject::Start()
 {
-	for (const auto& Component : Components_Deprecated)
+	// Components
 	{
-		if (Component->IsEnable)
+		for (auto& Hash : Components)
 		{
-			Component->Start();
+			for (OComponent* Component : Hash.second)
+			{
+				if (Component->IsEnable)
+				{
+					Component->Start();
+				}
+			}
 		}
 	}
 
-	for (const auto& Child : Children_Deprecated)
+	// Children
 	{
-		if (Child->IsEnable)
+		for (auto& Hash : Children)
 		{
-			Child->Start();
+			for (OGameObject* Child : Hash.second)
+			{
+				if (Child->IsEnable)
+				{
+					Child->Start();
+				}
+			}
 		}
 	}
 }
 
 void OGameObject::Tick()
 {
-	for (const auto& Component : Components_Deprecated)
+	// Components
 	{
-		if (Component->IsEnable)
+		for (auto& Hash : Components)
 		{
-			Component->Tick();
+			for (OComponent* Component : Hash.second)
+			{
+				if (Component->IsEnable)
+				{
+					Component->Tick();
+				}
+			}
 		}
 	}
 
-	for (const auto& Child : Children_Deprecated)
+	// Children
 	{
-		if (Child->IsEnable)
+		for (auto& Hash : Children)
 		{
-			Child->Tick();
+			for (OGameObject* Child : Hash.second)
+			{
+				if (Child->IsEnable)
+				{
+					Child->Tick();
+				}
+			}
 		}
 	}
 }
 
 void OGameObject::End()
 {
-	for (const auto& Component : Components_Deprecated)
+	// Components
 	{
-		if (Component->IsEnable)
+		for (auto& Hash : Components)
 		{
-			Component->End();
+			for (OComponent* Component : Hash.second)
+			{
+				if (Component->IsEnable)
+				{
+					Component->End();
+				}
+			}
 		}
 	}
 
-	for (const auto& Child : Children_Deprecated)
+	// Children
 	{
-		if (Child->IsEnable)
+		for (auto& Hash : Children)
 		{
-			Child->End();
+			for (OGameObject* Child : Hash.second)
+			{
+				if (Child->IsEnable)
+				{
+					Child->End();
+				}
+			}
 		}
 	}
 }

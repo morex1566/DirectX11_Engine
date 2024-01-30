@@ -7,7 +7,7 @@ class CTransform : public OComponent
 public:
 	CTransform(OGameObject* InOwner);
 
-	CTransform()										= default;
+	CTransform();
 	CTransform(const CTransform&)						= default;
 	CTransform& operator=(const CTransform&)			= default;
 	CTransform(CTransform&&) noexcept					= default;

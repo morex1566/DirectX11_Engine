@@ -58,7 +58,7 @@ void CUnlitShader::Tick()
 	}
 
 	// Set index order.
-	for (const auto& Mesh : Owner->TFindComponents_Deprecated<CMesh>())
+	for (auto& Mesh : Owner->TGetComponents<CMesh>())
 	{
 		Mesh->Render();
 		this->Render(Mesh->GetIndexCount(), 0, 0);

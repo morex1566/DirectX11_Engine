@@ -34,21 +34,10 @@ public:
 
 
 public:
-	template <typename T, typename ...Args>
-	T*								TAddComponent_Deprecated(Args&&... InConstructorArgs);
-	template <typename T>
-	void							TDeleteComponent_Deprecated();
-	template <typename T>
-	T*								TFindComponent_Deprecated() const;
-	template <typename T>
-	std::vector<T*>					TFindComponents_Deprecated() const;
-
-
-
 	template <class T, class = IsComponent<T>>
 	T* 								TGetComponent();
 	template <class T, class = IsComponent<T>>
-	std::vector<T*>&				TGetComponents();
+	std::vector<T*>					TGetComponents();
 	template <class T, class = IsComponent<T>>
 	void							TAttachComponent(T* InTarget);
 	template <class T, class = IsComponent<T>>
@@ -61,78 +50,16 @@ public:
 	void							SetWorld(OWorld* InWorld);
 	void							SetParent(OGameObject* InParent);
 
+
 protected:
 	CTransform*									Transform;
 	OGameObject*								Parent;
 	OWorld*										World;
-
-	std::vector<std::shared_ptr<OComponent>>	Components_Deprecated;
-	std::vector<std::shared_ptr<OGameObject>>	Children_Deprecated;
-
 	GameObjectHashMap							Children;
 	ComponentHashMap							Components;
 
 
 };
-
-template <typename T, typename ...Args>
-T* OGameObject::TAddComponent_Deprecated(Args&&... InConstructorArgs)
-{
-	// T(Args...)
-	Components_Deprecated.emplace_back(std::make_shared<T>(std::move(this), std::forward<Args>(InConstructorArgs)...));
-
-	return static_cast<T*>(Components_Deprecated.back().get());
-}
-
-template <typename T>
-void OGameObject::TDeleteComponent_Deprecated()
-{
-	auto it = Components_Deprecated.begin();
-	while (it != Components_Deprecated.end())
-	{
-		if (T* TComponent = dynamic_cast<T*>(it->get()))
-		{
-			it->reset();
-			it = Components_Deprecated.erase(it);
-
-			break;
-		}
-		else
-		{
-			++it;
-		}
-	}
-}
-
-template <typename T>
-T* OGameObject::TFindComponent_Deprecated() const
-{
-	for (auto& Component : Components_Deprecated)
-	{
-		if (T* TComponent = dynamic_cast<T*>(Component.get()))
-		{
-			return TComponent;
-		}
-	}
-
-	return nullptr;
-}
-
-template <class T>
-std::vector<T*> OGameObject::TFindComponents_Deprecated() const
-{
-	std::vector<T*> TComponents;
-
-	for (auto& Component : Components_Deprecated)
-	{
-		if (T* TComponent = dynamic_cast<T*>(Component.get()))
-		{
-			TComponents.emplace_back(TComponent);
-		}
-	}
-
-	return TComponents;
-}
 
 template<class T, class>
 inline T* OGameObject::TGetComponent()
@@ -142,7 +69,16 @@ inline T* OGameObject::TGetComponent()
 	auto ComponentsIt = Components.find(type);
 	if (ComponentsIt != Components.end())
 	{
-		return ComponentsIt[type][0];
+		// 캐스팅
+		if (T* CastedComponent = dynamic_cast<T*>(Components[type][0]))
+		{
+			return CastedComponent;
+		}
+		else
+		{
+			SConsole::LogWarning(ToWString(type) + L" casting failed.", __FILE__, __LINE__);
+			return nullptr;
+		}
 	}
 
 	SConsole::LogWarning(ToWString(type) + L" is not exist in world.", __FILE__, __LINE__);
@@ -150,14 +86,29 @@ inline T* OGameObject::TGetComponent()
 }
 
 template<class T, class>
-inline std::vector<T*>& OGameObject::TGetComponents()
+inline std::vector<T*> OGameObject::TGetComponents()
 {
 	std::string type = typeid(T).name();
 
 	auto ComponentsIt = Components.find(type);
 	if (ComponentsIt != Components.end())
 	{
-		return ComponentsIt[type];
+		// 캐스팅
+		std::vector<T*> CastedComponents;
+		for (OComponent* Component : Components[type])
+		{
+			if (T* CastedComponent = dynamic_cast<T*>(Component))
+			{
+				CastedComponents.push_back(CastedComponent);
+			}
+			else
+			{
+				SConsole::LogWarning(ToWString(type) + L" casting failed.", __FILE__, __LINE__);
+				return std::vector<T*>();
+			}
+		}
+
+		return CastedComponents;
 	}
 
 	SConsole::LogWarning(ToWString(type) + L" is not exist in world.", __FILE__, __LINE__);

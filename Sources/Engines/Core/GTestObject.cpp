@@ -9,7 +9,7 @@
 GTestObject::GTestObject()
 	: OGameObject()
 {
-	CMesh* Mesh = TAddComponent_Deprecated<CMesh>();
+	CMesh* Mesh = new CMesh;
 	{
 		Mesh->SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		Mesh->AddVertex(FVertex(XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(0, 1, 0, 1),
@@ -24,21 +24,27 @@ GTestObject::GTestObject()
 		//Mesh->Load(ToWString(GET_RESOURCE_FILE_PATH("cube.fbx")));
 	}
 
+	TAttachComponent<CMesh>(Mesh);
+
 	////CUnlitShader* Shader = TAddComponent<CUnlitShader>();
 	////{
 	////	Shader->LoadShader(ToWString(GET_SHADER_FILE_DIR("UnlitVertexShader.hlsl")), ToWString(GET_SHADER_FILE_DIR("UnlitPixelShader.hlsl")));
 	////}
 
-	CTexture* texture = TAddComponent_Deprecated<CTexture>();
+	CTexture* Texture = new CTexture;
 	{
-		texture->Load(ToWString(GET_RESOURCE_FILE_PATH("stone.tga")), ETexture::TGA);
+		Texture->Load(ToWString(GET_RESOURCE_FILE_PATH("stone.tga")), ETexture::TGA);
 	}
 
-	CLitShader* shader = TAddComponent_Deprecated<CLitShader>();
+	TAttachComponent<CTexture>(Texture);
+
+	CLitShader* Shader = new CLitShader;
 	{
-		shader->Load(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
-						   ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));
+		Shader->Load(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
+						ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));
 	}
+
+	TAttachComponent<CLitShader>(Shader);
 
 }
 

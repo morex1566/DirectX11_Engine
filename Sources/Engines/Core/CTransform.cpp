@@ -13,6 +13,17 @@ CTransform::CTransform(OGameObject* InOwner)
 	WorldMatrix = XMMatrixIdentity();
 }
 
+CTransform::CTransform()
+{
+	Position = XMFLOAT3(0, 0, 0);
+	Rotation = XMFLOAT3(0, 0, 0);
+	Scale = XMFLOAT3(1, 1, 1);
+	Up = XMFLOAT3(0, 1, 0);
+	LookAt = XMFLOAT3(0, 0, 1);
+	Forward = LookAt;
+	WorldMatrix = XMMatrixIdentity();
+}
+
 CTransform::~CTransform()
 {
 	Shutdown();

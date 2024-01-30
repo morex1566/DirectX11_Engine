@@ -12,6 +12,11 @@ CMesh::CMesh(OGameObject* InOwner)
 {
 }
 
+CMesh::CMesh()
+{
+	PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+}
+
 CMesh::~CMesh()
 {
 	Shutdown();

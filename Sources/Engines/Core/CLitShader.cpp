@@ -48,7 +48,7 @@ void CLitShader::Tick()
 
 	// Set shader essential params.
 	Camera = SApplication::GetCamera();
-	CTexture* texture = Owner->TFindComponent_Deprecated<CTexture>();
+	CTexture* texture = Owner->TGetComponent<CTexture>();
 
 	Transform = Owner->GetTransform();
 	{
@@ -57,7 +57,7 @@ void CLitShader::Tick()
 	}
 
 	// Set index order.
-	for (const auto& Mesh : Owner->TFindComponents_Deprecated<CMesh>())
+	for (auto& Mesh : Owner->TGetComponents<CMesh>())
 	{
 		Mesh->Render();
 		this->Render(Mesh->GetIndexCount(), 0, 0);
@@ -199,7 +199,7 @@ void CLitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& In
 {
 	HRESULT							Result;
 	D3D11_MAPPED_SUBRESOURCE		MappedResource;
-	FWorldViewProjection*					CBuffer;
+	FWorldViewProjection*			CBuffer;
 	UINT							BufferNum;
 
 	ID3D11DeviceContext& DeviceContext = SApplication::GetDirectX11()->GetDeviceContext();
