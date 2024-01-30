@@ -3,9 +3,15 @@
 #include "OComponent.h"
 
 class CTransform;
+class OWorld;
 
 class OGameObject : public Object, public IName, public IEnable, public ITag
 {
+public:
+	// T가 Component를 상속받는지 확인
+	template <class T> using IsComponent = std::enable_if_t<std::is_base_of<OComponent, T>::value>;
+
+
 public:
 	OGameObject();
 	OGameObject(const OGameObject&)							= default;
@@ -16,28 +22,31 @@ public:
 
 
 public:
-	virtual void								Init() override;
-	virtual void								Shutdown() override;
-	virtual void								Start() override;
-	virtual void								Tick() override;
-	virtual void								End() override;
+	virtual void					Init() override;
+	virtual void					Shutdown() override;
+	virtual void					Start() override;
+	virtual void					Tick() override;
+	virtual void					End() override;
 
 
 public:
 	template <typename T, typename ...Args>
-	T*											TAddComponent(Args&&... InConstructorArgs);
+	T*								TAddComponent(Args&&... InConstructorArgs);
 	template <typename T>
-	void										TDeleteComponent();
+	void							TDeleteComponent();
 	template <typename T>
-	T*											TFindComponent() const;
+	T*								TFindComponent() const;
 	template <typename T>
-	std::vector<T*>								TFindComponents() const;
-	FORCEINLINE CTransform*						GetTransform() const { return Transform; }
+	std::vector<T*>					TFindComponents() const;
+	FORCEINLINE CTransform*			GetTransform() const { return Transform; }
+	FORCEINLINE OWorld*				GetWorld() const { return World; }
+	FORCEINLINE void				SetWorld(OWorld* InWorld) { World = InWorld; }
 
 
 protected:
 	CTransform*									Transform;
 	const OGameObject*							Parent;
+	OWorld*										World;
 	std::vector<std::shared_ptr<OComponent>>	Components;
 	std::vector<std::shared_ptr<OGameObject>>	Children;
 

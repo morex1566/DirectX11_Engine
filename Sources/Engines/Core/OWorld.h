@@ -9,6 +9,14 @@ class ODirectX11;
 class OWorld : public Object
 {
 public:
+	// T가 GameObject를 상속받는지 확인
+	template <class T> using IsGameObject = std::enable_if_t<std::is_base_of<OGameObject, T>::value>;
+
+	// GameObject를 저장하는 해쉬맵 Key = typeid(OGameObject).name(), Value = OGameObject's vector.
+	using GameObjectHashMap = std::map<std::string, std::vector<OGameObject*>>;
+
+
+public:
 	OWorld();
 	OWorld(const OWorld&)									= default;
 	OWorld& operator=(const OWorld&)						= default;
@@ -16,43 +24,85 @@ public:
 	OWorld& operator=(OWorld&&) noexcept					= default;
 	~OWorld() override;
 
-	void													Init() override;
-	void													Shutdown() override;
 
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	void													Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	void													Tick() override;
-	/**
-	 * \brief Called only once immediately after the main loop is over.
-	 */
-	void													End() override;
+public:
+	void	Init() override;
+	void	Shutdown() override;
+	void	Start() override;
+	void	Tick() override;
+	void	End() override;
+
+
+public:
+	template <class T, class = IsGameObject<T>>
+	T*				TGetGameObject();
+	template <class T, class = IsGameObject<T>>
+	std::vector<T*> TGetGameObjects();
+	template <class T, class = IsGameObject<T>>
+	void			TAttachGameObject(T* InTarget);
+	template <class T, class = IsGameObject<T>>
+	void			TDetachGameObject(T* InTarget);
+	
 
 	template <typename T, typename... Args>
 	T&														TCreateGameObject(Args&&... Arguments);
-	/**
-	 * \brief 
-	 * \return World's game object vector. 
-	 */
-	const std::vector<std::shared_ptr<OGameObject>>&		GetGameObjects() const { return GameObjects; }
+	const std::vector<std::shared_ptr<OGameObject>>&		GetGameObjects_Deprecated() const { return GameObjects_Deprecated; }
+	
+	FORCEINLINE GameObjectHashMap* GetGameObjects() { return &GameObjects; }
 
 private:
-	/**
-	 * \brief All of gameobject in world are here.
-	 */
-	std::vector<std::shared_ptr<OGameObject>>				GameObjects;
+	std::vector<std::shared_ptr<OGameObject>>	GameObjects_Deprecated;
+	GameObjectHashMap GameObjects;
+
+
 };
+
+template<class T, class>
+inline T* OWorld::TGetGameObject()
+{
+	
+
+	return nullptr;
+}
+
+template<class T, class>
+inline std::vector<T*> OWorld::TGetGameObjects()
+{
+	return std::vector<T*>();
+}
+
+template<class T, class>
+inline void OWorld::TAttachGameObject(T* InTarget)
+{
+	// nullptr이면 함수에러
+	if (!InTarget)
+	{
+		SConsole::LogError("TAttachGameObject(), param, 'InTarget' is nullptr.");
+		return;
+	}
+
+	InTarget->SetWorld(this);
+}
+
+template<class T, class>
+inline void OWorld::TDetachGameObject(T* InTarget)
+{
+	// nullptr이면 함수에러
+	if (!InTarget)
+	{
+		SConsole::LogError("TAttachGameObject(), param, 'InTarget' is nullptr.");
+		return;
+	}
+
+	InTarget->SetWorld(nullptr);
+}
 
 template <typename T, typename... Args>
 T& OWorld::TCreateGameObject(Args&&... Arguments)
 {
 	// Create and attach.
 	std::shared_ptr<T> TGameObject = std::make_shared<T>(std::move(Arguments)...);
-	GameObjects.push_back(TGameObject);
+	GameObjects_Deprecated.push_back(TGameObject);
 
 	// name as default.
 	bool IsDone = false;
@@ -63,7 +113,7 @@ T& OWorld::TCreateGameObject(Args&&... Arguments)
 
 		// Find same name.
 		// When is found, raise the index.
-		for (const auto& GameObject : GameObjects)
+		for (const auto& GameObject : GameObjects_Deprecated)
 		{
 			if (GameObject->Name == ToWString(GetTypeToString<T>() + std::to_string(Index)))
 			{

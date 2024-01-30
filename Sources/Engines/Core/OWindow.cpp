@@ -113,7 +113,7 @@ void OWindow::Init()
 
 		if (HWnd == nullptr)
 		{
-			SConsole::LogError(L"CreateWindowW() is failed.");
+			SConsole::LogError(L"CreateWindowW() is failed.", __FILE__, __LINE__);
 			Object::Init();
 		}
 	}

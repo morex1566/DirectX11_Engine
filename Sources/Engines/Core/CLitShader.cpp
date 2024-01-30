@@ -141,7 +141,7 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 		VertexShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3DCompileFromFile() is failed.");
+		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
 		throw std::exception();
 	}
 
@@ -150,8 +150,7 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 		PixelShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3DCompileFromFile() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
 	}
 
 	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
@@ -160,16 +159,14 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 		Result = Device.CreateVertexShader(VertexShaderBuffer->GetBufferPointer(), VertexShaderBuffer->GetBufferSize(), nullptr, VertexShader.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateVertexShader() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"CreateVertexShader() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the pixel shader from the buffer.
 		Result = Device.CreatePixelShader(PixelShaderBuffer->GetBufferPointer(), PixelShaderBuffer->GetBufferSize(), nullptr, PixelShader.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreatePixelShader() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"CreatePixelShader() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create layout.
@@ -177,24 +174,21 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 			VertexShaderBuffer->GetBufferSize(), Layout.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateInputLayout() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"CreateInputLayout() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 		Result = Device.CreateBuffer(&MatrixBufferDesc, nullptr, MatrixBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateBuffer() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the texture sampler state.
 		Result = Device.CreateSamplerState(&SamplerStateDesc, SamplerState.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateSamplerState() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"CreateSamplerState() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -213,8 +207,7 @@ void CLitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& In
 		Result = DeviceContext.Map(MatrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"Map() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"Map() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set cbuffer's parameters.

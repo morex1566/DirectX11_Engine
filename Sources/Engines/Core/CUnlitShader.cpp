@@ -111,8 +111,7 @@ bool CUnlitShader::Load(const std::wstring& InVSFilePath, const std::wstring& In
 		VertexShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3DCompileFromFile() is failed.");
-		return false;
+		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
 	}
 
 	// Compile pixel shader.
@@ -120,8 +119,7 @@ bool CUnlitShader::Load(const std::wstring& InVSFilePath, const std::wstring& In
 		PixelShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3DCompileFromFile() is failed.");
-		return false;
+		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
 	}
 
 	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
@@ -130,16 +128,14 @@ bool CUnlitShader::Load(const std::wstring& InVSFilePath, const std::wstring& In
 		Result = Device.CreateVertexShader(VertexShaderBuffer->GetBufferPointer(), VertexShaderBuffer->GetBufferSize(), nullptr, VertexShader.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateVertexShader() is failed.");
-			return false;
+			SConsole::LogError(L"CreateVertexShader() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the pixel shader from the buffer.
 		Result = Device.CreatePixelShader(PixelShaderBuffer->GetBufferPointer(), PixelShaderBuffer->GetBufferSize(), nullptr, PixelShader.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreatePixelShader() is failed.");
-			return false;
+			SConsole::LogError(L"CreatePixelShader() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create layout.
@@ -147,16 +143,14 @@ bool CUnlitShader::Load(const std::wstring& InVSFilePath, const std::wstring& In
 			VertexShaderBuffer->GetBufferSize(), Layout.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateInputLayout() is failed.");
-			return false;
+			SConsole::LogError(L"CreateInputLayout() is failed.", __FILE__, __LINE__);
 		}
 
 		// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.
 		Result = Device.CreateBuffer(&MatrixBufferDesc, nullptr, MatrixBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateBuffer() is failed.");
-			return false;
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -176,8 +170,7 @@ void CUnlitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& 
 		Result = DeviceContext.Map(MatrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"Map() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"Map() is failed.", __FILE__, __LINE__);
 		}
 
 		// Set cbuffer's parameters.

@@ -82,15 +82,6 @@
     <ClInclude Include="PCH.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="SReflection.h">
-      <Filter>Singletons\Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="SConsole.h">
-      <Filter>Singletons\Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="SApplication.h">
-      <Filter>Singletons\Sources</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Objects\Headers</Filter>
     </ClInclude>
@@ -160,6 +151,15 @@
     <ClInclude Include="ITag.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="SApplication.h">
+      <Filter>Singletons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SConsole.h">
+      <Filter>Singletons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SReflection.h">
+      <Filter>Singletons\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Includes\imgui\imgui_draw.cpp">
@@ -197,15 +197,6 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="SApplication.cpp">
-      <Filter>Singletons\Headers</Filter>
-    </ClCompile>
-    <ClCompile Include="SConsole.cpp">
-      <Filter>Singletons\Headers</Filter>
-    </ClCompile>
-    <ClCompile Include="SReflection.cpp">
-      <Filter>Singletons\Headers</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Objects\Sources</Filter>
@@ -257,6 +248,15 @@
     </ClCompile>
     <ClCompile Include="CModel.cpp">
       <Filter>Components\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SApplication.cpp">
+      <Filter>Singletons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SConsole.cpp">
+      <Filter>Singletons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SReflection.cpp">
+      <Filter>Singletons\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

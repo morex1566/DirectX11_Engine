@@ -42,8 +42,7 @@ void CModel::LoadModel(const std::wstring& InFilePath)
 	const aiScene* scene = importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		SConsole::LogError("ERROR::ASSIMP::");
-		return;
+		SConsole::LogError("ERROR::ASSIMP::", __FILE__, __LINE__);
 	}
 }
 

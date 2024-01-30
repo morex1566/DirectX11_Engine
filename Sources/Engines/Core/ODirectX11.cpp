@@ -76,24 +76,21 @@ void ODirectX11::Init()
 	Result = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(Factory.GetAddressOf()));
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDXGIFactory() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"CreateDXGIFactory() is failed.", __FILE__, __LINE__);
 	}
 
 	// Use the factory to create an adapter for the primary graphics interface (video card).
 	Result = Factory->EnumAdapters(0, Adapter.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"EnumAdapters() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"EnumAdapters() is failed.", __FILE__, __LINE__);
 	}
 
 	// Enumerate the primary adapter output (monitor).
 	Result = Adapter->EnumOutputs(0, AdapterOutput.GetAddressOf());
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"EnumOutputs() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"EnumOutputs() is failed.", __FILE__, __LINE__);
 	}
 
 	// Get the number of modes that fit the DXGI_FORMAT_R8G8B8A8_UNORM display format for the adapter output (monitor).
@@ -101,8 +98,7 @@ void ODirectX11::Init()
 	Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, nullptr);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"GetDisplayModeList() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"GetDisplayModeList() is failed.", __FILE__, __LINE__);
 	}
 
 	// Create a list to hold all the possible display modes for this monitor/video card combination.
@@ -112,8 +108,7 @@ void ODirectX11::Init()
 		Result = AdapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &NumModes, DisplayModeList.get());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"GetDisplayModeList() is failed.");
-			throw std::exception();
+			SConsole::LogError(L"GetDisplayModeList() is failed.", __FILE__, __LINE__);
 		}
 
 		// Now go through all the display modes and find the one that matches the screen width and height.
@@ -147,8 +142,7 @@ void ODirectX11::Init()
 	Result = Adapter->GetDesc(&AdapterDesc);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"GetDesc() is failed.");
-		throw std::exception();
+		SConsole::LogError(L"GetDesc() is failed.", __FILE__, __LINE__);
 	}
 
 	// Set the feature level to DirectX 11.
@@ -528,8 +522,7 @@ void ODirectX11::CreateDeviceAndSwapChain(IDXGISwapChain** OutSwapChain, ID3D11D
 		D3D11_SDK_VERSION, &InSwapChainDesc, OutSwapChain, OutDevice, nullptr, OutDeviceContext);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"D3D11CreateDeviceAndSwapChain() is failed.");
-		return;
+		SConsole::LogError(L"D3D11CreateDeviceAndSwapChain() is failed.", __FILE__, __LINE__);
 	}
 }
 
@@ -542,16 +535,14 @@ void ODirectX11::CreateRenderTargetView(ID3D11RenderTargetView** OutRenderTarget
 	Result = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(BackBuffer.GetAddressOf()));
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"GetBackBuffer() is failed.");
-		return;
+		SConsole::LogError(L"GetBackBuffer() is failed.", __FILE__, __LINE__);
 	}
 
 	// Create render target view from back buffer.
 	Result = Device->CreateRenderTargetView(BackBuffer.Get(), nullptr, OutRenderTargetView);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateRenderTargetView() is failed.");
-		return;
+		SConsole::LogError(L"CreateRenderTargetView() is failed.", __FILE__, __LINE__);
 	}
 }
 
@@ -563,8 +554,7 @@ void ODirectX11::CreateDepthStencilBuffer(ID3D11Texture2D** OutDepthStencilBuffe
 	Result = Device->CreateTexture2D(&InDepthStencilBufferDesc, nullptr, OutDepthStencilBuffer);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDepthStencilBuffer() is failed.");
-		return;
+		SConsole::LogError(L"CreateDepthStencilBuffer() is failed.", __FILE__, __LINE__);
 	}
 
 	return;
@@ -578,8 +568,7 @@ void ODirectX11::CreateDepthStencilState(ID3D11DepthStencilState** OutDepthSteci
 	Result = Device->CreateDepthStencilState(&InDepthStencilStateDesc, OutDepthStecilState);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDepthStencilState() is failed.");
-		return;
+		SConsole::LogError(L"CreateDepthStencilState() is failed.", __FILE__, __LINE__);
 	}
 }
 
@@ -591,8 +580,7 @@ void ODirectX11::CreateDepthStencilView(ID3D11Texture2D* InDepthStencilBuffer, I
 	Result = Device->CreateDepthStencilView(InDepthStencilBuffer, &InDepthStencilViewDesc, OutDepthStencilView);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateDepthStencilView() is failed.");
-		return;
+		SConsole::LogError(L"CreateDepthStencilView() is failed.", __FILE__, __LINE__);
 	}
 }
 
@@ -604,8 +592,7 @@ void ODirectX11::CreateRasterizerState(ID3D11RasterizerState** OutRasterizerStat
 	Result = Device->CreateRasterizerState(&InRasterStateDesc, OutRasterizerState);
 	if (FAILED(Result))
 	{
-		SConsole::LogError(L"CreateRasterizerState() is failed.");
-		return;
+		SConsole::LogError(L"CreateRasterizerState() is failed.", __FILE__, __LINE__);
 	}
 }
 

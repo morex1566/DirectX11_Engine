@@ -64,14 +64,12 @@ void CTexture::Load(const std::wstring& InFilePath, ETexture InType)
 				result = DirectX::CreateShaderResourceView(&DirectX11->GetDevice(), image.GetImages(), image.GetImageCount(), image.GetMetadata(), &Resource);
 				if (FAILED(result))
 				{
-					SConsole::LogError(L"CreateShaderResourceView() is failed.");
-					return;
+					SConsole::LogError(L"CreateShaderResourceView() is failed.", __FILE__, __LINE__);
 				}
 			}
 			else
 			{
-				SConsole::LogError(L"LoadFromDDSFile() is failed.");
-				return;
+				SConsole::LogError(L"LoadFromDDSFile() is failed.", __FILE__, __LINE__);
 			}
 
 			break;
@@ -85,14 +83,12 @@ void CTexture::Load(const std::wstring& InFilePath, ETexture InType)
 				result = DirectX::CreateShaderResourceView(&DirectX11->GetDevice(), image.GetImages(), image.GetImageCount(), image.GetMetadata(), &Resource);
 				if (FAILED(result))
 				{
-					SConsole::LogError(L"CreateShaderResourceView() is failed.");
-					return;
+					SConsole::LogError(L"CreateShaderResourceView() is failed.", __FILE__, __LINE__);
 				}
 			}
 			else
 			{
-				SConsole::LogError(L"LoadFromDDSFile() is failed.");
-				return;
+				SConsole::LogError(L"LoadFromDDSFile() is failed.", __FILE__, __LINE__);
 			}
 
 			break;

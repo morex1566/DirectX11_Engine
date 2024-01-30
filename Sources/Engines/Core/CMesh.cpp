@@ -94,8 +94,7 @@ bool CMesh::CreateVertexBuffer()
 		Result = Device.CreateBuffer(&VertexBufferDesc, &VertexData, VertexBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"VertexCreateBuffer() is failed.");
-			return false;
+			SConsole::LogError(L"VertexCreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -135,8 +134,7 @@ bool CMesh::CreateIndexBuffer()
 		Result = Device.CreateBuffer(&IndexBufferDesc, &IndexData, IndexBuffer.GetAddressOf());
 		if (FAILED(Result))
 		{
-			SConsole::LogError(L"CreateBuffer() is failed.");
-			return false;
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
 
@@ -170,7 +168,6 @@ void CMesh::Load(const std::wstring& InFilePath)
 	const aiScene* scene = importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		SConsole::LogError("ERROR::ASSIMP::");
-		return;
+		SConsole::LogError("ERROR::ASSIMP::", __FILE__, __LINE__);
 	}
 }
