@@ -61,9 +61,8 @@ int WINAPI WinMain(HINSTANCE HInstance, HINSTANCE HPrevInstance, PSTR Scmdline, 
 
 			Application.Tick();
 			Application.Draw();
+			Application.End();
 		}
-
-		Application.End();
 	}
 
 

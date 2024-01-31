@@ -46,7 +46,10 @@ void SConsole::Log(const std::wstring& Log)
 		SetConsoleTextAttribute(hConsole, 7);
 	}
 
-	std::wcout << Log << std::endl;
+	std::wcout << L"[" << GetCurrentTimeAsWString() << L"]" <<
+				  L"[Log]" <<
+				  Log <<
+				  std::endl;
 }
 
 void SConsole::LogWarning(const std::wstring& Log, const std::string& inFIleName, int inLine)

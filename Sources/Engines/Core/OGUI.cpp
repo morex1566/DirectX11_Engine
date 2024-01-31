@@ -106,6 +106,14 @@ void OGUI::Tick()
 {
 	Object::Tick();
 
+	for (const auto& Widget : Widgets)
+	{
+		if (Widget->IsEnable)
+		{
+			Widget->Tick();
+		}
+	}
+
 	DirectX11->SetDepthStencilState(ODirectX11::ERenderMode::R_2D);
 	DirectX11->SetRasterizerState(ODirectX11::ERenderMode::R_2D);
 	DirectX11->SetRenderTargets(ODirectX11::ERenderMode::R_2D);

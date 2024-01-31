@@ -80,7 +80,7 @@ void GCamera::Tick()
 	}
 
 	// Movement acelleration.
-	MoveSpeed = OInput::GetKeyDown(DIK_LSHIFT) ? 4.0f : 2.0f;
+	MoveSpeed = OInput::GetKey(DIK_LSHIFT) ? 4.0f : 2.0f;
 
 	// Move and rotate camera from keyboard input.
 	if (OInput::GetMouseButtonDown(OInput::EMouseButton::Right))
@@ -141,22 +141,22 @@ void GCamera::Move()
 	{
 		XMVECTOR DistanceVector = XMVectorSet(0, 0, 0, 0);
 		{
-			if (OInput::GetKeyDown(DIK_W))
+			if (OInput::GetKey(DIK_W))
 			{
 				DistanceVector += Transform->GetForwardVector();
 			}
 
-			if (OInput::GetKeyDown(DIK_S))
+			if (OInput::GetKey(DIK_S))
 			{
 				DistanceVector += Transform->GetBackVector();
 			}
 
-			if (OInput::GetKeyDown(DIK_A))
+			if (OInput::GetKey(DIK_A))
 			{
 				DistanceVector += Transform->GetLeftVector();
 			}
 
-			if (OInput::GetKeyDown(DIK_D))
+			if (OInput::GetKey(DIK_D))
 			{
 				DistanceVector += Transform->GetRightVector();
 			}

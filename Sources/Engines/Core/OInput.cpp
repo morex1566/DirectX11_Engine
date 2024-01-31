@@ -5,6 +5,7 @@
 #include "OInput.h"
 
 uint8				OInput::Keys[256];
+uint8				OInput::Keydowns[256];
 std::queue<uint8>   OInput::History;
 DIMOUSESTATE		OInput::MouseState;
 int					OInput::MousePosX;
@@ -16,6 +17,14 @@ OInput::OInput()
 	MouseState = {};
 	MousePosX = 0;
 	MousePosY = 0;
+}
+
+void OInput::MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam)
+{
+	if (InMsg == WM_KEYDOWN)
+	{
+		Keydowns[InWParam] = 1;
+	}
 }
 
 void OInput::Init()
@@ -144,9 +153,20 @@ void OInput::Tick()
 	UpdateMousePos();
 }
 
+void OInput::End()
+{
+	Object::End();
+
+	ClearKeys();
+}
+
 void OInput::ReadKeyboard()
 {
 	HRESULT Result;
+
+	// 토글구현에 사용
+	uint8 BeforeKeys[256];
+	std::memcpy(BeforeKeys, Keys, sizeof(uint8) * 256);
 
 	// Read the keyboard device.
 	Result = KeyboardInputDevice->GetDeviceState(sizeof(Keys), &Keys);
@@ -180,4 +200,12 @@ void OInput::UpdateMousePos()
 {
 	MousePosX += MouseState.lX;
 	MousePosY += MouseState.lY;
+}
+
+void OInput::ClearKeys()
+{
+	uint8 EmptyKeys[256] = {0,};
+
+	std::memcpy(Keys, EmptyKeys, sizeof(uint8) * 256);
+	std::memcpy(Keydowns, EmptyKeys, sizeof(uint8) * 256);
 }

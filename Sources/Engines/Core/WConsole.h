@@ -13,11 +13,12 @@ public:
 	WConsole& operator=(WConsole&&) noexcept					= default;
 	~WConsole() override;
 
+
 public:
 	void			Init() override {}
 	void			Shutdown() override {}
 	void			Start() override {}
-	void			Tick() override {}
+	void			Tick() override;
 	void			End() override {}
 
 
@@ -27,7 +28,7 @@ public:
 
 private:
 	const OWorld*	World;
-
+	uint8			bIsConsoleOpened = 0;
 
 };
 

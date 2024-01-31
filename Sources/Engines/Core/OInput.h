@@ -29,33 +29,41 @@ public:
 	OInput& operator=(OInput&&) noexcept		= default;
 	~OInput() override							= default;
 
-	void										Init() override;
-	void										Shutdown() override;
-	/**
-	 * \brief Called only once before entering the main loop.
-	 */
-	void										Start() override;
-	/**
-	 * \brief Called once when the every frame.
-	 */
-	void										Tick() override;
 
-	FORCEINLINE	static bool						GetKeyDown(uint8 InDIKCode) { return Keys[InDIKCode] & 0x80 ? true : false; }
-	FORCEINLINE static bool						GetMouseButtonDown(EMouseButton InMouseButtonType) { return MouseState.rgbButtons[static_cast<int>(InMouseButtonType)] & 0x80 ? true : false; }
-	FORCEINLINE static int						GetMousePosX() { return MousePosX; }
-	FORCEINLINE static int						GetMousePosY() { return MousePosY; }
-	FORCEINLINE static int						GetMouseAxisX() { return MouseState.lX; }
-	FORCEINLINE static int						GetMouseAxisY() { return MouseState.lY; }
+public:
+	static void CALLBACK			MessageHandler(HWND InHWnd, UINT InMsg, WPARAM InWParam, LPARAM InLParam);
+
+
+public:
+	void							Init() override;
+	void							Shutdown() override;
+	void							Start() override;
+	void							Tick() override;
+	void							End() override;
+
+	FORCEINLINE	static bool			GetKey(uint8 InDIKCode) { return Keys[InDIKCode] & 0x80 ? true : false; }
+	FORCEINLINE static bool			GetKeyDown(uint8 InVKCode) { return Keydowns[InVKCode] ? true : false; }
+	FORCEINLINE static bool			GetMouseButtonDown(EMouseButton InMouseButtonType) { return MouseState.rgbButtons[static_cast<int>(InMouseButtonType)] & 0x80 ? true : false; }
+	FORCEINLINE static int			GetMousePosX() { return MousePosX; }
+	FORCEINLINE static int			GetMousePosY() { return MousePosY; }
+	FORCEINLINE static int			GetMouseAxisX() { return MouseState.lX; }
+	FORCEINLINE static int			GetMouseAxisY() { return MouseState.lY; }
 
 private:
-	void										ReadKeyboard();
-	void										ReadMouse();
-	void										UpdateMousePos();
+	void							ReadKeyboard();
+	void							ReadMouse();
+	void							UpdateMousePos();
+	void							ClearKeys();
 
 	/**
-	 * \brief '1' means key down, '0' means key up.
+	 * \brief '1' means key down, '0' means key up. (누름)
 	 */
 	static uint8								Keys[256];
+	/**
+	 * \brief '1' means key down, '0' means key up. (토글)
+	 */
+	static uint8								Keydowns[256];
+
 	/**
 	 * \brief History of pressed key at frame.
 	 */

@@ -52,15 +52,12 @@ LRESULT WINAPI OWindow::WindowEventHandler(HWND HWnd, UINT Msg, WPARAM WParam, L
 
 			break;
 		}
-		default:
-		{
-			break;
-		}
 	}
 
 	ODirectX11::MessageHandler(HWnd, Msg, WParam, LParam);
 	OGUI::MessageHandler(HWnd, Msg, WParam, LParam);
 	GCamera::MessageHandler(HWnd, Msg, WParam, LParam);
+	OInput::MessageHandler(HWnd, Msg, WParam, LParam);
 
 	return ::DefWindowProcW(HWnd, Msg, WParam, LParam);
 }
