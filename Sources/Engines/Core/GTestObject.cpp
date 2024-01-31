@@ -42,7 +42,7 @@ GTestObject::GTestObject()
 
 	CModel* Model = new CModel(this);
 	{
-		Model->LoadMesh(ToWString(GET_RESOURCE_FILE_PATH("Cube.fbx")));
+		Model->LoadMesh(ToWString(GET_RESOURCE_FILE_PATH("Steve.fbx")));
 		Model->LoadTexture(ToWString(GET_RESOURCE_FILE_PATH("steve.png")), ETexture::WIC);
 		Model->LoadShader(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
 						  ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));
@@ -76,6 +76,9 @@ void GTestObject::Shutdown()
 void GTestObject::Start()
 {
 	OGameObject::Start();
+
+	Transform->SetScale(XMFLOAT3(0.1, 0.1, 0.1));
+	Transform->SetRotation(XMFLOAT3(90, 0, 0));
 }
 
 void GTestObject::Tick()

@@ -49,7 +49,9 @@ void CModel::LoadMesh(const std::wstring& InFilePath)
 {
 	Assimp::Importer Importer;
 
-	const aiScene* Scene = Importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
+	const aiScene* Scene = Importer.ReadFile(ToString(InFilePath), 
+		aiProcess_Triangulate |
+		aiProcess_ConvertToLeftHanded);
 	if (!Scene || Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !Scene->mRootNode)
 	{
 		SConsole::LogError(L"Cannot read file from Assimp::Importer.", __FILE__, __LINE__);
@@ -57,6 +59,8 @@ void CModel::LoadMesh(const std::wstring& InFilePath)
 	else
 	// 파일 읽기 성공
 	{
+		aiMatrix4RotationX(&Scene->mRootNode->mTransformation, 90);
+
 		ProcessNode(Scene->mRootNode, Scene);
 	}
 }
