@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "CAnimator.h"
+#include "CModel.h"
 
 CAnimator::CAnimator(OGameObject* InOwner)
 	: OComponent(InOwner)
@@ -36,4 +37,9 @@ void CAnimator::End()
 {
 	OComponent::End();
 
+}
+
+void CAnimator::LoadModel(CModel* InModel)
+{
+	Model = InModel;
 }

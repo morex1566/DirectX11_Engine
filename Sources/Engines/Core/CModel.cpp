@@ -45,7 +45,7 @@ void CModel::Tick()
 
 void CModel::End() {}
 
-void CModel::LoadModel(const std::wstring& InFilePath)
+void CModel::LoadMesh(const std::wstring& InFilePath)
 {
 	Assimp::Importer Importer;
 

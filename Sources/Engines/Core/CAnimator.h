@@ -1,6 +1,8 @@
 #pragma once
 #include "OComponent.h"
 
+class CModel;
+
 class CAnimator : public OComponent
 {
 public:
@@ -15,11 +17,19 @@ public:
 
 
 public:
-	virtual void 					Init() override;
-	virtual void					Shutdown() override;
-	virtual void					Start() override;
-	virtual void					Tick() override;
-	virtual void					End() override;
+	virtual void 	Init() override;
+	virtual void	Shutdown() override;
+	virtual void	Start() override;
+	virtual void	Tick() override;
+	virtual void	End() override;
+
+
+public:
+	void LoadModel(CModel* InModel);
+
+	
+private:
+	CModel*			Model;
 
 
 };

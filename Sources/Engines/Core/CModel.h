@@ -6,6 +6,7 @@
 #include "assimp/postprocess.h"
 #include "assimp/scene.h"
 
+#include "CAnimator.h"
 #include "CMesh.h"
 #include "CTexture.h"
 #include "CLitShader.h"
@@ -33,7 +34,7 @@ public:
 
 
 public:
-	void LoadModel(const std::wstring& InFilePath);
+	void LoadMesh(const std::wstring& InFilePath);
 	void LoadTexture(const std::wstring& InFilePath, ETexture InTextureType);
 	void LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 

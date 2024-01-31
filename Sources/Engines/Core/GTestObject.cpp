@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "GTestObject.h"
 #include "CModel.h"
+#include "CAnimator.h"
 
 GTestObject::GTestObject()
 	: OGameObject()
@@ -41,12 +42,19 @@ GTestObject::GTestObject()
 
 	CModel* Model = new CModel(this);
 	{
-		Model->LoadModel(ToWString(GET_RESOURCE_FILE_PATH("Cube.fbx")));
+		Model->LoadMesh(ToWString(GET_RESOURCE_FILE_PATH("Cube.fbx")));
 		Model->LoadTexture(ToWString(GET_RESOURCE_FILE_PATH("steve.png")), ETexture::WIC);
 		Model->LoadShader(ToWString(GET_SHADER_FILE_PATH("LitVertexShader.hlsl")),
 						  ToWString(GET_SHADER_FILE_PATH("LitPixelShader.hlsl")));
 
 		TAttachComponent<CModel>(Model);
+	}
+
+	CAnimator* Animator = new CAnimator(this);
+	{
+		Animator->LoadModel(Model);
+
+		TAttachComponent<CAnimator>(Animator);
 	}
 }
 
