@@ -120,6 +120,9 @@ void OWindow::Init()
 
 	// Get current window size.
 	Resize();
+
+	// 윈도우 창 화면에 출력하기 
+	::ShowWindow(HWnd, SW_SHOWDEFAULT);	
 }
 
 void OWindow::Shutdown()
@@ -133,8 +136,6 @@ void OWindow::Shutdown()
 void OWindow::Start()
 {
 	Object::Start();
-
-	::ShowWindow(HWnd, SW_SHOWDEFAULT);
 }
 
 void OWindow::Tick()

@@ -28,6 +28,8 @@ public:
 	void			Tick() override;
 	void			End() override;
 
+	void			ReleaseResource();
+
 
 public:
 	void Load(const std::wstring& InFilePath, ETexture InType);

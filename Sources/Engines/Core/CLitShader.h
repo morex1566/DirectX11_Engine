@@ -13,6 +13,8 @@ public:
 	CLitShader& operator=(CLitShader&&) noexcept			= default;
 	~CLitShader() override;
 
+
+public:
 	virtual void 					Init() override;
 	virtual void					Shutdown() override;
 	virtual void					Start() override;

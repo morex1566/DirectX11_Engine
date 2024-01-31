@@ -53,7 +53,7 @@ void OInput::Init()
 		}
 
 		// Set the coop level.
-		Result = KeyboardInputDevice->SetCooperativeLevel(HWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+		Result = KeyboardInputDevice->SetCooperativeLevel(HWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 		if (FAILED(Result))
 		{
 			SConsole::LogError(L"KeyboardInputDevice->SetCooperativeLevel() is failed.", __FILE__, __LINE__);
@@ -100,17 +100,37 @@ void OInput::Start()
 	HRESULT Result;
 
 	// Get access to keyboard.
-	Result = KeyboardInputDevice->Acquire();
-	if (FAILED(Result))
+	while (true)
 	{
-		SConsole::LogError(L"KeyboardInputDevice->Acquire() is failed.", __FILE__, __LINE__);
+		Result = KeyboardInputDevice->Acquire();
+
+		if (FAILED(Result))
+		{
+			SConsole::LogWarning(L"KeyboardInputDevice->Acquire() is failed... try again.", __FILE__, __LINE__);
+			continue;
+		}
+		else
+		if (SUCCEEDED(Result))
+		{
+			break;
+		}
 	}
 
 	// Get access to mouse.
-	Result = MouseInputDevice->Acquire();
-	if (FAILED(Result))
+	while (true)
 	{
-		SConsole::LogError(L"MouseInputDevice->Acquire() is failed.", __FILE__, __LINE__);
+		Result = MouseInputDevice->Acquire();
+
+		if (FAILED(Result))
+		{
+			SConsole::LogWarning(L"MouseInputDevice->Acquire() is failed... try again.", __FILE__, __LINE__);
+			continue;
+		}
+		else
+		if (SUCCEEDED(Result))
+		{
+			break;
+		}
 	}
 }
 

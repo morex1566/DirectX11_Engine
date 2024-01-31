@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\Includes\json\json.hpp" />
     <ClInclude Include="..\..\..\Includes\json\json_fwd.hpp" />
+    <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CLitShader.h" />
     <ClInclude Include="CMesh.h" />
     <ClInclude Include="CModel.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="..\..\..\Includes\imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CLitShader.cpp" />
     <ClCompile Include="CMesh.cpp" />
     <ClCompile Include="CModel.cpp" />

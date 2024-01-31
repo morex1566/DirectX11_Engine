@@ -23,11 +23,7 @@ void CTexture::Shutdown()
 {
 	OComponent::Shutdown();
 
-	if (Resource)
-	{
-		Resource->Release();
-		Resource = nullptr;
-	}
+	ReleaseResource();
 }
 
 void CTexture::Start()
@@ -45,9 +41,18 @@ void CTexture::End()
 	OComponent::End();
 }
 
+void CTexture::ReleaseResource()
+{
+	if (Resource)
+	{
+		Resource->Release();
+		Resource = nullptr;
+	}
+}
+
 void CTexture::Load(const std::wstring& InFilePath, ETexture InType)
 {
-	Shutdown();
+	ReleaseResource();
 
 	HRESULT result;
 	DirectX::ScratchImage image;
@@ -88,10 +93,27 @@ void CTexture::Load(const std::wstring& InFilePath, ETexture InType)
 			}
 			else
 			{
-				SConsole::LogError(L"LoadFromDDSFile() is failed.", __FILE__, __LINE__);
+				SConsole::LogError(L"LoadFromTGAFile() is failed.", __FILE__, __LINE__);
 			}
 
 			break;
+		}
+
+		case ETexture::WIC:
+		{
+			result = LoadFromWICFile(InFilePath.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, image);
+			if (SUCCEEDED(result))
+			{
+				result = DirectX::CreateShaderResourceView(&DirectX11->GetDevice(), image.GetImages(), image.GetImageCount(), image.GetMetadata(), &Resource);
+				if (FAILED(result))
+				{
+					SConsole::LogError(L"CreateShaderResourceView() is failed.", __FILE__, __LINE__);
+				}
+			}
+			else
+			{
+				SConsole::LogError(L"LoadFromWICFile() is failed.", __FILE__, __LINE__);
+			}
 		}
 	}
 }

@@ -8,7 +8,7 @@
 **/PCH.pch
 
 # Ignore Resources folder
-Resources/*
+# Resources/*
 
 # Ignore precompiled header file
 Sources/Core/PCH.pch

@@ -160,6 +160,9 @@
     <ClInclude Include="SReflection.h">
       <Filter>Singletons\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="CAnimator.h">
+      <Filter>Components\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Includes\imgui\imgui_draw.cpp">
@@ -257,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="SReflection.cpp">
       <Filter>Singletons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimator.cpp">
+      <Filter>Components\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

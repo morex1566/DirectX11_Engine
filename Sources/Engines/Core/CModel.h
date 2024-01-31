@@ -6,9 +6,10 @@
 #include "assimp/postprocess.h"
 #include "assimp/scene.h"
 
-class CMesh;
-class CTexture;
-class CLitShader;
+#include "CMesh.h"
+#include "CTexture.h"
+#include "CLitShader.h"
+
 
 class CModel : public OComponent
 {
@@ -33,7 +34,7 @@ public:
 
 public:
 	void LoadModel(const std::wstring& InFilePath);
-	void LoadTexture(const std::wstring& InFilePath);
+	void LoadTexture(const std::wstring& InFilePath, ETexture InTextureType);
 	void LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 
 

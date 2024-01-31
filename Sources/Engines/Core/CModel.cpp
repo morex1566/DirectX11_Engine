@@ -1,8 +1,5 @@
 #include "PCH.h"
 #include "CModel.h"
-#include "CMesh.h"
-#include "CTexture.h"
-#include "CLitShader.h"
 
 CModel::CModel(OGameObject* InOwner)
 	: OComponent(InOwner)
@@ -64,10 +61,10 @@ void CModel::LoadModel(const std::wstring& InFilePath)
 	}
 }
 
-void CModel::LoadTexture(const std::wstring& InFilePath)
+void CModel::LoadTexture(const std::wstring& InFilePath, ETexture InTextureType)
 {
 	Texture = new CTexture(Owner);
-	Texture->Load(InFilePath, ETexture::TGA);
+	Texture->Load(InFilePath, InTextureType);
 
 	Owner->TAttachComponent<CTexture>(Texture);
 }
