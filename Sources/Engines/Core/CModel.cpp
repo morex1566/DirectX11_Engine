@@ -11,14 +11,29 @@ CModel::~CModel()
 	Shutdown();
 }
 
-void CModel::Init() {}
+void CModel::Init()
+{
+	OComponent::Init();
+}
 
-void CModel::Shutdown() {}
+void CModel::Shutdown()
+{
+	OComponent::Shutdown();
+}
 
-void CModel::Start() {}
+void CModel::Start() 
+{
+	OComponent::Start();
+
+	CreateVertexBuffer();
+	CreateIndexBuffer();
+}
 
 void CModel::Tick()
 {
+	OComponent::Tick();
+
+	// 랜더타겟뷰를 3D로 변경
 	auto* DirectX11 = SApplication::GetDirectX11();
 	{
 		DirectX11->SetDepthStencilState(ODirectX11::ERenderMode::R_3D);
@@ -36,14 +51,15 @@ void CModel::Tick()
 	}
 
 	// 그리기를 시작할 순서(인덱스) 설정
-	for (auto*& Mesh : Meshes)
-	{
-		Mesh->Render();
-		Shader->Render(Mesh->GetIndexCount(), 0, 0);
-	}
+	Render();
+	Shader->Render(IndexCount, 0, 0);
 }
 
-void CModel::End() {}
+void CModel::End()
+{
+	OComponent::End();
+}
+
 
 void CModel::LoadMesh(const std::wstring& InFilePath)
 {
@@ -59,9 +75,7 @@ void CModel::LoadMesh(const std::wstring& InFilePath)
 	else
 	// 파일 읽기 성공
 	{
-		aiMatrix4RotationX(&Scene->mRootNode->mTransformation, 90);
-
-		ProcessNode(Scene->mRootNode, Scene);
+		Parse(Scene);
 	}
 }
 
@@ -81,28 +95,85 @@ void CModel::LoadShader(const std::wstring& InVSFilePath, const std::wstring& In
 	Owner->TAttachComponent<CLitShader>(Shader);
 }
 
-void CModel::ProcessNode(const aiNode* InNode, const aiScene* InScene)
+void CModel::AddVertex(const FVertex& InVertex)
 {
-	for (UINT i = 0; i < InNode->mNumMeshes; i++)
-	{
-		aiMesh* Mesh = InScene->mMeshes[InNode->mMeshes[i]];
-		Meshes.emplace_back(ProcessMesh(Mesh, InNode));
-	}
+	Vertices.emplace_back(InVertex);
+	VertexCount++;
+}
 
-	for (UINT i = 0; i < InNode->mNumChildren; i++)
+void CModel::AddIndex(UINT InIndex)
+{
+	Indices.emplace_back(InIndex);
+	IndexCount++;
+}
+
+void CModel::Render()
+{
+	UINT				 Stride;
+	UINT				 Offset;
+
+	Stride = sizeof(FVertex);
+	Offset = 0;
+	ID3D11DeviceContext& DeviceContext = SApplication::GetDirectX11()->GetDeviceContext();
 	{
-		ProcessNode(InNode->mChildren[i], InScene);
+		// Set the vertex buffer to active in the input assembler so it can be rendered.
+		DeviceContext.IASetVertexBuffers(0, 1, &VertexBuffer, &Stride, &Offset);
+
+		// Set the index buffer to active in the input assembler so it can be rendered.
+		DeviceContext.IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+		// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
+		DeviceContext.IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	}
 }
 
-CMesh* CModel::ProcessMesh(const aiMesh* InMesh, const aiNode* InNode)
+void CModel::Parse(const aiScene* InScene)
 {
-	std::vector<FVertex>		Vertices;
-	std::vector<UINT>			Indices;
+	// 파일의 데이터 
+	int TotalVertexCount = 0;
+	int TotalIndexCount = 0;
+	int TotalBoneCount = 0;
 
+	MeshBaseIndex.resize(InScene->mNumMeshes);
 
+	for (UINT i = 0; i < InScene->mNumMeshes; i++)
+	{
+		// 메쉬정보 추출
+		const aiMesh* Mesh = InScene->mMeshes[i];
+		{
+			int VertexCountInMesh = Mesh->mNumVertices;
+			int IndexCountInMesh = Mesh->mNumFaces * 3; // D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
+			int BoneCountInMesh = Mesh->mNumBones;
+
+			// Vertices에 대한 현재 메쉬의 시작 Index를 저장
+			// 메쉬 정보 추출
+			MeshBaseIndex[i] = TotalVertexCount;
+			if (Mesh->mNumVertices > 0)
+			{
+				ParseMesh(Mesh, InScene);
+			}
+
+			TotalVertexCount += VertexCountInMesh;
+			TotalIndexCount += IndexCountInMesh;
+			TotalBoneCount += BoneCountInMesh;
+
+			// 뼈 정보 추출
+			VertexBoneDatas.resize(TotalVertexCount);
+			if (Mesh->HasBones())
+			{
+				ParseBone(i, Mesh);
+			}
+		}
+	}
+
+	VertexCount = TotalVertexCount;
+	IndexCount = TotalIndexCount;
+	BoneCount = TotalBoneCount;
+}
+
+void CModel::ParseMesh(const aiMesh* InMesh, const aiScene* InScene)
+{
 	// 정점 추출
-	CMesh* Mesh = new CMesh(Owner);
 	for (UINT i = 0; i < InMesh->mNumVertices; i++)
 	{
 		// 위치
@@ -125,9 +196,9 @@ CMesh* CModel::ProcessMesh(const aiMesh* InMesh, const aiNode* InNode)
 			InMesh->mNormals[i].x,
 			InMesh->mNormals[i].y,
 			InMesh->mNormals[i].z
-		);
+		);		
 
-		Mesh->AddVertex(FVertex(Position, XMFLOAT4(), TexCoord, Normal));
+		AddVertex(FVertex(Position, XMFLOAT4(), TexCoord, Normal));
 	}
 
 	// 인덱스 설정
@@ -137,17 +208,120 @@ CMesh* CModel::ProcessMesh(const aiMesh* InMesh, const aiNode* InNode)
 
 		for (UINT j = 0; j < Face.mNumIndices; j++)
 		{
-			Mesh->AddIndex(Face.mIndices[j]);
+			AddIndex(Face.mIndices[j]);
 		}
 	}
+}
 
-	// 정점 로드X
-	if (Mesh->GetVertexCount() <= 0)
+void CModel::ParseBone(UINT InMeshIndex, const aiMesh* InMesh)
+{
+	for (UINT i = 0; i < InMesh->mNumBones; i++)
 	{
-		SConsole::LogError(L"Vertice is not loaded.", __FILE__, __LINE__);
+		aiBone* Bone = InMesh->mBones[i];
+
+		AddBoneID(Bone);
+
+		for (UINT j = 0; j < Bone->mNumWeights; j++)
+		{
+			const aiVertexWeight& VertexWeight = Bone->mWeights[j];
+			FVertexBoneData		  VertexBoneData;
+			UINT				  BoneID = BoneNameIDMaps[Bone->mName.C_Str()];
+
+			SConsole::Log(L"BoneID : " + ToWString(Bone->mName.C_Str()) + L",  VertexID : "
+			+ std::to_wstring(VertexWeight.mVertexId) + 
+			L",  " + std::to_wstring(VertexWeight.mWeight));
+
+			VertexBoneData.AddBoneData(BoneID, VertexWeight.mWeight);
+			VertexBoneDatas[MeshBaseIndex[InMeshIndex] + VertexWeight.mVertexId] = VertexBoneData;
+		}
+	}
+}
+
+void CModel::CreateVertexBuffer()
+{
+	D3D11_BUFFER_DESC			VertexBufferDesc;
+	D3D11_SUBRESOURCE_DATA		VertexData;
+	HRESULT						Result;
+
+	// Initialize vertex buffer desc.
+	{
+		ZeroMemory(&VertexBufferDesc, sizeof(VertexBufferDesc));
+
+		VertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		VertexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(FVertex) * Vertices.size());
+		VertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		VertexBufferDesc.CPUAccessFlags = 0;
+		VertexBufferDesc.MiscFlags = 0;
+		VertexBufferDesc.StructureByteStride = 0;
 	}
 
-	Owner->TAttachComponent<CMesh>(Mesh);
+	// Initialize vertex data.
+	{
+		ZeroMemory(&VertexData, sizeof(VertexData));
 
-	return Mesh;
+		VertexData.pSysMem = Vertices.data();
+		VertexData.SysMemPitch = 0;
+		VertexData.SysMemSlicePitch = 0;
+	}
+
+	// Create vertex buffer.
+	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
+	{
+		Result = Device.CreateBuffer(&VertexBufferDesc, &VertexData, &VertexBuffer);
+		if (FAILED(Result))
+		{
+			SConsole::LogError(L"VertexCreateBuffer() is failed.", __FILE__, __LINE__);
+		}
+	}
+}
+
+void CModel::CreateIndexBuffer()
+{
+	D3D11_BUFFER_DESC			IndexBufferDesc;
+	D3D11_SUBRESOURCE_DATA		IndexData;
+	HRESULT						Result;
+
+	// Initialize index buffer desc.
+	{
+		ZeroMemory(&IndexBufferDesc, sizeof(IndexBufferDesc));
+
+		IndexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		IndexBufferDesc.ByteWidth = static_cast<UINT>(sizeof(UINT) * Indices.size());
+		IndexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		IndexBufferDesc.CPUAccessFlags = 0;
+		IndexBufferDesc.MiscFlags = 0;
+		IndexBufferDesc.StructureByteStride = 0;
+	}
+
+	// Initialize index data.
+	{
+		ZeroMemory(&IndexData, sizeof(IndexData));
+
+		IndexData.pSysMem = Indices.data();
+		IndexData.SysMemPitch = 0;
+		IndexData.SysMemSlicePitch = 0;
+	}
+
+	// Create index buffer.
+	ID3D11Device& Device = SApplication::GetDirectX11()->GetDevice();
+	{
+		Result = Device.CreateBuffer(&IndexBufferDesc, &IndexData, &IndexBuffer);
+		if (FAILED(Result))
+		{
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
+		}
+	}
+}
+
+void CModel::AddBoneID(const aiBone* InBone)
+{
+	UINT BoneID = 0;
+	std::string BoneName = std::string(InBone->mName.C_Str());
+
+	// 처음 등록하는 경우.
+	if (BoneNameIDMaps.find(BoneName) == BoneNameIDMaps.end())
+	{
+		BoneID = BoneNameIDMaps.size();
+		BoneNameIDMaps[BoneName] = BoneID;
+	}
 }

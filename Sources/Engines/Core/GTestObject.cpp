@@ -77,8 +77,8 @@ void GTestObject::Start()
 {
 	OGameObject::Start();
 
-	Transform->SetScale(XMFLOAT3(0.1, 0.1, 0.1));
-	Transform->SetRotation(XMFLOAT3(90, 0, 0));
+	Transform->SetScale(XMFLOAT3(0.1f, 0.1f, 0.1f));
+	Transform->SetRotation(XMFLOAT3(90.0f, 0.0f, 0.0f));
 }
 
 void GTestObject::Tick()

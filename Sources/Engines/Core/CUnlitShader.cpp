@@ -38,31 +38,6 @@ void CUnlitShader::Start()
 void CUnlitShader::Tick()
 {
 	OComponent::Tick();
-
-	const GCamera* Camera;
-	const CTransform* Transform;
-
-	auto DirectX11 = SApplication::GetDirectX11();
-	{
-		DirectX11->SetDepthStencilState(ODirectX11::ERenderMode::R_3D);
-		DirectX11->SetRasterizerState(ODirectX11::ERenderMode::R_3D);
-		DirectX11->SetRenderTargets(ODirectX11::ERenderMode::R_3D);
-		DirectX11->SetViewport(ODirectX11::ERenderMode::R_3D);
-	}
-
-	// Set shader essential params.
-	Camera = SApplication::GetCamera();
-	Transform = Owner->GetTransform();
-	{
-		SetShaderParameters(Transform->GetWorldMatrix(), Camera->GetViewMatrix(), Camera->GetProjectionMatrix());
-	}
-
-	// Set index order.
-	for (auto& Mesh : Owner->TGetComponents<CMesh>())
-	{
-		Mesh->Render();
-		this->Render(Mesh->GetIndexCount(), 0, 0);
-	}
 }
 
 void CUnlitShader::End()

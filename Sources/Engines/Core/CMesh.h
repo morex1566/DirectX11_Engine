@@ -26,7 +26,6 @@ public:
 	void										AddVertex(const FVertex& InVertex);
 	void										AddIndex(UINT InIndex);
 	void										Render();
-	void										Load(const std::wstring& InFilePath);
 	FORCEINLINE UINT							GetVertexCount() { return Vertices.size(); }
 	FORCEINLINE UINT							GetIndexCount() { return Indices.size(); }
 	FORCEINLINE void							SetPrimitiveType(D3D11_PRIMITIVE_TOPOLOGY InType) { PrimitiveType = InType; }
@@ -42,6 +41,9 @@ private:
 	std::vector<UINT>							Indices;
 	D3D11_PRIMITIVE_TOPOLOGY					PrimitiveType;
 
+	// std::vector<UINT>						MeshBaseVertices;
+	std::vector<FVertexBoneData>				VertexToBones;
+	std::map<std::string, UINT>					BoneNameToIndexMap;
 
 };
 

@@ -37,19 +37,41 @@ public:
 	void LoadMesh(const std::wstring& InFilePath);
 	void LoadTexture(const std::wstring& InFilePath, ETexture InTextureType);
 	void LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
+	void AddVertex(const FVertex& InVertex);
+	void AddIndex(UINT InIndex);
+	void Render();
 
 
 private:
-	void ProcessNode(const aiNode* InNode, const aiScene* InScene);
-	CMesh* ProcessMesh(const aiMesh* InMesh, const aiNode* InNode);
+	void Parse(const aiScene* InScene);
+	void ParseMesh(const aiMesh* InMesh, const aiScene* InScene);
+	void ParseBone(UINT InMeshIndex, const aiMesh* InMesh);
+	void CreateVertexBuffer();
+	void CreateIndexBuffer();
+	void AddBoneID(const aiBone* InBone);
+
+	FORCEINLINE UINT GetVertexCount() { return VertexCount; }
+	FORCEINLINE UINT GetIndexCount() { return IndexCount; }
+	FORCEINLINE UINT GetBoneCount() { return BoneCount; }
+	FORCEINLINE UINT GetBoneID(std::string BoneName) { return BoneNameIDMaps[BoneName]; }
 
 
 private:
-	std::vector<CMesh*>			Meshes;
-	//std::vector<CTexture*>    Textures;
-	//std::vector<CLitShader*>	Shaders;
-	CTexture*					Texture;
-	CLitShader*					Shader;
+	CTexture*							Texture;
+	CLitShader*							Shader;
+	std::vector<FVertex>				Vertices;
+	std::vector<UINT>					Indices;
+	std::vector<FVertexBoneData>		VertexBoneDatas;
+	std::vector<UINT>					MeshBaseIndex; // Vertices를 메쉬단위로 읽을 때, 필요합니다.
+	std::vector<FBoneTransform>			BoneTransforms;
+	std::map<std::string, UINT>			BoneNameIDMaps;
+
+	UINT								VertexCount;
+	UINT								IndexCount;
+	UINT								BoneCount;
+
+	ID3D11Buffer*						VertexBuffer;
+	ID3D11Buffer*						IndexBuffer;
 
 
 };

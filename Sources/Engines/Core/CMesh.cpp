@@ -36,15 +36,8 @@ void CMesh::Start()
 {
 	OComponent::Start();
 
-	if (!CreateVertexBuffer())
-	{
-		throw std::exception();
-	}
-
-	if (!CreateIndexBuffer())
-	{
-		throw std::exception();
-	}
+	CreateVertexBuffer();
+	CreateIndexBuffer();
 }
 
 void CMesh::Tick()
@@ -164,16 +157,5 @@ void CMesh::Render()
 
 		// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 		DeviceContext.IASetPrimitiveTopology(PrimitiveType);
-	}
-}
-
-void CMesh::Load(const std::wstring& InFilePath)
-{
-	Assimp::Importer importer;
-
-	const aiScene* scene = importer.ReadFile(ToString(InFilePath), aiProcess_Triangulate);
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-	{
-		SConsole::LogError(L"ERROR::ASSIMP::", __FILE__, __LINE__);
 	}
 }
