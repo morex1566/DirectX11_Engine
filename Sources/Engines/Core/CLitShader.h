@@ -25,7 +25,7 @@ public:
 public:
 	void							Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 	void							SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection, 
-														ID3D11ShaderResourceView* texture);
+														FBoneTransform* InBoneTransforms, ID3D11ShaderResourceView* texture);
 	void							Render(UINT InIndexCount, UINT InStartIndexToProcessing, INT InBaseVertexLocation);
 
 

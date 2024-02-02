@@ -198,7 +198,8 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 
 }
 
-void CLitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection, ID3D11ShaderResourceView* texture)
+void CLitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView,
+									 const XMMATRIX& InProjection, FBoneTransform* InBoneTransforms, ID3D11ShaderResourceView* texture)
 {
 	HRESULT							Result;
 	D3D11_MAPPED_SUBRESOURCE		MappedResource;

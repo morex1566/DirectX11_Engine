@@ -2,6 +2,7 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "assimp-vc143-mtd.lib")
 
 #pragma warning(disable : 4267)
 #pragma warning(disable : 26495)

@@ -1,11 +1,11 @@
 #pragma once
-#include "OComponent.h"
 
 #include "assimp/Importer.hpp"
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
 #include "assimp/scene.h"
 
+#include "OComponent.h"
 #include "CAnimator.h"
 #include "CMesh.h"
 #include "CTexture.h"
@@ -34,7 +34,7 @@ public:
 
 
 public:
-	void LoadMesh(const std::wstring& InFilePath);
+	void Load(const std::wstring& InFilePath);
 	void LoadTexture(const std::wstring& InFilePath, ETexture InTextureType);
 	void LoadShader(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 	void AddVertex(const FVertex& InVertex);
@@ -43,24 +43,51 @@ public:
 
 
 private:
-	void Parse(const aiScene* InScene);
-	void ParseMesh(const aiMesh* InMesh, const aiScene* InScene);
-	void ParseBone(UINT InMeshIndex, const aiMesh* InMesh, const aiScene* InScene);
+	void Parse();
+	void ParseMesh(const aiMesh* InMesh);
+	void ParseBone(UINT InMeshIndex, const aiMesh* InMesh);
+	void UpdateBoneTransforms(float InTimeinSeconds);
+	void ReadNodeHierarchy(float AnimationTime, const aiNode* InNode, const XMMATRIX& InParentTransform);
+	const aiNodeAnim* FindNodeAnimation(const aiAnimation* Anim, const std::string& NodeName);
+	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* NodeAnim);
+	UINT FindScaling(float AnimationTimeTicks, const aiNodeAnim* NodeAnim);
+	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTimeTicks, const aiNodeAnim* NodeAnim);
+	UINT FindRotation(float AnimationTimeTicks, const aiNodeAnim* NodeAnim);
+	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTimeTicks, const aiNodeAnim* NodeAnim);
+	UINT FindPosition(float AnimationTimeTicks, const aiNodeAnim* NodeAnim);
 	void CreateVertexBuffer();
 	void CreateIndexBuffer();
-	void CreateBoneTransforms(float InTimeinSeconds, const aiScene* InScene);
 
 	FORCEINLINE UINT GetVertexCount() { return VertexCount; }
 	FORCEINLINE UINT GetIndexCount() { return IndexCount; }
 	FORCEINLINE UINT GetBoneCount() { return BoneCount; }
+	FORCEINLINE int GetBoneID(const std::string& InBoneName) 
+	{
+		if (BoneIDs.find(InBoneName) == BoneIDs.end())
+		{
+			BoneIDs[InBoneName] = (int)BoneIDs.size();
+		}
 
+		return BoneIDs[InBoneName];
+	}
+	
 
 private:
 	CTexture*							Texture;
 	CLitShader*							Shader;
 	std::vector<FVertex>				Vertices;
 	std::vector<UINT>					Indices;
-	std::vector<FBoneTransform>			BoneTransforms;
+
+	// BoneID는 BoneTransforms의 인덱스와 매치.
+	FBoneTransform*						BoneTransforms;
+	std::map<std::string, int>			BoneIDs;
+
+	// Assimp Importer 인스턴스
+	Assimp::Importer					Importer;
+	const aiScene*						Scene;
+
+	// Animation Test 용 시간
+	float								Time = 0.0f;
 
 	UINT								VertexCount;
 	UINT								IndexCount;
