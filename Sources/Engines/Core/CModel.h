@@ -45,9 +45,10 @@ public:
 private:
 	void Parse(const aiScene* InScene);
 	void ParseMesh(const aiMesh* InMesh, const aiScene* InScene);
-	void ParseBone(UINT InMeshIndex, const aiMesh* InMesh);
+	void ParseBone(UINT InMeshIndex, const aiMesh* InMesh, const aiScene* InScene);
 	void CreateVertexBuffer();
 	void CreateIndexBuffer();
+	void CreateBoneTransforms(float InTimeinSeconds, const aiScene* InScene);
 
 	FORCEINLINE UINT GetVertexCount() { return VertexCount; }
 	FORCEINLINE UINT GetIndexCount() { return IndexCount; }

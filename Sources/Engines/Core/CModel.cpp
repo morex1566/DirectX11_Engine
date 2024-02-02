@@ -156,7 +156,7 @@ void CModel::Parse(const aiScene* InScene)
 			// 뼈 정보 추출
 			if (Mesh->HasBones())
 			{
-				ParseBone(i, Mesh);
+				ParseBone(i, Mesh, InScene);
 			}
 		}
 	}
@@ -208,19 +208,18 @@ void CModel::ParseMesh(const aiMesh* InMesh, const aiScene* InScene)
 	}
 }
 
-void CModel::ParseBone(UINT InMeshIndex, const aiMesh* InMesh)
+void CModel::ParseBone(UINT InMeshIndex, const aiMesh* InMesh, const aiScene* InScene)
 {
 	for (UINT i = 0; i < InMesh->mNumBones; i++)
 	{
 		aiBone* Bone = InMesh->mBones[i];
 
+		// 뼈의 가중치를 Vertex에 전달합니다.
 		for (UINT j = 0; j < Bone->mNumWeights; j++)
 		{
 			const aiVertexWeight& VertexWeight = Bone->mWeights[j];
 
-			SConsole::Log(L"BoneID : " + ToWString(Bone->mName.C_Str()) + L",  VertexID : "
-			+ std::to_wstring(VertexWeight.mVertexId) + 
-			L",  " + std::to_wstring(VertexWeight.mWeight));
+			Vertices[VertexWeight.mVertexId].AddBone(i, VertexWeight.mWeight);
 		}
 	}
 }
@@ -299,4 +298,17 @@ void CModel::CreateIndexBuffer()
 			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 	}
+}
+
+void CModel::CreateBoneTransforms(float InTimeinSeconds, const aiScene* InScene)
+{
+	XMMATRIX BoneTransform;
+
+	float TicksPerSecond = InScene->mAnimations[0]->mTicksPerSecond != 0 ?
+						   InScene->mAnimations[0]->mTicksPerSecond 
+						   : 25.0f;
+
+	float TimeInTicks = InTimeinSeconds * TicksPerSecond;
+	float AnimationTime = fmod(TimeInTicks, InScene->mAnimations[0]->mDuration);
+
 }
