@@ -134,8 +134,6 @@ void CModel::Parse(const aiScene* InScene)
 	int TotalIndexCount = 0;
 	int TotalBoneCount = 0;
 
-	MeshBaseIndex.resize(InScene->mNumMeshes);
-
 	for (UINT i = 0; i < InScene->mNumMeshes; i++)
 	{
 		// 메쉬정보 추출
@@ -145,9 +143,7 @@ void CModel::Parse(const aiScene* InScene)
 			int IndexCountInMesh = Mesh->mNumFaces * 3; // D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
 			int BoneCountInMesh = Mesh->mNumBones;
 
-			// Vertices에 대한 현재 메쉬의 시작 Index를 저장
 			// 메쉬 정보 추출
-			MeshBaseIndex[i] = TotalVertexCount;
 			if (Mesh->mNumVertices > 0)
 			{
 				ParseMesh(Mesh, InScene);
@@ -158,7 +154,6 @@ void CModel::Parse(const aiScene* InScene)
 			TotalBoneCount += BoneCountInMesh;
 
 			// 뼈 정보 추출
-			VertexBoneDatas.resize(TotalVertexCount);
 			if (Mesh->HasBones())
 			{
 				ParseBone(i, Mesh);
@@ -198,7 +193,7 @@ void CModel::ParseMesh(const aiMesh* InMesh, const aiScene* InScene)
 			InMesh->mNormals[i].z
 		);		
 
-		AddVertex(FVertex(Position, XMFLOAT4(), TexCoord, Normal));
+		AddVertex(FVertex(Position, XMFLOAT4(), TexCoord, Normal, XMFLOAT3(), XMFLOAT3()));
 	}
 
 	// 인덱스 설정
@@ -219,20 +214,13 @@ void CModel::ParseBone(UINT InMeshIndex, const aiMesh* InMesh)
 	{
 		aiBone* Bone = InMesh->mBones[i];
 
-		AddBoneID(Bone);
-
 		for (UINT j = 0; j < Bone->mNumWeights; j++)
 		{
 			const aiVertexWeight& VertexWeight = Bone->mWeights[j];
-			FVertexBoneData		  VertexBoneData;
-			UINT				  BoneID = BoneNameIDMaps[Bone->mName.C_Str()];
 
 			SConsole::Log(L"BoneID : " + ToWString(Bone->mName.C_Str()) + L",  VertexID : "
 			+ std::to_wstring(VertexWeight.mVertexId) + 
 			L",  " + std::to_wstring(VertexWeight.mWeight));
-
-			VertexBoneData.AddBoneData(BoneID, VertexWeight.mWeight);
-			VertexBoneDatas[MeshBaseIndex[InMeshIndex] + VertexWeight.mVertexId] = VertexBoneData;
 		}
 	}
 }
@@ -310,18 +298,5 @@ void CModel::CreateIndexBuffer()
 		{
 			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
-	}
-}
-
-void CModel::AddBoneID(const aiBone* InBone)
-{
-	UINT BoneID = 0;
-	std::string BoneName = std::string(InBone->mName.C_Str());
-
-	// 처음 등록하는 경우.
-	if (BoneNameIDMaps.find(BoneName) == BoneNameIDMaps.end())
-	{
-		BoneID = BoneNameIDMaps.size();
-		BoneNameIDMaps[BoneName] = BoneID;
 	}
 }

@@ -22,12 +22,6 @@ void OWorld::Init()
 	GTestObject* TestGameObject = new GTestObject;
 	TAttachGameObject<GTestObject>(TestGameObject);
 
-	GGizmo* Gizmo = new GGizmo;
-	TAttachGameObject<GGizmo>(Gizmo);
-
-	// TDetachGameObject(TestGameObject);
-	// TDetachGameObject(Gizmo);
-
 	// GameObjectHashMap
 	{
 		for (auto& Hash : GameObjects)

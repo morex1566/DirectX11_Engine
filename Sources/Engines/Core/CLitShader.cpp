@@ -47,10 +47,9 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 	ComPtr<ID3DBlob>			ErrorMsg;
 	ComPtr<ID3DBlob>			VertexShaderBuffer;
 	ComPtr<ID3DBlob>			PixelShaderBuffer;
-	D3D11_INPUT_ELEMENT_DESC	PolygonLayout[4];
+	D3D11_INPUT_ELEMENT_DESC	PolygonLayout[8];
 	D3D11_BUFFER_DESC			MatrixBufferDesc;
 	D3D11_SAMPLER_DESC			SamplerStateDesc;
-
 
 	// Initialize layout desc.
 	// Must be equal to shader constant buffer type.
@@ -69,7 +68,7 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 	PolygonLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 	PolygonLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	PolygonLayout[1].InstanceDataStepRate = 0;
-
+		
 	PolygonLayout[2].SemanticName = "TEXCOORD";
 	PolygonLayout[2].SemanticIndex = 0;
 	PolygonLayout[2].Format = DXGI_FORMAT_R32G32_FLOAT;
@@ -85,6 +84,38 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 	PolygonLayout[3].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 	PolygonLayout[3].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	PolygonLayout[3].InstanceDataStepRate = 0;
+
+	PolygonLayout[4].SemanticName = "BINORMAL";
+	PolygonLayout[4].SemanticIndex = 0;
+	PolygonLayout[4].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	PolygonLayout[4].InputSlot = 0;
+	PolygonLayout[4].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	PolygonLayout[4].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	PolygonLayout[4].InstanceDataStepRate = 0;
+
+	PolygonLayout[5].SemanticName = "TANGENT";
+	PolygonLayout[5].SemanticIndex = 0;
+	PolygonLayout[5].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	PolygonLayout[5].InputSlot = 0;
+	PolygonLayout[5].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	PolygonLayout[5].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	PolygonLayout[5].InstanceDataStepRate = 0;
+
+	PolygonLayout[6].SemanticName = "TEXCOORD";
+	PolygonLayout[6].SemanticIndex = 1;
+	PolygonLayout[6].Format = DXGI_FORMAT_R32G32B32A32_SINT;
+	PolygonLayout[6].InputSlot = 0;
+	PolygonLayout[6].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	PolygonLayout[6].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	PolygonLayout[6].InstanceDataStepRate = 0;
+
+	PolygonLayout[7].SemanticName = "TEXCOORD";
+	PolygonLayout[7].SemanticIndex = 2;
+	PolygonLayout[7].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	PolygonLayout[7].InputSlot = 0;
+	PolygonLayout[7].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	PolygonLayout[7].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	PolygonLayout[7].InstanceDataStepRate = 0;
 
 	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
 	MatrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;

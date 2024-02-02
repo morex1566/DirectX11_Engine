@@ -40,11 +40,6 @@ private:
 	std::vector<FVertex>						Vertices;
 	std::vector<UINT>							Indices;
 	D3D11_PRIMITIVE_TOPOLOGY					PrimitiveType;
-
-	// std::vector<UINT>						MeshBaseVertices;
-	std::vector<FVertexBoneData>				VertexToBones;
-	std::map<std::string, UINT>					BoneNameToIndexMap;
-
 };
 
 

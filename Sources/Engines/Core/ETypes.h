@@ -6,31 +6,14 @@ struct FVertex
 	XMFLOAT4 Color;
 	XMFLOAT2 Texture;
 	XMFLOAT3 Normal;
+	XMFLOAT3 Binormal;
+	XMFLOAT3 Tangent;
+	XMINT4   Bone;
+	XMFLOAT4 Weight;
 
 	FVertex() = default;
-	FVertex(XMFLOAT3 InPosition, XMFLOAT4 InColor, XMFLOAT2 InTexture, XMFLOAT3 InNormal) 
-	: Position(InPosition), Color(InColor), Texture(InTexture), Normal(InNormal) {}
-}; 
-
-#define MAX_NUM_BONES_PER_VERTEX 4
-#define ARRAY_SIZE_IN_ELEMENTS(ARR) (sizeof(ARR) / sizeof(ARR[0]))
-struct FVertexBoneData
-{
-	UINT BoneIDs[MAX_NUM_BONES_PER_VERTEX] = {0, };
-	float Weights[MAX_NUM_BONES_PER_VERTEX] = {0.0f, };
-
-	void AddBoneData(UINT BoneID, float Weight)
-	{
-		for (UINT i = 0; i < ARRAY_SIZE_IN_ELEMENTS(BoneIDs); i++)
-		{
-			if (Weights[i] == 0.0f) 
-			{
-				BoneIDs[i] = BoneID;
-				Weights[i] = Weight;
-				return;
-			}
-		}
-	}
+	FVertex(XMFLOAT3 InPosition, XMFLOAT4 InColor, XMFLOAT2 InTexture, XMFLOAT3 InNormal, XMFLOAT3 InBinormal, XMFLOAT3 InTangent)
+	: Position(InPosition), Color(InColor), Texture(InTexture), Normal(InNormal), Binormal(InBinormal), Tangent(InTangent) {}
 };
 
 struct FBoneTransform

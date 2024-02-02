@@ -48,12 +48,10 @@ private:
 	void ParseBone(UINT InMeshIndex, const aiMesh* InMesh);
 	void CreateVertexBuffer();
 	void CreateIndexBuffer();
-	void AddBoneID(const aiBone* InBone);
 
 	FORCEINLINE UINT GetVertexCount() { return VertexCount; }
 	FORCEINLINE UINT GetIndexCount() { return IndexCount; }
 	FORCEINLINE UINT GetBoneCount() { return BoneCount; }
-	FORCEINLINE UINT GetBoneID(std::string BoneName) { return BoneNameIDMaps[BoneName]; }
 
 
 private:
@@ -61,10 +59,7 @@ private:
 	CLitShader*							Shader;
 	std::vector<FVertex>				Vertices;
 	std::vector<UINT>					Indices;
-	std::vector<FVertexBoneData>		VertexBoneDatas;
-	std::vector<UINT>					MeshBaseIndex; // Vertices를 메쉬단위로 읽을 때, 필요합니다.
 	std::vector<FBoneTransform>			BoneTransforms;
-	std::map<std::string, UINT>			BoneNameIDMaps;
 
 	UINT								VertexCount;
 	UINT								IndexCount;
