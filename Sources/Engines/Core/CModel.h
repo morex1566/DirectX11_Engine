@@ -79,7 +79,8 @@ private:
 	std::vector<UINT>					Indices;
 
 	// BoneID는 BoneTransforms의 인덱스와 매치.
-	FBoneTransform*						BoneTransforms;
+	FBone*								BoneTransform;
+	
 	std::map<std::string, int>			BoneIDs;
 
 	// Assimp Importer 인스턴스

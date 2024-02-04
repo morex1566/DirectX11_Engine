@@ -1,4 +1,5 @@
 #pragma once
+#include "ETypes.h"
 
 struct FVertex
 {
@@ -43,10 +44,14 @@ struct FVertex
 	}
 };
 
-struct FBoneTransform
+#define MAX_BONE_COUNT 100
+/// <summary>
+/// 쉐이더에 넘겨주는 버퍼입니다.
+/// </summary>
+struct FBone
 {
-	XMMATRIX Offset;
-	XMMATRIX Transform;
+	XMMATRIX Offset[MAX_BONE_COUNT];
+	XMMATRIX Transform[MAX_BONE_COUNT];
 };
 
 struct FWorldViewProjection

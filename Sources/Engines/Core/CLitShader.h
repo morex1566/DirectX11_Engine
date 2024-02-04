@@ -25,7 +25,7 @@ public:
 public:
 	void							Load(const std::wstring& InVSFilePath, const std::wstring& InPSFilePath);
 	void							SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView, const XMMATRIX& InProjection, 
-														FBoneTransform* InBoneTransforms, ID3D11ShaderResourceView* texture);
+														FBone* InBone, ID3D11ShaderResourceView* texture);
 	void							Render(UINT InIndexCount, UINT InStartIndexToProcessing, INT InBaseVertexLocation);
 
 
@@ -34,6 +34,7 @@ private:
 	ComPtr<ID3D11PixelShader>		PixelShader;
 	ComPtr<ID3D11InputLayout>		Layout;
 	ComPtr<ID3D11Buffer>			MatrixBuffer;
+	ComPtr<ID3D11Buffer>			BoneBuffer;
 	ComPtr<ID3D11SamplerState>		SamplerState;
 
 	std::wstring					VSFilePath;

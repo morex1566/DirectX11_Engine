@@ -33,10 +33,10 @@ void CModel::Shutdown()
 {
 	OComponent::Shutdown();
 
-	if (BoneTransforms != nullptr)
+	if (BoneTransform != nullptr)
 	{
-		delete[] BoneTransforms;
-		BoneTransforms = nullptr;
+		delete[] BoneTransform;
+		BoneTransform = nullptr;
 	}
 }
 
@@ -73,7 +73,7 @@ void CModel::Tick()
 	auto* Transform = Owner->GetTransform();
 	{
 		Shader->SetShaderParameters(Transform->GetWorldMatrix(), Camera->GetViewMatrix(),
-									Camera->GetProjectionMatrix(), BoneTransforms, Texture->GetResource());
+									Camera->GetProjectionMatrix(), BoneTransform, Texture->GetResource());
 	}
 
 	// 그리기를 시작할 순서(인덱스) 설정
@@ -176,7 +176,7 @@ void CModel::Parse()
 		BoneCount = TotalBoneCount;
 	}
 
-	BoneTransforms = new FBoneTransform[BoneCount];
+	BoneTransform = new FBone;
 
 	// 데이터 추출
 	for (UINT i = 0; i < Scene->mNumMeshes; i++)
@@ -249,8 +249,8 @@ void CModel::ParseBone(UINT InMeshIndex, const aiMesh* InMesh)
 		int     BoneID = GetBoneID(Bone->mName.C_Str());
 
 		// 뼈의 기본행렬정보를 저장
-		BoneTransforms[BoneID].Offset = ToXMMATRIX(Bone->mOffsetMatrix);
-		BoneTransforms[BoneID].Transform = XMMatrixIdentity();
+		BoneTransform->Offset[BoneID] = ToXMMATRIX(Bone->mOffsetMatrix);
+		BoneTransform->Transform[BoneID] = XMMatrixIdentity();
 
 		// 뼈의 가중치를 FVertex에 저장
 		for (UINT j = 0; j < Bone->mNumWeights; j++)
@@ -318,9 +318,9 @@ void CModel::ReadNodeHierarchy(float AnimationTime, const aiNode* InNode, const 
 	if (BoneIDs.find(NodeName) != BoneIDs.end())
 	{
 		int BoneID = GetBoneID(NodeName);
-		BoneTransforms->Transform = ToXMMATRIX(Scene->mRootNode->mTransformation.Inverse()) 
+		BoneTransform->Transform[BoneID] = ToXMMATRIX(Scene->mRootNode->mTransformation.Inverse())
 									* GlobalTransformation
-									* BoneTransforms[BoneID].Transform;
+									* BoneTransform->Offset[BoneID];
 	}
 
 	// 자식 노드 순회

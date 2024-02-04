@@ -49,6 +49,7 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 	ComPtr<ID3DBlob>			PixelShaderBuffer;
 	D3D11_INPUT_ELEMENT_DESC	PolygonLayout[8];
 	D3D11_BUFFER_DESC			MatrixBufferDesc;
+	D3D11_BUFFER_DESC			BoneBufferDesc;
 	D3D11_SAMPLER_DESC			SamplerStateDesc;
 
 	// Initialize layout desc.
@@ -125,6 +126,14 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 	MatrixBufferDesc.MiscFlags = 0;
 	MatrixBufferDesc.StructureByteStride = 0;
 
+	// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.
+	BoneBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	BoneBufferDesc.ByteWidth = sizeof(FBone);
+	BoneBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	BoneBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	BoneBufferDesc.MiscFlags = 0;
+	BoneBufferDesc.StructureByteStride = 0;
+
 	// Create a texture sampler state description.
 	SamplerStateDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	SamplerStateDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -145,8 +154,8 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 		VertexShaderBuffer.GetAddressOf(), ErrorMsg.GetAddressOf());
 	if (FAILED(Result))
 	{
+		SConsole::LogWarning(ToWString((char*)ErrorMsg.Get()->GetBufferPointer()), __FILE__, __LINE__);
 		SConsole::LogError(L"D3DCompileFromFile() is failed.", __FILE__, __LINE__);
-		throw std::exception();
 	}
 
 	// Compile pixel shader.
@@ -188,6 +197,12 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
 		}
 
+		Result = Device.CreateBuffer(&BoneBufferDesc, nullptr, BoneBuffer.GetAddressOf());
+		if (FAILED(Result))
+		{
+			SConsole::LogError(L"CreateBuffer() is failed.", __FILE__, __LINE__);
+		}
+
 		// Create the texture sampler state.
 		Result = Device.CreateSamplerState(&SamplerStateDesc, SamplerState.GetAddressOf());
 		if (FAILED(Result))
@@ -199,40 +214,61 @@ void CLitShader::Load(const std::wstring& InVSFilePath, const std::wstring& InPS
 }
 
 void CLitShader::SetShaderParameters(const XMMATRIX& InWorld, const XMMATRIX& InView,
-									 const XMMATRIX& InProjection, FBoneTransform* InBoneTransforms, ID3D11ShaderResourceView* texture)
+									 const XMMATRIX& InProjection, FBone* InBone, ID3D11ShaderResourceView* texture)
 {
 	HRESULT							Result;
 	D3D11_MAPPED_SUBRESOURCE		MappedResource;
-	FWorldViewProjection*			CBuffer;
+	FWorldViewProjection*			MatrixCBuffer;
+	FBone*							BoneCBuffer;
 	UINT							BufferNum;
 
 	ID3D11DeviceContext& DeviceContext = SApplication::GetDirectX11()->GetDeviceContext();
 	{
-		// Lock cbuffer.
-		Result = DeviceContext.Map(MatrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
-		if (FAILED(Result))
+		// Transformation Matrix buffer 설정
 		{
-			SConsole::LogError(L"Map() is failed.", __FILE__, __LINE__);
+			Result = DeviceContext.Map(MatrixBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
+			if (FAILED(Result))
+			{
+				SConsole::LogError(L"Map() is failed.", __FILE__, __LINE__);
+			}
+
+			// Set MatrixCBuffer's parameters.
+			MatrixCBuffer = static_cast<FWorldViewProjection*>(MappedResource.pData);
+			{
+				MatrixCBuffer->World = XMMatrixTranspose(InWorld);
+				MatrixCBuffer->View = XMMatrixTranspose(InView);
+				MatrixCBuffer->Projection = XMMatrixTranspose(InProjection);
+			}
+
+			DeviceContext.Unmap(MatrixBuffer.Get(), 0);
+			BufferNum = 0;
+			DeviceContext.VSSetConstantBuffers(BufferNum, 1, MatrixBuffer.GetAddressOf());
 		}
 
-		// Set cbuffer's parameters.
-		CBuffer = static_cast<FWorldViewProjection*>(MappedResource.pData);
+
+		// Bone Transformation Matrix buffer 설정
 		{
-			CBuffer->World = XMMatrixTranspose(InWorld);
-			CBuffer->View = XMMatrixTranspose(InView);
-			CBuffer->Projection = XMMatrixTranspose(InProjection);
+			// Lock cbuffer.
+			Result = DeviceContext.Map(BoneBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource);
+			if (FAILED(Result))
+			{
+				SConsole::LogError(L"Map() is failed.", __FILE__, __LINE__);
+			}
+
+			BoneCBuffer = static_cast<FBone*>(MappedResource.pData);
+			for (int i = 0; i < MAX_BONE_COUNT; i++)
+			{
+				BoneCBuffer->Offset[i] = InBone->Offset[i];
+				BoneCBuffer->Transform[i] = InBone->Transform[i];
+			}
+
+			DeviceContext.Unmap(BoneBuffer.Get(), 0);
+			BufferNum = 1;
+			DeviceContext.VSSetConstantBuffers(BufferNum, 1, BoneBuffer.GetAddressOf());
 		}
 
-		// Unlock cbuffer.
-		DeviceContext.Unmap(MatrixBuffer.Get(), 0);
 
-		// Set position of cbuffer in vs.
-		BufferNum = 0;
-
-		// Set cbuffer in vs.
-		DeviceContext.VSSetConstantBuffers(BufferNum, 1, MatrixBuffer.GetAddressOf());
-
-		// Set shader resource.
+		// 쉐이더에 texture 전달
 		DeviceContext.PSSetShaderResources(0, 1, &texture);
 	}
 }
