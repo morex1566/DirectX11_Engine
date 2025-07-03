@@ -8,7 +8,7 @@
 **/PCH.pch
 
 # Ignore Resources folder
-# Resources/*
+/[Rr]esources
 
 # Ignore precompiled header file
 Sources/Core/PCH.pch
@@ -18,5 +18,3 @@ Bins/Debug/*
 
 # Ignore all file in the Release folder
 Bins/Release/*
-
-Resources/*
