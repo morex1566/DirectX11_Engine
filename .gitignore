@@ -18,3 +18,5 @@ Bins/Debug/*
 
 # Ignore all file in the Release folder
 Bins/Release/*
+
+Resources/*
